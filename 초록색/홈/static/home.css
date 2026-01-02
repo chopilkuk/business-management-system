@@ -1,0 +1,466 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+.notosanskr * { 
+ font-family: 'Noto Sans KR', sans-serif;
+}
+
+body{ /*폰트설정*/
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f8f8f8;
+}
+
+*{padding:0;margin:0} /*상단메뉴바*/
+			ul,ol{list-style:none}
+			a{text-decoration:none;color:#fff;font-size:15px}
+			nav{width:80%;overflow:hidden; height:80px;background: #fcf6f5; margin: auto; border-bottom: 1px solid #c8c8c8; margin-bottom: 7px;}
+			#nav3 {
+  				width: 100%;
+                height: 9%;
+ 				position: relative;
+  				text-align: center;
+			}
+			#nav3>a { 
+				line-height: 80px;
+ 				display: block;
+  				font-size: 40px;
+  				position: absolute;
+  				left: 150px; 
+			}
+			#nav3>select {
+  				padding: 0 20px;
+  				height: 30px;
+  				background-color: #1b2035;
+ 	 			color: #fff;
+  				position: absolute;
+  				right: 30px;
+  				top: 8%;
+  				transform: translateY(-15px);
+  				border: 2px solid #fff;
+  				border-radius: 30px;
+			}		
+			#nav3>ul {
+  				display: inline-block;
+			}
+			#nav3>ul li {
+  				float: left;
+  				line-height: 80px;
+  				padding: 0 3px;
+            }
+
+.logout {
+	background: url("menu/logout.png") no-repeat;
+	background-size: 30px;
+	margin-left: 990px;
+	margin-top: 15px;
+	
+	width: 50px;
+	height: 50px;
+	border: none;
+}
+
+.logout:hover {
+	background: url("menu/logout2.png") no-repeat;
+	background-size: 30px;
+	margin-left: 990px;
+	margin-top: 15px;
+}
+
+
+
+.menuTitle{ /*메뉴이름*/
+    font-size: 20pt;
+    font-weight: bold;
+    color: #002835;
+	margin-left: 43%;
+	margin-right: 43%;
+	margin-top: 13px;
+	margin-bottom: 10px;
+	display : inline-block;
+
+}
+
+.layout:after{ clear: both; display: block; content: '' }
+
+.layout{
+	margin-left: 8.3%;
+	margin-right: 8.3%;
+}
+
+
+/* 프로필 */
+.layout .userBox{
+	width: 20%;
+	height: 87%;
+	background: linear-gradient(#2bae66, #2bae66);
+	box-shadow: 2px 2px 7px -5px #545454;
+	margin-top: 5px;
+	float: left;
+	
+}
+
+.profile
+{	
+	margin: 30px auto 5px;
+	position: relative;
+	width: 110px;
+	height: 110px;
+	border-radius: 50%;
+	overflow: hidden;
+	box-shadow: 2px 2px 7px -5px #545454;
+}
+
+.profile img
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	
+}
+
+.timeCheck {
+	margin-top: 10px;
+}
+
+.username {
+	font-weight: 700;
+	font-size: 18px;
+	margin-left: 31%;
+	color: white;
+}
+
+.userrank {
+	font-weight: 500;
+	font-size: 13px;
+	color: white;
+}
+
+.goTime {
+	float: left;
+	width: 50%;
+	color: white;
+}
+
+.outTime {
+	float: left;
+	width: 50%;
+	color: white;
+}
+
+
+#goText {
+	font-size: 12px;
+	margin-left: 40%;
+}
+
+.goBtn{
+	margin-left: 31%;
+	background-color: #f3f3f3;
+	border: none;
+	border-radius: 10px;
+	padding: 1px 5px 1px 5px;
+	margin-top: 2px;
+	box-shadow: 2px 2px 7px -5px #545454;
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+.goBtn:hover {
+	color: #2bae66;
+}
+
+
+#outText {
+	font-size: 12px;
+	margin-left: 40%;
+}
+
+.outBtn{
+	margin-left: 31%;
+	background-color: #f3f3f3;
+	border: none;
+	border-radius: 10px;
+	padding: 1px 5px 1px 5px;
+	margin-top: 2px;
+	box-shadow: 2px 2px 7px -5px #545454;
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+.outBtn:hover {
+	color: #2bae66;
+	
+}
+
+.alarmImg{
+	float: left;
+	
+}
+
+.alarmImg img{
+	margin-left: 15px;
+	margin-top: 10px;
+}
+
+.alarmTitle{
+	float: left;
+	margin-top: 8px;
+	margin-left: 2px;
+	font-size: 14px;
+	font-weight: 500;
+	color: white;
+}
+
+.alarm{
+	float: left;
+	margin-top: 4px;
+	color: white;
+}
+
+.allBtn {
+	font-size: 12px;
+	font-weight: 400;
+	margin-top: 6px;
+	margin-left: 30px;
+	background: none;
+	border: none;
+	font-family: 'Noto Sans KR', sans-serif;
+	color: white;
+}
+.allBtn:hover {
+	color: #ffcece;
+}
+
+.metionBtn {
+	font-size: 12px;
+	font-weight: 400;
+	margin-top: 6px;
+	background: none;
+	border: none;
+	font-family: 'Noto Sans KR', sans-serif;
+	color: white;
+}
+.metionBtn:hover {
+	color: #ffcece;
+}
+
+.alarmBox{
+	width: 96%;
+	height: 35%;
+	background: #f3f3f3;
+	margin: 10px 0 0 12.5px;
+	border-radius: 10px;
+	box-shadow: 2px 2px 7px -5px #545454;
+	padding-top: 5px;
+}
+
+.alarmCon {
+	border: 1px solid #c9c9c9;
+	width: 155px;
+	padding: 5px;
+	margin-left: 7px;
+}
+
+.alarmName {
+	font-size: 15px;
+	font-weight: 500;
+	color: black;
+}
+
+.alarmWirter{
+	font-size: 10px;
+	color: black;
+}
+
+.alarmSub{
+	font-size: 13px;
+	color: black;
+}
+
+
+
+.dateMenu {
+	float: left;
+	margin-left: 25px;
+	margin-top: 10px;
+}
+.authoMenu {
+	float: left;
+	margin-left: 15px;
+	margin-top: 10px;
+}
+
+.settingMenu {
+	float: left;
+	margin-left: 15px;
+	margin-top: 10px;
+}
+/* 프로필 끝 */
+
+
+
+/*업무현황 */
+.layout .userOne {
+	width: 53%;
+	height: 45%;
+	background-color: white;
+	border: 1px solid #e0e0e0;
+	box-shadow: 2px 2px 7px -5px #545454;
+	margin-top: 5px;
+	margin-left: 5px;
+	float: left;
+	overflow:auto;
+}
+
+.story{
+	background-color: white;
+	border: 1px solid #d9d9d9;
+	width: 400px;
+	margin-left: 20px;
+	margin-top: 10px;
+	padding: 20px;
+}
+
+.plus {
+	width: 30px;
+	height: 30px;
+	border-radius: 100px;
+	border: none;
+	background-color: #2bae66;
+	margin-top: 5px;
+	margin-left: 500px;
+	color: white;
+	font-size: 20px;
+}
+.plus:hover {
+	background-color: #0d5f32;
+}
+
+
+
+/* 캘린더 */
+.layout .userTwo {
+	width: 25%;
+	height: 45%;
+	background-color: white;
+	border: 1px solid #e0e0e0;
+	box-shadow: 2px 2px 7px -5px #545454;
+	float: left;
+	margin-top: 5px;
+	margin-left: 5px;
+}
+
+.story2{
+	background-color: white;
+	border: 1px solid #d9d9d9;
+	width: 183px;
+	height: 133px;
+	margin-left: 15px;
+	margin-top: 10px;
+	padding: 20px;
+}
+
+.plus2 {
+	width: 30px;
+	height: 30px;
+	border-radius: 100px;
+	border: none;
+	background-color: #094d28;
+	margin-top: 5px;
+	margin-left: 216px;
+	color: white;
+	font-size: 20px;
+}
+.plus2:hover {
+	background-color: #2bae66;
+}
+
+
+
+
+/* 하단메뉴 */
+.layout .userThree {
+	width: 19.7%;
+	height: 40%;
+	background-color: white;
+	float: left;
+	margin-top: 5px;
+	margin-left: 5px;
+	border-top: 6px solid #4fb57d;
+
+	background-image: url("menu/businessManagementMain3.jpg");
+	background-size: 100% 100%;
+	
+}
+
+.businessAla {
+	font-size: 23px;
+	font-weight: 600;
+	color: white;
+	margin-left: 160px;
+	margin-top: 1px;
+	float: left;
+}
+
+
+.layout .userFour {
+	width: 19.7%;
+	height: 40%;
+	background-color: white;
+	float: left;
+	margin-top: 5px;
+	border-top: 6px solid #2bae66;
+
+	background-image: url("menu/clientMain3.jpg");
+	background-size: 100% 100%;
+}
+
+.clientAla {
+	font-size: 23px;
+	font-weight: 600;
+	color: white;
+	margin-left: 160px;
+	margin-top: 1px;
+	float: left;
+}
+
+
+.layout .userFive {
+	width: 19.7%;
+	height: 40%;
+	background-color: white;
+	float: left;
+	margin-top: 5px;
+	border-top: 6px solid #0e6937;
+
+	background-image: url("menu/technologyMain3.jpg");
+	background-size: 100% 100%;
+}
+
+.techAla {
+	font-size: 23px;
+	font-weight: 600;
+	color: white;
+	margin-left: 160px;
+	margin-top: 1px;
+	float: left;
+}
+
+.layout .userSix {
+	width: 19.7%;
+	height: 40%;
+	float: left;
+	margin-top: 5px;
+	border-top: 6px solid #094d28;
+
+	background-image: url("menu/cooperationMain3.jpg");
+	background-size: 100% 100%;
+
+}
+
+.cooperAla {
+	font-size: 23px;
+	font-weight: 600;
+	color: white;
+	margin-left: 160px;
+	margin-top: 1px;
+	float: left;
+}

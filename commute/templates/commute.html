@@ -1,0 +1,104 @@
+<html>
+    <head>
+        {% load static %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>근태관리</title>
+        <link rel = "stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+        <script src="{% static 'js/commute.js' %}"></script>
+    </head>
+ 
+    <body>
+        {% include 'navbar.html' %}
+        <div class="layout">
+            {% include 'sidebar.html' %}
+
+            <div class="content-area">
+                <span class="menuTitle">근태관리</span><!-- 메뉴 이름(한글) -->
+                <div class="timeCheck">
+                    <div class="goTime">
+                        <span id="goText">출근</span><br>
+                        <input type="button" class="goBtn" value="09:00"></input> <!-- 버튼 누르면 현재 시간 저장-->
+                    </div>
+                    <div class="outTime">
+                        <span id="outText">퇴근</span><br>
+                        <input type="button" class="outBtn" value="18:00"></input>
+                    </div>
+                </div>
+                <div class="alarm">
+                    <div class="alarmImg">
+                        <img src="{% static 'images/alarm.png' %}" width="15px" alt="알림">
+                    </div>
+                    <div class="alarmTitle">알림</div>
+                    <div class="alarm">
+                        <input type="button" class="allBtn" value="전체알림"></input>  <!-- 전체알림 -->
+                        <span style="margin-top: 2px; font-size: 12px;">I</span>
+                        <input type="button" class="metionBtn" value="우선알림"></input> <!-- 우선알림, 개인알림 -->
+                        <br>
+                    </div>
+                    <br>
+                    <div class="alarmBox"> <!-- 알림 상자 -->
+                        <span class="Box"></span>
+                        <div class="alarmCon">
+                            {% if notifications %}
+                                {% for notification in notifications %}
+                                    <span class="alarmName">{{ notification.title }}</span>
+                                    <span class="alarmWirter">{{ notification.author }}</span><br>
+                                    <span class="alarmSub">{{ notification.content }}</span><br>
+                                {% endfor %}
+                            {% else %}
+                                <span class="alarmSub">새로운 알림이 없습니다.</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="userMenu">
+                        <div class="dateMenu">
+                            <a href="/data/"><img src="{% static 'images/datablack.png' %}" width="40px" alt="자료"><br></a> <!-- 자료페이지로 이동-->
+                            <span style="font-size: 13px; font-weight: 500; margin-left: 7px">자료</span>
+                        </div>
+                        <div class="authoMenu">
+                            <a href="/authority/"><img src="{% static 'images/authorityblack.png' %}" width="40px" alt="권한"><br></a>
+                            <span style="font-size: 13px; font-weight: 500; margin-left: 7px">권한</span>
+                        </div>
+                        <div class="settingMenu">
+                            <a href="/setting/"><img src="{% static 'images/settingblack.png' %}" width="40px" alt="설정"><br></a>
+                            <span style="font-size: 12px; font-weight: 500; margin-left: 7px">설정</span>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- 프로필 -->
+            <div class="ontentsBox"> <!-- 내용 박스 -->
+                <input type="button" id="datepicker">
+                <span class="dateSelect" id="date"></span>
+                <span id="department">부서</span><br>
+                <div class="input-group">
+                    <button type="button" class="btnCheckTrip" onclick="window.open('businessTrip','출장','width=650,height=600,location=no,status=no,scrollbars=yes');">출장</button>
+                    <button type="button" class="btnCheckRest" onclick="window.open('leave','휴가','width=650,height=600,location=no,status=no,scrollbars=yes');">휴가</button>
+                    <button type="button" id="btnExel"><span>엑셀</span></button>
+                </div>
+                <input onkeyup="filter()" type="text" id="serch" placeholder="검색어를 입력하세요.">
+                <table class="table" id="commuteBox">
+                    <th>근속일자</th>
+                    <th>이름</th>
+                    <th>출근시간</th>
+                    <th>퇴근시간</th>
+                    <th>상태</th>
+                    <th>사유</th>
+                    <th>수정</th>
+
+                    <tr>
+                        <td><script>anciennete()</script></td>
+                        <td><script>name()</script></td>
+                        <td><script>attendance()</script></td>
+                        <td><script>leave()</script></td>
+                        <td><script>state()</script></td>
+                        <td><script>reason()</script></td>
+                        <td><script>update()</script></td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
+

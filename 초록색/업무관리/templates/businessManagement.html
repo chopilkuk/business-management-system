@@ -1,0 +1,264 @@
+<html lang="ko">
+
+<head>
+  {% load static %}
+  {% load tags %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width = device - width, initial-scale=1">
+  <title>업무관리</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'businessManagement.css' %}?afterrrrrrr">
+  <!-- <script src="{% static 'businessManagement.js' %}"></script> -->
+  <!-- <script src="{% static 'businessManagement.js' %}"> -->
+    <script>
+    window.onload = function(){
+    // var head_data = ['...', '홍석주'];
+
+    // document.getElementById("management_title_head").innerHTML = '<table id="t2"></table>';
+    // var head = document.getElementById("t2");
+    // var btn_ind;
+
+    // for(btn_ind = 0; btn_ind < head_data.length; btn_ind++)
+    // {
+    //     var button = document.createElement('button');
+    //     button.type = 'button';
+    //     button.innerText = head_data[btn_ind];
+    //     button.className = 'btn_' + btn_ind;
+    //     button.onclick = function(){
+    //         document.write("a");
+    //     };
+    //     head.prepend(button);
+    // }
+    
+    // var i;
+    // for(i = 0; i < 3; i++){
+    //   create_management_table();
+      
+    // }
+}
+
+function formcheck(){
+  var listlength = document.getElementsByName("project").length;
+              
+  var flag =1;
+  for (var i=0; i<listlength; i++) {
+    if (document.getElementsByName("project")[i].checked == true) {
+      alert(i);
+      flag=0;
+      break;
+    }
+  } 
+
+  if(flag == 1)
+  {
+    return false;
+  }
+}
+
+function deleteproject(){
+              const table = document.getElementById('t1');
+              var listlength = document.getElementsByName("project").length;
+              
+              var flag =1;
+              for (var i=0; i<listlength; i++) {
+                if (document.getElementsByName("project")[i].checked == true) {
+                  alert(i);
+                  flag=0;
+                  break;
+                }
+              } 
+              if(flag==1){
+                alert("삭제할 항목을 선택하세요");
+                return;
+              }
+
+              if(confirm("삭제하시겠습니까?")==true){
+                  for (var i=0; i<listlength; i++) {
+                      if (document.getElementsByName("project")[i].checked == true) {
+                          const newRow = table.deleteRow(i+1);// 행(Row) 삭제
+                          
+                          i--;
+                      }
+                  }
+              }
+              else{
+                  return;
+              }
+            }
+
+function selectAll(selectAll)  {
+  const checkboxes 
+       = document.getElementsByName('project');
+  
+  checkboxes.forEach((checkbox) => {
+    checkbox.checked = selectAll.checked;
+  })
+  
+}
+
+  </script>
+  
+</head>
+
+<body>
+  <nav id="nav3">
+    <a href="../home"><img src="{% static 'menu/logo3.png' %}" width="35px"==></a>
+      <ul>
+        <li><a href="../home"><img src="{% static 'menu/home2.png' %}" title="홈" width="40px"></a></li>
+        <li><a href="../calendar"><img src="{% static 'menu/calendar2.png' %}" title="캘린더" width="40px"></a></li>
+        <li><a href="../commute"><img src="{% static 'menu/commute2.png' %}" title="출퇴근관리" width="40px"></a></li>
+        <li><a href="../client_inform"><img src="{% static 'menu/client2.png' %}" title="거래처정보" width="40px"></a></li>
+        <li><a href="../businessStatus"><img src="{% static 'menu/businessStatus2.png' %}" title="업무현황" width="40px"></a></li>
+        <li><a href="../businessManagement"><img src="{% static 'menu/businessManagement2.png' %}" title="업무관리" width="40px"></a></li>
+        <li><a href="../address"><img src="{% static 'menu/address2.png' %}" title="주소록" width="40px"></a></li>
+        <li><a href="../notice"><img src="{% static 'menu/notice2.png' %}" title="공지사항" width="40px"></a></li>
+        <li><a href="../data"><img src="{% static 'menu/data2.png' %}" title="자료" width="40px"></a></li>
+        <li><a href="../technology"><img src="{% static 'menu/technology2.png' %}" title="기술" width="40px"></a></li>
+        <li><a href="../supportProject"><img src="{% static 'menu/supportProject2.png' %}" title="지원사업" width="40px"></a></li>
+        <li><a href="../authority"><img src="{% static 'menu/authority2.png' %}" title="권한 " width="40px"></a></li>
+        <li><a href="../cooperation"><img src="{% static 'menu/cooperation2.png' %}" title="협업관리" width="40px"></a></li>
+      </ul>
+  </nav>
+  <span class="menuTitle">업무 관리</span><!-- 메뉴 이름(한글) -->
+  <div class="layout">
+    <div class="userBox"> <!-- 프로필 -->
+      <div class="profile">
+          <img src="{% static 'menu/puppy.jpg' %}">
+      </div>
+      <span class="username">강아지</span> <!-- 이름 -->
+      <span class="userrank">사원</span> <!-- 직급 -->
+      <div class="timeCheck">
+          <div class="goTime">
+              <span id="goText">출근</span><br>
+              <input type="button" class="goBtn" value="09:00"></input> <!-- 버튼 누르면 현재 시간 저장-->
+          </div>
+          <div class="outTime">
+              <span id="outText">퇴근</span><br>
+              <input type="button" class="outBtn" value="18:00"></input>
+          </div>
+      </div>
+      <div class="alarm">
+          <div class="alarmImg">
+              <img src="{% static 'menu/alram2.png' %}" width="15px">
+          </div>
+          <div class="alarmTitle">알림</div>
+          <div class="alarm">
+              <input type="button" class="allBtn" value="전체알림"></input>  <!-- 전체알림 -->
+              <span style="margin-top: 2px; font-size: 12px;">I</span>
+              <input type="button" class="metionBtn" value="우선알림"></input> <!-- 우선알림, 개인알림 -->
+              <br>
+          </div>
+          <br>
+          <div class="alarmBox"> <!-- 알림 상자 -->
+              <span class="Box"></span>
+              <div class="alarmCon">
+                  <span class="alarmName">알림제목</span>
+                  <span class="alarmWirter" >작성자</span><br>
+                  <span class="alarmSub">알림내용</span><br>
+              </div>
+          </div>
+          <div class="userMenu">
+              <div class="dateMenu">
+                  <a href="../data"><img src="{% static 'menu/datablack2.png' %}" width="40px"><br></a> <!-- 자료페이지로 이동-->
+                  <span style="font-size: 13px; font-weight: 500; margin-left: 7px">자료</span>
+              </div>
+              <div class="authoMenu">
+                  <a href="../authority"><img src="{% static 'menu/authorityblack2.png' %}" width="40px"><br></a>
+                  <span style="font-size: 13px; font-weight: 500; margin-left: 7px">권한</span>
+              </div>
+              <div class="settingMenu">
+                  <a href="../setting"><img src="{% static 'menu/settingblack2.png' %}" width="40px"><br></a>
+                  <span style="font-size: 12px; font-weight: 500; margin-left: 7px">설정</span>
+              </div>
+          </div>
+      </div>
+  </div> <!-- 프로필 -->
+    
+
+
+
+
+    <div class="ontentsBox">
+      
+      <!-- 내용 박스 -->
+      <!-- 코딩할 위치 -->
+      <div class="title">
+        <span style="font-size: 21px;        font-weight: 600;        font-family: 'Noto Sans KR', sans-serif;">업무 관련 사항</span>
+      </div>
+      <br><br>
+      <hr style="border: 0.5px groove #e2e2e2; margin-top:5px">
+
+      <p style="font-size: 13px; margin-top: 15px; margin-bottom: 10px;">업무일지는 오늘 기준으로 3달 이전까지 기본으로 조회됩니다. 이전 일지 조회는 기간별 검색을 이용해주세요.</p>
+      
+      <div class="monthSel">
+        <label for="row1" style="font-size: 12px; font-weight: 600;">월별 검색</label> <!-- 달력 스타일-->
+        <input type="date" id="start" name="date-start" min="2000-01-01" max="2099-12-31" style="font-family: 'Noto Sans KR', sans-serif; font-size: 11px; margin-top: 13px;">
+      </div>
+      <div class="daySel">
+        <label for="row1" style="font-size: 12px; font-weight: 600;">기간별 검색</label>
+        <input type="date" id="start" name="date-start" min="2000-01-01" max="2099-12-31" style="font-family: 'Noto Sans KR', sans-serif; font-size: 11px; margin-top: 13px;">
+        <input type="date" id="start" name="date-start" min="2000-01-01" max="2099-12-31" style="font-family: 'Noto Sans KR', sans-serif; font-size: 11px; margin-top: 13px;">
+      </div>
+
+      <div class="department">
+        <label for="row1" style="font-size: 12px; font-weight: 600;">신사업본부 사원별 현황</label>
+        <input type="date" id="start" name="date-start" min="2000-01-01" max="2099-12-31" style="font-family: 'Noto Sans KR', sans-serif; font-size: 11px; margin-top: 13px;">
+      </div>
+
+      <div class="searchtool"> <!-- 검색 -->
+        <input type="search" class="form-control form-control-sm" id="form-control" placeholder="검색어를 입력하세요." aria-controls="example2">
+        <input type="button" class="btn-primary" id="btn-primary" value="검색" onclick=search()><br><br>
+      </div>
+
+        <div id="management_title_head">
+        </div>
+        <div style='overflow: scroll;' id="management_table">
+          <form method="POST" onsubmit="return formcheck()">
+            <!-- Security token by Django -->
+            {% csrf_token %}
+            
+          <table id="t1">
+            <tr> <!-- 표 헤드-->
+              <th style="border-bottom: 1px solid #e2e2e2; background-color: #d0e0d7;" ><input type="checkbox" id="select" onclick=selectAll(this)></th>
+              <th style="border-bottom: 1px solid #e2e2e2; background-color: #d0e0d7;"><button style="background: none; border: none; font-family: 'Noto Sans KR', sans-serif; width: 60px; height: 50px; font-size: 15px; font-weight: 500;">업무번호</button></th>
+              <th style="border-bottom: 1px solid #e2e2e2; background-color: #d0e0d7;"><button style="background: none; border: none; font-family: 'Noto Sans KR', sans-serif; width: 120px; font-size: 15px; font-weight: 500;">피드백</button></th>
+              <th style="border-bottom: 1px solid #e2e2e2; background-color: #d0e0d7;"><button style="background: none; border: none; font-family: 'Noto Sans KR', sans-serif; width: 60px; font-size: 15px; font-weight: 500;">작성자</button></th>
+              <th style="border-bottom: 1px solid #e2e2e2; background-color: #d0e0d7;"><button style="background: none; border: none; font-family: 'Noto Sans KR', sans-serif; width: 120px; font-size: 15px; font-weight: 500;">작성일자</button></th>
+              <th style="border-bottom: 1px solid #e2e2e2; background-color: #d0e0d7;"><button style="background: none; border: none; font-family: 'Noto Sans KR', sans-serif; width: 60px; font-size: 15px; font-weight: 500;">업체</button></th>
+              <th style="border-bottom: 1px solid #e2e2e2; background-color: #d0e0d7;"><button style="background: none; border: none; font-family: 'Noto Sans KR', sans-serif; width: 60px; font-size: 15px; font-weight: 500;">지역</button></th>
+              <th style="border-bottom: 1px solid #e2e2e2; background-color: #d0e0d7;"><button style="background: none; border: none; font-family: 'Noto Sans KR', sans-serif; width: 60px; font-size: 15px; font-weight: 500;">모듈</button></th>
+              <th style="border-bottom: 1px solid #e2e2e2; background-color: #d0e0d7;"><button style="background: none; border: none; font-family: 'Noto Sans KR', sans-serif; width: 120px; font-size: 15px; font-weight: 500;">QUESTION</button></th>
+              <th style="border-bottom: 1px solid #e2e2e2; background-color: #d0e0d7;"><button style="background: none; border: none; font-family: 'Noto Sans KR', sans-serif; width: 120px; font-size: 15px; font-weight: 500;">SOLUTION</button></th>
+              <th style="border-bottom: 1px solid #e2e2e2; background-color: #d0e0d7;"><button style="background: none; border: none; font-family: 'Noto Sans KR', sans-serif; width: 60px; font-size: 15px; font-weight: 500;">이관</button></th>
+              <th style="border-bottom: 1px solid #e2e2e2; background-color: #d0e0d7;"><button style="background: none; border: none; font-family: 'Noto Sans KR', sans-serif; width: 60px; font-size: 15px; font-weight: 500;">상태</button></th>
+              <th style="border-bottom: 1px solid #e2e2e2; background-color: #d0e0d7;"><button style="background: none; border: none; font-family: 'Noto Sans KR', sans-serif; width: 120px; font-size: 15px; font-weight: 500;">직원업무상황</button></th>
+              <th style="border-bottom: 1px solid #e2e2e2; background-color: #d0e0d7;"><button style="background: none; border: none; font-family: 'Noto Sans KR', sans-serif; width: 120px; font-size: 15px; font-weight: 500;">ㅁㅁㅁㅁㅁㅁ</button></th>
+            </tr>
+
+            {% for tab in table %}
+                <tr>
+                    {% for k in keys %}
+                        {% if k == 'Job_ID' %}
+                          <td><input type="checkbox" name="project" value="{{tab|custom_key:k}}" onclick=""/></td>
+                        {% endif %}
+                        <td> {{tab|custom_key:k}} </td>
+                    {% endfor %}<!-- 표 바디-->
+                    <td><button onclick=edit() style="border: 1px solid #e2e2e2; border-radius: 5px; width: 40px; height: 30px; font-family: 'Noto Sans KR', sans-serif;">수정</button></td>
+                </tr>
+            {% endfor %}
+          </table>
+
+          <div class="titleBtn">
+            <button type="submit" class="btnCheckRest" onclick="">삭제</button>
+          </div>
+
+          </form>
+          
+          <div class="titleBtn">
+            <button type="button" class="btnCheckadd" onclick="window.open('projectadd','등록','width=650,height=600,location=no,status=no,scrollbars=yes');">등록</button>  
+          </div>
+        </div>
+
+        
+</body>
+
+</html>

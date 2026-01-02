@@ -1,0 +1,69 @@
+<html lang="ko">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width = device - width, initial-scale=1">
+    <title>공지사항</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/notice.css' %}?after">
+    <script src="{% static 'js/notice.js' %}"></script>
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+    <span class="menuTitle">공지 사항</span><!-- 메뉴 이름(한글) -->
+    <div class="layout">
+        {% include 'sidebar.html' %}
+        <div class="ontentsBox">
+            <!-- 내용 박스 -->
+            <!-- 코딩할 위치 -->
+
+            <table class="wrapnotice">
+                <tr>
+                    <td><input type='button' class='btn' name='btn' value='공지사항 작성' style="float: left; margin-top: 15px;"
+                        onClick="location.href='/공지사항/noticewrite/'">
+                    </td>
+                </tr>
+                <tr>
+                    <table class="titleSearch"> <!--제목과 검색기능-->
+                    
+                        <td>
+                            <select name="분류">
+                                <option value="제목">제목</option>
+                                <option value="작성자">작성자</option>
+                                <option value="내용">내용</option>
+                                <form action=" ">
+                                    <!--검색할 URL-->
+                                    <div class="searchtool">
+                                        <input type="search" class="form-control form-control-sm" placeholder="검색어를 입력하세요." aria-controls="example2">
+                                        <input type="button" class="btn-primary" value="검색" onclick=search()><br>
+                                      </div>
+                                </form>
+                            </select>
+                        </td>
+                    </table>
+                    <br>
+                    <table class="notice">
+                        <!--공지사항 표-->
+                        <thead>
+                            <tr>
+                                <th width="10%">번호</th>
+                                <th width="45%">제목</th>
+                                <th width="30%">작성날짜</th>
+                                <th width="15%">작성자</th>
+                            </tr>
+                        </thead>
+                    </table> 
+                    <table class='notice' id="notice_table"></table>
+                    <!--총 페이지 수-->
+                    <p>Showing 1 to 3 of 3 entries</p>
+                    
+                    
+                </tr>
+            </table>
+        
+        </div>
+    </div>
+    </table>
+</body>
+
+</html>

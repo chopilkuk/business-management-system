@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>비즈니스 관리 시스템</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/common.css' %}">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2c3e50;
+            margin: 0;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.2em;
+            margin: 0;
+        }
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .nav-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+        .nav-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        .nav-card .icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        .nav-card h3 {
+            color: #2c3e50;
+            margin: 0 0 10px 0;
+            font-size: 1.5em;
+        }
+        .nav-card p {
+            color: #7f8c8d;
+            margin: 0;
+            font-size: 0.9em;
+        }
+        .footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏢 비즈니스 관리 시스템</h1>
+            <p>업무 관리의 모든 것을 한 곳에서</p>
+        </div>
+        
+        <div class="nav-grid">
+            <a href="/client_inform/" class="nav-card">
+                <div class="icon">📋</div>
+                <h3>거래처 관리</h3>
+                <p>고객 및 거래처 정보 관리</p>
+            </a>
+            
+            <a href="/commute/" class="nav-card">
+                <div class="icon">⏰</div>
+                <h3>근태 관리</h3>
+                <p>출퇴근 및 근무 시간 관리</p>
+            </a>
+            
+            <a href="/businessStatus/" class="nav-card">
+                <div class="icon">📊</div>
+                <h3>업무 상태</h3>
+                <p>프로젝트 현황 및 진행 상태</p>
+            </a>
+            
+            <a href="/공지사항/" class="nav-card">
+                <div class="icon">📢</div>
+                <h3>공지사항</h3>
+                <p>중요 공지 및 알림 관리</p>
+            </a>
+            
+            <a href="/기술/" class="nav-card">
+                <div class="icon">🔧</div>
+                <h3>기술 관리</h3>
+                <p>기술 스택 및 도구 관리</p>
+            </a>
+            
+            <a href="/login/" class="nav-card">
+                <div class="icon">🔐</div>
+                <h3>로그인</h3>
+                <p>사용자 인증 및 접속</p>
+            </a>
+            
+            <a href="/admin/" class="nav-card">
+                <div class="icon">⚙️</div>
+                <h3>관리자</h3>
+                <p>시스템 관리 및 설정</p>
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2024 비즈니스 관리 시스템. 모든 권리 보유.</p>
+        </div>
+    </div>
+</body>
+</html>

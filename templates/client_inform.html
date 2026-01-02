@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>거래처 관리 - 비즈니스 관리 시스템</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/common.css' %}">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            color: #2c3e50;
+            margin: 0;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .back-btn {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
+        .back-btn:hover {
+            background: #2980b9;
+        }
+        .message {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.2em;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 거래처 관리</h1>
+        </div>
+        
+        <div class="content">
+            <a href="/" class="back-btn">← 홈으로 돌아가기</a>
+            <div class="message">
+                거래처 관리 페이지입니다! 📋<br>
+                여기에 거래처 정보 관리 기능이 구현됩니다.
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+이미지 이름이 바뀌어서 menu폴더는 같이 옮겨야합니다.
+사용한 색상은 #2bae66 입니다.
+홈, 업무관리, 업무관리 등록까지 수정했습니다.
+
+
+- 등록, 삭제버튼 (색이 있는 버튼)css
+
+.아이디{
+	font-weight: 500;
+	text-align: center;
+	background-color: #2bae66;
+	border-radius: 12px;
+	border: 1px solid #d0f2ff;
+	font-size: 15px;
+	font-family: 'Noto Sans KR', sans-serif;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 5px;
+	padding-right: 6px;
+	box-shadow: 2px 2px 7px -5px #545454;
+	color: white;
+}
+
+.아이디:hover{ /*마우스 올렸을 때 변화 */
+	color: #2bae66;
+	background-color: #f3f6f5;
+}
+
+
+- 표 헤더 설정
+1. html
+<th style="border-bottom: 1px solid #e2e2e2; background-color: #d0e0d7;"><button style="background: none; border: none; font-family: 'Noto Sans KR', sans-serif; width: 60px; height: 50px; font-size: 15px; font-weight: 500;">항목이름</button></th>
+
+2. css
+th {
+	border-bottom: 1px solid #e2e2e2;
+	background-color: #d0e0d7;"
+}
+
+.th 내부 버튼 아이디 {
+	background: none;
+	border: none;
+	font-family: 'Noto Sans KR', sans-serif;
+	width: auto; /*넓이는 맞춰서 조절*/
+	height: 50px;
+	font-size: 15px;
+	font-weight: 500;
+}

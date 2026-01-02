@@ -1,0 +1,177 @@
+<html>
+    <head>
+        {% load static %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>기술</title>
+        <link rel = "stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+        <script src="{% static 'js/technology.js' %}"></script>
+    </head>
+ 
+    <body>
+        {% include 'navbar.html' %}
+        <div class="layout">
+            {% include 'sidebar.html' %}
+
+            <div class="content-area">
+                <span class="menuTitle">기술</span><!-- 메뉴 이름(한글) -->
+                <span id ="depart" style="position:relative; padding-left: 80%;"></span>
+                    </div>
+                    <div class="outTime">
+                        <span id="outText">퇴근</span><br>
+                        <input type="button" class="outBtn" value="18:00"></input>
+                    </div>
+                </div>
+                <div class="alarm">
+                    <div class="alarmImg">
+                        <img src="{% static 'images/alarm.png' %}" width="15px" alt="알림">
+                    </div>
+                    <div class="alarmTitle">알림</div>
+                    <div class="alarm">
+                        <input type="button" class="allBtn" value="전체알림"></input>  <!-- 전체알림 -->
+                        <span style="margin-top: 2px; font-size: 12px;">I</span>
+                        <input type="button" class="metionBtn" value="우선알림"></input> <!-- 우선알림, 개인알림 -->
+                        <br>
+                    </div>
+                    <br>
+                    <div class="alarmBox"> <!-- 알림 상자 -->
+                        <span class="Box"></span>
+                        <div class="alarmCon">
+                            {% if notifications %}
+                                {% for notification in notifications %}
+                                    <span class="alarmName">{{ notification.title }}</span>
+                                    <span class="alarmWirter">{{ notification.author }}</span><br>
+                                    <span class="alarmSub">{{ notification.content }}</span><br>
+                                {% endfor %}
+                            {% else %}
+                                <span class="alarmSub">새로운 알림이 없습니다.</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="userMenu">
+                        <div class="dateMenu">
+                            <a href="/data/"><img src="{% static 'images/datablack.png' %}" width="40px" alt="자료"><br></a> <!-- 자료페이지로 이동-->
+                            <span style="font-size: 13px; font-weight: 500; margin-left: 7px">자료</span>
+                        </div>
+                        <div class="authoMenu">
+                            <a href="/authority/"><img src="{% static 'images/authorityblack.png' %}" width="40px" alt="권한"><br></a>
+                            <span style="font-size: 13px; font-weight: 500; margin-left: 7px">권한</span>
+                        </div>
+                        <div class="settingMenu">
+                            <a href="/setting/"><img src="{% static 'images/settingblack.png' %}" width="40px" alt="설정"><br></a>
+                            <span style="font-size: 12px; font-weight: 500; margin-left: 7px">설정</span>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- 프로필 -->
+            <div class="ontentsBox"> <!-- 내용 박스 -->
+                    <!-- 코딩할 위치 -->
+                <div id="topTitle">
+                    <span style="font-size: 21px;  font-weight: 600; font-family: 'Noto Sans KR', sans-serif; margin-top: 10px;">기술연구소</span><br>
+                </div>
+                <input type="button" id="menuBtn" value="업무보고" onClick="innerSample1()">
+                <input type="button" id="menuBtn" value="프로젝트" onClick="innerSample2()">
+                <hr style="border: 0.5px groove #e2e2e2; margin-top:5px">
+                <div id="report">
+                    <div id="titleBar">
+                        <div id="title" style="font-weight: 600; margin-top: 11px; margin-left: 6px;"><span>기술연구소</span></div>
+                        <div id="datePick">
+                            <span style="font-weight: 600; font-size: 11px; margin-top: 11px;">DATE</span>
+                            <input type="date" id="date" value="xxx" min="yyy" max="zzz" style="font-family: 'Noto Sans KR', sans-serif; font-size: 11px; margin-top: 13px;">
+                            <input type="submit" id="dateSub" onclick=inputDate() value="확인"><br>
+                        </div>
+                    </div>
+                    <span style="font-weight: 500; font-size: 15px; margin-left:35%">2022 기술연구소 운영 & 업무 보고</span>
+                    <hr>
+                    <span id="month"></span>
+                    <span style="font-weight: 600; font-size: 13px; margin-left:46%">주요업무</span><br>
+                    <hr>
+                    <div>
+                        <div id="left">
+                            <span style="font-weight: 600; font-size: 13px; margin-left: 5px;">금주업무</span><br>
+                            <input type="text">
+                        </div>
+                        <div id="right">
+                            <span style="font-weight: 600; font-size: 13px; margin-left: 5px;">차주업무</span><br>
+                            <input type="text">
+                        </div>
+                        <br><br>
+                        <hr>
+                        <span style="font-weight: 600; font-size: 13px; margin-left:5px;">*근무현황(휴가 & 외근 & 출장 & 업체협의)</span><br>
+                        <table border="1px">
+                            <thead>
+                                <th>직원</th>
+                                <th>특이사항</th>
+                                <th>월요일</th>
+                                <th>화요일</th>
+                                <th>수요일</th>
+                                <th>목요일</th>
+                                <th>금요일</th>
+                                <th>토요일</th>
+                                <th>일요일</th>
+                            </thead>
+                            <tbody>
+                                <td>1</td>
+                                <td><input type="text"></td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                            </tbody>
+                        </table>
+                        <br>
+                        <input type="button" id="save" value="저장">
+                    </div>
+                </div>
+                
+                <div id="project">
+                    <br>
+                    <table>
+                        <tr>
+                            <td>개발</td>
+                            <td><input type="button" id="save" value="등록"></td>
+                            <td><input type="button" id="save" value="삭제"></td>
+                        </tr>
+                        <tr>
+                            <table>
+                                <td>월별검색<br>
+                                    <input type="date" id="date" value="xxx" min="yyy" max="zzz">
+                                    <input type="submit" id="dateSub" onclick=inputDate() value="확인"><br>
+                                </td>
+                                <td>
+                                    기간별검색<br>
+                                    <input type="date" id="startDay" value="xxx" min="yyy" max="zzz">
+                                    <input type="submit" id="startSub" onclick=inputStart() value="확인">-
+                                    <input type="date" id="finDay" value="xxx" min="yyy" max="zzz">
+                                    <input type="submit" id="finSub" onclick=inputFin() value="확인">
+                                </td>
+                            </table>
+                            <td>
+                                <tr>
+                                    <input type="checkbox" id="check">
+                                    <input type="button" id="developTitle" value="개발제목">
+                                    <td><input type="button" id="developContent" value="개발내용">
+                                    <td><input type="button" id="update" value="업데이트"><br>
+                                </tr>
+                                <tr>
+                                    <table border="1px">
+                                        <td>
+                                            <input type="checkbox" id="check">
+                                            <span>1</span>
+                                            <span>1</span>
+                                            <span>1</span>
+                                        </td>
+                                    </table>
+                                    
+                                </tr>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

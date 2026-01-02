@@ -1,0 +1,140 @@
+<html>
+    <head>
+        {% load static %}
+        {% load tags %}
+        <link rel = "stylesheet" type="text/css" href="{% static 'home.css' %}?afterr">
+        <meta charset="utf-8">
+    </head>
+ 
+    <body>
+        <nav id="nav3">
+            <a href="../home"><img src="{% static 'menu/logo3.png' %}" width="35px"==></a>
+              <ul>
+                <li><a href="../home"><img src="{% static 'menu/home2.png' %}" title="홈" width="40px"></a></li>
+                <li><a href="../calendar"><img src="{% static 'menu/calendar2.png' %}" title="캘린더" width="40px"></a></li>
+                <li><a href="../commute"><img src="{% static 'menu/commute2.png' %}" title="출퇴근관리" width="40px"></a></li>
+                <li><a href="../client_inform"><img src="{% static 'menu/client2.png' %}" title="거래처정보" width="40px"></a></li>
+                <li><a href="../businessStatus"><img src="{% static 'menu/businessStatus2.png' %}" title="업무현황" width="40px"></a></li>
+                <li><a href="../businessManagement"><img src="{% static 'menu/businessManagement2.png' %}" title="업무관리" width="40px"></a></li>
+                <li><a href="../address"><img src="{% static 'menu/address2.png' %}" title="주소록" width="40px"></a></li>
+                <li><a href="../notice"><img src="{% static 'menu/notice2.png' %}" title="공지사항" width="40px"></a></li>
+                <li><a href="../data"><img src="{% static 'menu/data2.png' %}" title="자료" width="40px"></a></li>
+                <li><a href="../technology"><img src="{% static 'menu/technology2.png' %}" title="기술" width="40px"></a></li>
+                <li><a href="../supportProject"><img src="{% static 'menu/supportProject2.png' %}" title="지원사업" width="40px"></a></li>
+                <li><a href="../authority"><img src="{% static 'menu/authority2.png' %}" title="권한 " width="40px"></a></li>
+                <li><a href="../cooperation"><img src="{% static 'menu/cooperation2.png' %}" title="협업관리" width="40px"></a></li>
+              </ul>
+              <input type="button" class="logout" title="로그아웃">
+          </nav>
+
+        <div class="layout">
+            <div class="userBox"> <!-- 프로필 -->
+                <div class="profile">
+                    <img src="{% static 'menu/puppy.jpg' %}">
+                </div>
+                <span class="username">강아지</span> <!-- 이름 -->
+                <span class="userrank">사원</span> <!-- 직급 -->
+                <div class="timeCheck">
+                    <div class="goTime">
+                        <span id="goText">출근</span><br>
+                        <input type="button" class="goBtn" value="09:00"></input> <!-- 버튼 누르면 현재 시간 저장-->
+                    </div>
+                    <div class="outTime">
+                        <span id="outText">퇴근</span><br>
+                        <input type="button" class="outBtn" value="18:00"></input>
+                    </div>
+                </div>
+                <div class="alarm">
+                    <div class="alarmImg">
+                        <img src="{% static 'menu/alram2.png' %}" width="15px">
+                    </div>
+                    <div class="alarmTitle">알림</div>
+                    <div class="alarm">
+                        <input type="button" class="allBtn" value="전체알림"></input>  <!-- 전체알림 -->
+                        <span style="margin-top: 2px; font-size: 12px;">I</span>
+                        <input type="button" class="metionBtn" value="우선알림"></input> <!-- 우선알림, 개인알림 -->
+                        <br>
+                    </div>
+                    <br>
+                    <div class="alarmBox"> <!-- 알림 상자 -->
+                        <span class="Box"></span>
+                        <div class="alarmCon">
+                            <span class="alarmName">알림제목</span>
+                            <span class="alarmWirter" >작성자</span><br>
+                            <span class="alarmSub">알림내용</span><br>
+                        </div>
+                    </div>
+                    <div class="userMenu">
+                        <div class="dateMenu">
+                            <a href="../data"><img src="{% static 'menu/datablack2.png' %}" width="40px"><br></a> <!-- 자료페이지로 이동-->
+                            <span style="font-size: 13px; font-weight: 500; margin-left: 7px">자료</span>
+                        </div>
+                        <div class="authoMenu">
+                            <a href="../authority"><img src="{% static 'menu/authorityblack2.png' %}" width="40px"><br></a>
+                            <span style="font-size: 13px; font-weight: 500; margin-left: 7px">권한</span>
+                        </div>
+                        <div class="settingMenu">
+                            <a href="../setting"><img src="{% static 'menu/settingblack2.png' %}" width="40px"><br></a>
+                            <span style="font-size: 12px; font-weight: 500; margin-left: 7px">설정</span>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- 프로필 -->
+
+            <div class="userOne"> <!-- 업무 현황 -->
+                <span style="margin-top: 10px; margin-left: 20px; font-size: 20px; font-weight: 600; color: #2bae66; display: inline-block;">업무현황</span>
+                <div class="story"> <!-- 2개 떠야함 -->
+                    <span style="margin-left: 14px; font-size: 13px; font-weight: 500; color: black;">업무 제목</span>
+                    <span style="margin-left: 2px; font-size: 8px; font-weight: 500; color: black;">담당자</span><br>
+                    <span style="margin-left: 14px; font-size: 13px; font-weight: 500; color: black;">쌍떡잎식물 장미목 장미과 낙엽교목 식물인 사과나무의 열매.</span>
+                </div>
+                <a href="../businessStatus">
+                    <input type="button" class="plus" value="+">
+                </a>
+            </div>
+
+            <div class="userTwo"> <!-- 캘린더 -->
+                <span style="margin-top: 10px; margin-left: 20px; font-size: 20px; font-weight: 600; color: #094d28; display: inline-block;">캘린더</span>
+                    <div class="story2">
+                        
+                    </div>
+                <a href="../calendar">
+                    <input type="button" class="plus2" value="+">
+                </a>
+            </div>
+
+            <div class="userThree">
+                <a href="../businessManagement">
+                    <span class="businessAla">20</span>
+                    <img src="{% static 'menu/businessManagement.png' %}" width="80px" style="margin-left: 5px; margin-top: 100px;"><br>
+                    <span class="businesstTitle" style="margin-left: 14px; font-size: 16px; font-weight: 600;">업무관리</span>
+                </a>
+            </div>
+
+            <div class="userFour">
+                <a href="../client_inform">
+                    <span class="clientAla">5</span>
+                    <img src="{% static 'menu/client.png' %}" width="80px" style="margin-left: 5px; margin-top: 100px;"><br>
+                    <span class="clientTitle" style="margin-left: 24px; font-size: 16px; font-weight: 600;">거래처</span>
+                </a>
+            </div>
+
+            <div class="userFive">
+                <a href="../technology">
+                    <span class="techAla">8</span>
+                    <img src="{% static 'menu/technology.png' %}" width="80px" style="margin-left: 5px; margin-top: 100px;"><br>
+                    <span class="techTitle" style="margin-left: 25px; font-size: 16px; font-weight: 600;">기술</span>
+                </a>
+            </div>
+
+            <div class="userSix">
+                <a href="../cooperation">
+                    <span class="cooperAla">17</span>
+                    <img src="{% static 'menu/cooperation.png' %}" width="80px" style="margin-left: 5px; margin-top: 100px;"><br>
+                    <span class="cooperTitle" style="margin-left: 16px; font-size: 16px; font-weight: 600;">협업관리</span>
+                </a>
+            </div>
+            
+        </div>
+    </body>
+</html>

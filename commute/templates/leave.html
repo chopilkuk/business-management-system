@@ -1,0 +1,46 @@
+<html>
+    <head>
+        {% load static %}
+        <script src="{% static 'leave.js' %}"></script><!-- js -->
+        <link rel = "stylesheet" type="text/css" href="{% static 'leave.css' %}">
+    </head>
+
+
+    <body>
+        <nav id="nav3"></nav>
+        <span class="menuTitle">휴가</span><br>
+        <input type="button" id="save" value="저장" onclick=save()>
+        <input type="button" id="del" value="삭제" onclick='self.close()'>
+        <div class="ontentsBox">
+            <table class="commuteBox">
+                <th>#</th>
+                <th>항목</th>
+                <th>내용</th>
+
+                <tr>
+                    <th> 1</th>
+                    <td> 사원명</td>
+                    <td> <input type="text" id="name"></td>
+                </tr>
+                <tr>
+                    <th> 2</th>
+                    <td> 날짜</td>
+                    <td> <input type="date" id="date"value="xxx" min="yyy" max="zzz"></td>
+                </tr>
+                <tr>
+                    <th> 3</th>
+                    <td> 상태</td>
+                    <td> <input type="text" id="status"></td>
+                </tr>
+                <tr>
+                    <th> 4</th>
+                    <td> 사유</td>
+                    <td> <input type="text" id="ect"></td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+        
+    </body>
+</html>

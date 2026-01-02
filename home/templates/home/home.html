@@ -1,0 +1,77 @@
+<html>
+    <head>
+        {% load static %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>업무 관리 시스템</title>
+        <link rel = "stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+		<script src="{% static 'js/home.js' %}" type="text/javascript" defer></script>
+    </head>
+ 
+    <body>
+        {% include 'navbar.html' %}
+        <div class="layout">
+            {% include 'sidebar.html' %}
+
+            <div class="content-area">
+                <div class="userOne fade-in"> <!-- 업무 현황 -->
+                    <span style="margin-top: 10px; margin-left: 20px; font-size: 20px; font-weight: 600; color: #84c5c8; display: inline-block;">업무현황</span>
+                    <div class="story"> <!-- 2개 떠야함 -->
+                        <span style="margin-left: 14px; font-size: 13px; font-weight: 500; color: black;">업무 제목</span>
+                        <span style="margin-left: 2px; font-size: 8px; font-weight: 500; color: black;">담당자</span><br>
+                        <span style="margin-left: 14px; font-size: 13px; font-weight: 500; color: black;">쌍떡잎식물 장미목 장미과 낙엽교목 식물인 사과나무의 열매.</span>
+                    </div>
+                    <a href="/businessStatus/">
+                        <input type="button" class="plus" value="+">
+                    </a>
+                </div>
+
+                <div class="userTwo fade-in"> <!-- 캘린더 -->
+                    <span style="margin-top: 10px; margin-left: 20px; font-size: 20px; font-weight: 600; color: #489ccf; display: inline-block;">캘린더</span>
+                    <div class="story2">
+                        
+                    </div>
+                            
+                        </div>
+                    <a href="/calendar/">
+                        <input type="button" class="plus2" value="+">
+                    </a>
+                </div>
+
+                <div class="content-grid">
+                    <div class="userThree slide-up">
+                        <a href="/businessManagement/">
+                            <span class="businessAla">20</span>
+                            <img src="{% static 'images/businessManagement.png' %}" width="80px" style="margin-left: 5px; margin-top: 100px;" alt="업무관리"><br>
+                            <span class="businesstTitle" style="margin-left: 14px; font-size: 16px; font-weight: 600;">업무관리</span>
+                        </a>
+                    </div>
+
+                    <div class="userFour slide-up">
+                        <a href="/client_inform/">
+                            <span class="clientAla">5</span>
+                            <img src="{% static 'images/client.png' %}" width="80px" style="margin-left: 5px; margin-top: 100px;" alt="거래처"><br>
+                            <span class="clientTitle" style="margin-left: 24px; font-size: 16px; font-weight: 600;">거래처</span>
+                        </a>
+                    </div>
+
+                    <div class="userFive slide-up">
+                        <a href="/기술/">
+                            <span class="techAla">8</span>
+                            <img src="{% static 'images/technology.png' %}" width="80px" style="margin-left: 5px; margin-top: 100px;" alt="기술"><br>
+                            <span class="techTitle" style="margin-left: 25px; font-size: 16px; font-weight: 600;">기술</span>
+                        </a>
+                    </div>
+
+                    <div class="userSix slide-up">
+                        <a href="/cooperation/">
+                            <span class="cooperAla">17</span>
+                            <img src="{% static 'images/cooperation.png' %}" width="80px" style="margin-left: 5px; margin-top: 100px;" alt="협업관리"><br>
+                            <span class="cooperTitle" style="margin-left: 16px; font-size: 16px; font-weight: 600;">협업관리</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

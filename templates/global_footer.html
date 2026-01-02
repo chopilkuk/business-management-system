@@ -1,0 +1,189 @@
+{% load static %}
+<footer class="global-footer">
+    <div class="footer-container">
+        <!-- 푸터 상단 -->
+        <div class="footer-top">
+            <div class="footer-section">
+                <div class="footer-brand">
+                    <img src="{% static 'images/logo.png' %}" alt="Global Logo" width="40px">
+                    <h3>Business Management System</h3>
+                    <p>세계적인 비즈니스 관리 솔루션</p>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h4>주요 기능</h4>
+                <ul class="footer-links">
+                    <li><a href="/공지사항/"><i class="fas fa-bullhorn"></i> 공지사항</a></li>
+                    <li><a href="/기술/"><i class="fas fa-code"></i> 기술 관리</a></li>
+                    <li><a href="/client_inform/"><i class="fas fa-building"></i> 거래처 정보</a></li>
+                    <li><a href="/businessStatus/"><i class="fas fa-chart-line"></i> 업무 현황</a></li>
+                    <li><a href="/commute/"><i class="fas fa-clock"></i> 근태 관리</a></li>
+                    <li><a href="/calendar/"><i class="fas fa-calendar-alt"></i> 캘린더</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>지원</h4>
+                <ul class="footer-links">
+                    <li><a href="/help/"><i class="fas fa-question-circle"></i> 도움말</a></li>
+                    <li><a href="/docs/"><i class="fas fa-book"></i> 문서</a></li>
+                    <li><a href="/api/"><i class="fas fa-code"></i> API</a></li>
+                    <li><a href="/status/"><i class="fas fa-heartbeat"></i> 시스템 상태</a></li>
+                    <li><a href="/contact/"><i class="fas fa-envelope"></i> 문의하기</a></li>
+                    <li><a href="/feedback/"><i class="fas fa-comment"></i> 피드백</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>연결</h4>
+                <div class="social-links">
+                    <a href="#" class="social-link" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" class="social-link" title="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="#" class="social-link" title="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-link" title="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+                
+                <div class="newsletter">
+                    <h5>뉴스레터 구독</h5>
+                    <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                        <input type="email" placeholder="이메일 주소" required>
+                        <button type="submit">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 푸터 하단 -->
+        <div class="footer-bottom">
+            <div class="footer-bottom-left">
+                <p>&copy; 2024 Business Management System. All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="/privacy/">개인정보처리방침</a>
+                    <a href="/terms/">이용약관</a>
+                    <a href="/cookies/">쿠키 정책</a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom-right">
+                <div class="language-selector">
+                    <select id="languageSelect" onchange="changeLanguage(this.value)">
+                        <option value="ko">한국어</option>
+                        <option value="en">English</option>
+                        <option value="zh">中文</option>
+                        <option value="ja">日本語</option>
+                    </select>
+                </div>
+                
+                <div class="theme-selector">
+                    <button class="theme-btn" onclick="toggleTheme()">
+                        <i class="fas fa-moon" id="footerThemeIcon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- 푸터 스크립트 -->
+<script>
+// 뉴스레터 구독
+function subscribeNewsletter(event) {
+    event.preventDefault();
+    const email = event.target.querySelector('input[type="email"]').value;
+    
+    fetch('/api/v1/newsletter/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify({ email: email })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showGlobalAlert('success', '뉴스레터 구독이 완료되었습니다.');
+            event.target.reset();
+        } else {
+            showGlobalAlert('error', data.message || '구독에 실패했습니다.');
+        }
+    })
+    .catch(error => {
+        console.error('뉴스레터 구독 오류:', error);
+        showGlobalAlert('error', '구독에 실패했습니다.');
+    });
+}
+
+// 언어 변경
+function changeLanguage(lang) {
+    fetch(`/set-language/${lang}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        }
+    })
+    .catch(error => {
+        console.error('언어 변경 오류:', error);
+    });
+}
+
+// 푸터 테마 아이콘 업데이트
+document.addEventListener('DOMContentLoaded', function() {
+    const savedTheme = localStorage.getItem('theme');
+    const footerThemeIcon = document.getElementById('footerThemeIcon');
+    
+    if (savedTheme === 'dark') {
+        footerThemeIcon.classList.remove('fa-moon');
+        footerThemeIcon.classList.add('fa-sun');
+    }
+});
+
+// 푸터 링크 클릭 추적
+document.querySelectorAll('.footer-links a').forEach(link => {
+    link.addEventListener('click', function(e) {
+        const linkText = this.textContent.trim();
+        console.log('Footer link clicked:', linkText);
+        
+        // 분석 이벤트 전송
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'footer_link_click', {
+                'link_name': linkText,
+                'link_url': this.href
+            });
+        }
+    });
+});
+
+// 소셜 링크 추적
+document.querySelectorAll('.social-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+        const platform = this.getAttribute('title');
+        console.log('Social link clicked:', platform);
+        
+        // 분석 이벤트 전송
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'social_link_click', {
+                'platform': platform,
+                'link_url': this.href
+            });
+        }
+    });
+});
+</script>

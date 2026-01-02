@@ -1,0 +1,86 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+.notosanskr * { 
+ font-family: 'Noto Sans KR', sans-serif;
+}
+
+body{ /*폰트설정*/
+    font-family: 'Noto Sans KR', sans-serif;
+    background: linear-gradient(45deg, #aadbd5, #80bfd7);
+}
+
+.temaBox {
+    width: 80%;
+    height: 70%;
+    background: linear-gradient(45deg, #cce9e5, #a0cdde);
+    border-radius: 5px;
+
+    margin: 65px auto;
+    box-shadow: 2px 2px 7px -5px #545454;
+    padding-left: 8%;
+    padding-top: 5%;
+}
+
+
+.next {
+    margin-left: 72%;
+}
+
+
+#nextTime {
+    font-size: 13px;
+    font-weight: 600;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+#nextTime:hover {
+    color: #606060;
+}
+
+
+#nextPage {
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #2a80a2;
+    color: white;
+    border: none;
+    padding: 5px 10px 5px 10px;
+}
+
+#nextPage:hover {
+    background-color: #5ab7dc;
+}
+
+
+.thema1 {
+    float: left;
+    margin-top: 20px;
+    margin-left: 15%;
+}
+
+
+.thema2 {
+    float: left;
+    margin-left: 70px;
+    margin-top: 20px;
+}
+
+.thema3 {
+    float: left;
+    margin-left: 70px;
+    margin-top: 20px;
+}
+
+
+.thema4 {
+    float: left;
+    margin-top: 20px;
+    margin-left: 25%;
+}
+.thema5 {
+    float: left;
+    margin-left: 70px;
+    margin-top: 20px;
+}

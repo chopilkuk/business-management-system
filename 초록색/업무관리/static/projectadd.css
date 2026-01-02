@@ -1,0 +1,86 @@
+body{ /*폰트설정*/
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f8f8f8;
+}
+
+*{padding:0;margin:0} /*상단메뉴바*/
+			ul,ol{list-style:none}
+			a{text-decoration:none;color:#fff;font-size:15px}
+			nav{width:80%;overflow:hidden; height:80px;background: #2bae66;margin: auto}
+			#nav3 {
+  				width: 100%;
+                height: 7%;
+ 				position: relative;
+  				text-align: center;
+			}
+
+body{ /*폰트설정*/
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f8f8f8;
+}
+
+.menuTitle{ /*메뉴이름*/
+    font-size: 25pt;
+    font-weight: bold;
+    color: #2bae66;
+    margin-top: 10px;
+    margin-left: 7%;
+}
+.ontentsBox { /*내용 박스*/
+    width: 80%;
+    border: 1px solid #e0e0e0;
+    margin: 10px auto;
+    padding: 0 20px 20px 20px;
+    box-shadow: 3px 3px 3px -3px #545454;
+    background-color: white;
+}
+.commuteBox { /* 테이블*/
+    margin: 20px auto;
+    width: 100%;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+    border-spacing: 30px;
+    border-collapse: collapse;
+}
+th {
+    border-bottom: 2px solid #e2e2e2;
+    padding: 10px;
+    font-size: 15pt;
+    
+}
+td {
+    border-bottom: 1px solid #e2e2e2;
+    padding: 10px;
+    font-size: 13pt;
+}
+
+#save{ /* 저장 버튼*/
+    font-family: 'Noto Sans KR', sans-serif;
+    width: 50px;
+    height: 35px;
+    background-color: #efefef;
+    color: black;
+    margin-top: 20px;
+    margin-left: 9%;
+    border-radius: 12px;
+    border: 1px solid #b9b9b9;
+}
+
+#del{  /* 삭제 버튼*/
+    font-family: 'Noto Sans KR', sans-serif;
+    width: 50px;
+    height: 35px;
+    background-color: #efefef;
+    color: black;
+    margin-top: 20px;
+    border-radius: 12px;
+    border: 1px solid #b9b9b9;
+}
+
+tr:nth-child(2n) {
+    background-color: #f1f1f1;
+}
+
+tr:nth-child(2n+1) {
+    background-color: white;
+}
