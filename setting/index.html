@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>설정 - 비즈니스 관리 시스템</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2E7D32;
+            --secondary-color: #4CAF50;
+            --success-color: #66BB6A;
+            --danger-color: #F44336;
+            --warning-color: #FF9800;
+            --info-color: #2196F3;
+            --dark-color: #1B5E20;
+            --light-color: #F1F8E9;
+            --border-color: #C8E6C9;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .settings-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .settings-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .back-btn {
+            background: var(--info-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .settings-tabs {
+            display: flex;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 15px 30px;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--dark-color);
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-btn:hover {
+            color: var(--primary-color);
+            background: var(--light-color);
+        }
+
+        .tab-btn.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .settings-section {
+            background: white;
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            color: var(--dark-color);
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .save-btn {
+            background: var(--success-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .save-btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .color-picker {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+
+        .color-option.selected {
+            border-color: var(--dark-color);
+        }
+
+        .notification-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: var(--light-color);
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .notification-info {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+        }
+
+        .notification-desc {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .backup-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: var(--light-color);
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .backup-info {
+            flex: 1;
+        }
+
+        .backup-title {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+        }
+
+        .backup-desc {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .backup-btn {
+            background: var(--info-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .backup-btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .demo-notice {
+            background: var(--warning-color);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .demo-notice a {
+            color: white;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="settings-container">
+        <div class="demo-notice">
+            <strong>🎯 데모 페이지:</strong> 이 페이지는 GitHub Pages용 정적 데모입니다. 
+            실제 동적 기능은 <a href="http://127.0.0.1:61822/setting/">로컬 서버</a>에서 확인하세요.
+        </div>
+
+        <div class="settings-header">
+            <h1 class="settings-title">
+                <i class="fas fa-cog"></i> 설정
+            </h1>
+            <a href="../" class="back-btn">
+                <i class="fas fa-home"></i> 홈으로
+            </a>
+        </div>
+
+        <div class="settings-tabs">
+            <button class="tab-btn active" onclick="showTab('general')">
+                <i class="fas fa-cog"></i> 일반
+            </button>
+            <button class="tab-btn" onclick="showTab('notifications')">
+                <i class="fas fa-bell"></i> 알림
+            </button>
+            <button class="tab-btn" onclick="showTab('appearance')">
+                <i class="fas fa-palette"></i> 외관
+            </button>
+            <button class="tab-btn" onclick="showTab('backup')">
+                <i class="fas fa-database"></i> 백업
+            </button>
+        </div>
+
+        <!-- 일반 설정 -->
+        <div id="general" class="tab-content active">
+            <div class="settings-section">
+                <h2 class="section-title">
+                    <i class="fas fa-user"></i> 사용자 정보
+                </h2>
+                <div class="form-group">
+                    <label class="form-label">사용자 이름</label>
+                    <input type="text" class="form-control" value="강아지">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">이메일</label>
+                    <input type="email" class="form-control" value="user@company.com">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">직급</label>
+                    <input type="text" class="form-control" value="사원">
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h2 class="section-title">
+                    <i class="fas fa-clock"></i> 근무 시간 설정
+                </h2>
+                <div class="form-group">
+                    <label class="form-label">표준 출근 시간</label>
+                    <input type="time" class="form-control" value="09:00">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">표준 퇴근 시간</label>
+                    <input type="time" class="form-control" value="18:00">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">근무 시간 계산 방식</label>
+                    <select class="form-control">
+                        <option>정규 근무 시간</option>
+                        <option>실제 근무 시간</option>
+                        <option>유연 근무 시간</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- 알림 설정 -->
+        <div id="notifications" class="tab-content">
+            <div class="settings-section">
+                <h2 class="section-title">
+                    <i class="fas fa-bell"></i> 알림 설정
+                </h2>
+                
+                <div class="notification-item">
+                    <div class="notification-info">
+                        <div class="notification-title">업무 알림</div>
+                        <div class="notification-desc">새로운 업무가 할당될 때 알림</div>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="notification-item">
+                    <div class="notification-info">
+                        <div class="notification-title">공지사항 알림</div>
+                        <div class="notification-desc">새로운 공지사항이 게시될 때 알림</div>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="notification-item">
+                    <div class="notification-info">
+                        <div class="notification-title">캘린더 알림</div>
+                        <div class="notification-desc">일정이 있을 때 알림</div>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="notification-item">
+                    <div class="notification-info">
+                        <div class="notification-title">이메일 알림</div>
+                        <div class="notification-desc">중요 알림을 이메일로 전송</div>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- 외관 설정 -->
+        <div id="appearance" class="tab-content">
+            <div class="settings-section">
+                <h2 class="section-title">
+                    <i class="fas fa-palette"></i> 테마 설정
+                </h2>
+                <div class="form-group">
+                    <label class="form-label">테마 색상</label>
+                    <div class="color-picker">
+                        <div class="color-option selected" style="background: #2E7D32;" onclick="selectColor(this, '#2E7D32')"></div>
+                        <div class="color-option" style="background: #1976D2;" onclick="selectColor(this, '#1976D2')"></div>
+                        <div class="color-option" style="background: #D32F2F;" onclick="selectColor(this, '#D32F2F')"></div>
+                        <div class="color-option" style="background: #7B1FA2;" onclick="selectColor(this, '#7B1FA2')"></div>
+                        <div class="color-option" style="background: #FF6F00;" onclick="selectColor(this, '#FF6F00')"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">글꼴 크기</label>
+                    <select class="form-control">
+                        <option>작게</option>
+                        <option selected>보통</option>
+                        <option>크게</option>
+                        <option>매우 크게</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">언어</label>
+                    <select class="form-control">
+                        <option selected>한국어</option>
+                        <option>English</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- 백업 설정 -->
+        <div id="backup" class="tab-content">
+            <div class="settings-section">
+                <h2 class="section-title">
+                    <i class="fas fa-database"></i> 데이터 백업
+                </h2>
+                
+                <div class="backup-item">
+                    <div class="backup-info">
+                        <div class="backup-title">자동 백업</div>
+                        <div class="backup-desc">매일 자동으로 데이터 백업</div>
+                    </div>
+                    <button class="backup-btn" onclick="alert('백업 기능은 로컬 서버에서 사용 가능합니다.')">지금 백업</button>
+                </div>
+
+                <div class="backup-item">
+                    <div class="backup-info">
+                        <div class="backup-title">마지막 백업</div>
+                        <div class="backup-desc">2024-01-15 23:00</div>
+                    </div>
+                    <button class="backup-btn" onclick="alert('복원 기능은 로컬 서버에서 사용 가능합니다.')">복원</button>
+                </div>
+
+                <div class="backup-item">
+                    <div class="backup-info">
+                        <div class="backup-title">백업 크기</div>
+                        <div class="backup-desc">125.3 MB</div>
+                    </div>
+                    <button class="backup-btn" onclick="alert('다운로드 기능은 로컬 서버에서 사용 가능합니다.')">다운로드</button>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="save-btn" onclick="alert('설정 저장 기능은 로컬 서버에서 사용 가능합니다.')">
+                <i class="fas fa-save"></i> 설정 저장
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function showTab(tabName) {
+            // 모든 탭 숨기기
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // 모든 버튼 비활성화
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // 선택한 탭 표시
+            document.getElementById(tabName).classList.add('active');
+            
+            // 선택한 버튼 활성화
+            event.target.classList.add('active');
+        }
+
+        function selectColor(element, color) {
+            // 모든 색상 선택 해제
+            const colors = document.querySelectorAll('.color-option');
+            colors.forEach(c => c.classList.remove('selected'));
+            
+            // 선택한 색상 활성화
+            element.classList.add('selected');
+            
+            alert(`테마 색상을 ${color}로 변경합니다.`);
+        }
+    </script>
+</body>
+</html>
