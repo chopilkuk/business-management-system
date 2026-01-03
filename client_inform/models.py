@@ -1,3 +1,11 @@
+# =============================================================================
+# 비즈니스 관리 시스템 거래처 정보 관리 앱 모델
+# =============================================================================
+# 설명: 거래처 정보 관리와 관련된 데이터베이스 모델을 정의
+# 작성자: 비즈니스 관리 시스템 개발팀
+# 버전: 1.0.0
+# =============================================================================
+
 """
 거래처 정보 관리 앱의 데이터베이스 모델
 
@@ -10,6 +18,7 @@ customer_information 모델은 거래처의 모든 주요 정보를 저장합니
 - 시스템 정보 저장 (ERP 사용 여부, 담당자 등)
 """
 
+# Django 데이터베이스 모델 임포트
 from django.db import models
 
 class customer_information(models.Model):
@@ -45,54 +54,116 @@ class customer_information(models.Model):
         note (Char): 비고/메모
     """
     
+    # =============================================================================
     # 기본 정보 필드들
-    registration_date = models.DateField('reg_date')  # 거래처 등록일
-    region = models.CharField(max_length=32)           # 지역 (예: 서울, 경기 등)
-    division = models.CharField(max_length=32)          # 구분 (예: 내부, 외부, 파트너)
+    # =============================================================================
+    # 거래처 등록일 (관리자 사이트에서 'reg_date'로 표시)
+    registration_date = models.DateField('reg_date')
     
+    # 지역 정보 (예: 서울, 경기, 부산 등)
+    region = models.CharField(max_length=32)
+    
+    # 구분 정보 (예: 내부, 외부, 파트너, 협력사 등)
+    division = models.CharField(max_length=32)
+    
+    # =============================================================================
     # 핵심 식별 정보 - 필수 필드
-    company_name = models.CharField(max_length=32)      # 기업명 (거래처의 핵심 식별자)
-    representative = models.CharField(max_length=32)     # 대표자명
-    business_registration_number = models.CharField(max_length=32)  # 사업자등록번호
+    # =============================================================================
+    # 기업명 (거래처의 핵심 식별자)
+    company_name = models.CharField(max_length=32)
     
+    # 대표자명 (법적 대표자 정보)
+    representative = models.CharField(max_length=32)
+    
+    # 사업자등록번호 (고유 식별자, 중복 불가)
+    business_registration_number = models.CharField(max_length=32)
+    
+    # =============================================================================
     # 비즈니스 규모 정보
-    number_of_employees = models.IntegerField(default=0)  # 종업원수 (기본값: 0)
-    annual_sales = models.IntegerField(default=0)          # 연간 매출액 (기본값: 0)
+    # =============================================================================
+    # 종업원수 (기본값: 0, 음수 불가)
+    number_of_employees = models.IntegerField(default=0)
     
+    # 연간 매출액 (기본값: 0, 음수 불가)
+    annual_sales = models.IntegerField(default=0)
+    
+    # =============================================================================
     # 비즈니스 상세 정보
-    sectors = models.CharField(max_length=32)           # 주요 업종 (예: IT, 제조, 서비스 등)
-    event = models.CharField(max_length=64)              # 종목 또는 특별 이벤트
-    outsourcing_work_type = models.CharField(max_length=32)  # 외주사 작업 유형
-    main_business = models.CharField(max_length=32)     # 주요업무 내용
+    # =============================================================================
+    # 주요 업종 (예: IT, 제조, 서비스, 유통 등)
+    sectors = models.CharField(max_length=32)
     
+    # 종목 또는 특별 이벤트 정보
+    event = models.CharField(max_length=64)
+    
+    # 외주사 작업 유형 (예: 개발, 유지보수, 컨설팅 등)
+    outsourcing_work_type = models.CharField(max_length=32)
+    
+    # 주요업무 내용 (거래처와의 주요 비즈니스 내용)
+    main_business = models.CharField(max_length=32)
+    
+    # =============================================================================
     # 계약 관련 정보
-    contract_status = models.CharField(max_length=100)  # 계약 상태 (예: 진행중, 완료, 만료 등)
-    v3_contract_status = models.CharField(max_length=2)  # V3 백신 계약 상태 (예: O, X)
+    # =============================================================================
+    # 계약 상태 (예: 진행중, 완료, 만료, 해지 등)
+    contract_status = models.CharField(max_length=100)
     
+    # V3 백신 계약 상태 (예: O, X, 계약안함 등)
+    v3_contract_status = models.CharField(max_length=2)
+    
+    # =============================================================================
     # 담당자 및 연락처 정보
-    staff_in_charge = models.CharField(max_length=32)     # 담당직원
-    phone_number = models.CharField(max_length=50)       # 전화번호
-    business_address = models.CharField(max_length=50)     # 사업장 주소
-    e_mail = models.CharField(max_length=32)             # 이메일 주소
+    # =============================================================================
+    # 담당직원 (내부 담당자 이름)
+    staff_in_charge = models.CharField(max_length=32)
     
+    # 전화번호 (연락처 정보)
+    phone_number = models.CharField(max_length=50)
+    
+    # 사업장 주소 (실제 비즈니스 주소)
+    business_address = models.CharField(max_length=50)
+    
+    # 이메일 주소 (공식 연락 이메일)
+    e_mail = models.CharField(max_length=32)
+    
+    # =============================================================================
     # 시스템 사용 정보
-    erp_maintenance = models.CharField(max_length=10)     # ERP 유지보수 상태
-    erp_usage_status = models.CharField(max_length=8)     # ERP 사용 현황
-    groupware = models.BooleanField()                    # 그룹웨어 사용 여부 (True/False)
+    # =============================================================================
+    # ERP 유지보수 상태 (예: 정상, 만료, 미계약 등)
+    erp_maintenance = models.CharField(max_length=10)
     
+    # ERP 사용 현황 (예: 사용중, 미사용, 도입예정 등)
+    erp_usage_status = models.CharField(max_length=8)
+    
+    # 그룹웨어 사용 여부 (True/False)
+    groupware = models.BooleanField()
+    
+    # =============================================================================
     # 평가 및 메모
-    company_evaluation = models.CharField(max_length=10)  # 업체 평가 (예: A, B, C 등급)
-    note = models.CharField(max_length=200)               # 비고 또는 추가 메모
+    # =============================================================================
+    # 업체 평가 (예: A, B, C 등급)
+    company_evaluation = models.CharField(max_length=10)
+    
+    # 비고 또는 추가 메모 (자유 형식 메모)
+    note = models.CharField(max_length=200)
 
+    # =============================================================================
+    # 모델 메타데이터 클래스
+    # =============================================================================
     class Meta:
         """
         모델 메타데이터 클래스
         
         이 클래스는 모델의 동작과 표현을 제어하는 설정을 포함합니다.
         """
-        verbose_name = '거래처 정보'           # 단수 형태의 모델 이름 (관리자 사이트 등에서 표시)
-        verbose_name_plural = '거래처 정보들'    # 복수 형태의 모델 이름
-        ordering = ['-registration_date']      # 기본 정렬 순서 (등록일 최신순)
+        # 단수 형태의 모델 이름 (관리자 사이트 등에서 표시)
+        verbose_name = '거래처 정보'
+        
+        # 복수 형태의 모델 이름
+        verbose_name_plural = '거래처 정보들'
+        
+        # 기본 정렬 순서 (등록일 최신순)
+        ordering = ['-registration_date']
         
         # 제약 조건 설정
         constraints = [
@@ -170,6 +241,9 @@ class customer_information(models.Model):
         
         super().save(*args, **kwargs)  # 실제 저장 실행
 
+    # =============================================================================
+    # 프로퍼티 메서드들
+    # =============================================================================
     @property
     def get_full_address(self):
         """
