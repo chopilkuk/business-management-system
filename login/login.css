@@ -1,0 +1,93 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+.notosanskr * { 
+ font-family: 'Noto Sans KR', sans-serif;
+}
+
+body{ /*폰트설정*/
+    font-family: 'Noto Sans KR', sans-serif;
+    background: linear-gradient(45deg, #aadbd5, #80bfd7);
+}
+
+.loginBox {
+    width: 300px;
+    height: 350px;
+    background: linear-gradient(45deg, #cce9e5, #a0cdde);
+    border-radius: 5px;
+
+    margin: 110px auto;
+    box-shadow: 2px 2px 7px -5px #545454;
+}
+
+.logo {
+    margin: 50px 28% 30px ;
+}
+
+#idBox {
+    width: 250px;
+    height: 35px;
+    margin: 2px 8% ;
+    border: 1px solid #c9c9c9;
+    box-shadow: 2px 2px 7px -5px #545454;
+    border-radius: 5px;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+#pwBox {
+    width: 250px;
+    height: 35px;
+    margin: 2px 8% ;
+    border: 1px solid #c9c9c9;
+    box-shadow: 2px 2px 7px -5px #545454;
+    border-radius: 5px;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+#loginBtn {
+    width: 250px;
+    height: 30px;
+    margin: 15px 8% ;
+    box-shadow: 2px 2px 7px -5px #545454;
+    border-radius: 5px;
+    background-color: #80bfd7;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 600;
+    color: white;
+    border: none;
+}
+#loginBtn:hover {
+    background-color: #575757;
+}
+
+#findId {
+    font-size: 12px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+    font-family: 'Noto Sans KR', sans-serif;
+    margin-left: 11%;
+}
+
+#findId:hover {
+    color: #437a90;
+}
+
+#findPw {
+    font-size: 12px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+#findPw:hover {
+    color: #437a90;
+}
+
+#join {
+    font-size: 12px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+#join:hover {
+    color: #437a90;
+}

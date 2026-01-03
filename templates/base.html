@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="세계적인 비즈니스 관리 시스템">
+    <meta name="keywords" content="비즈니스 관리, 업무 관리, 프로젝트 관리, 글로벌 시스템">
+    <title>{% block title %} - Business Management System</title>
+    
+    <!-- 파비콘 아이콘 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- 글로벌 CSS -->
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    
+    <!-- 파비콘 아이콘 -->
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+    <link rel="apple-touch-icon" href="{% static 'images/apple-touch-icon.png' %}">
+    
+    <!-- 테마 색상 -->
+    <meta name="theme-color" content="#2563eb">
+    <meta name="msapplication-TileColor" content="#2563eb">
+    
+    <!-- Open Graph 메타 태그 -->
+    <meta property="og:title" content="{% block title %} - Business Management System">
+    <meta property="og:description" content="세계적인 비즈니스 관리 시스템">
+    <meta property="og:image" content="{% static 'images/og-image.jpg' %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ko_KR">
+    
+    <!-- Twitter 카드 -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block title %} - Business Management System">
+    <meta name="twitter:description" content="세계적인 비즈니스 관리 시스템">
+    <meta name="twitter:image" content="{% static 'images/twitter-card.jpg' %}">
+    
+    <!-- 구조화된 데이터 -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Business Management System",
+        "url": "{{ request.build_absolute_uri }}",
+        "description": "세계적인 비즈니스 관리 시스템",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Your Company"
+        },
+        "potentialAction": {
+            "@type": "ViewAction",
+            "target": "{{ request.build_absolute_uri }}"
+        }
+    }
+    </script>
+</head>
+
+<body data-theme="light">
+    <!-- 글로벌 내비게이션 -->
+    {% include 'global_navbar.html' %}
+    
+    <!-- 메인 컨텐측 영역 -->
+    <main class="main-content">
+        <div class="content-wrapper">
+            {% block content %}
+                {{ content|safe }}
+            {% endblock %}
+        </div>
+    </main>
+    
+    <!-- 글로벌터 -->
+    {% include 'global_footer.html' %}
+    
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{% static 'js/realtime.js' %}"></script>
+    <script src="{% static 'js/global.js' %}"></script>
+    
+    <!-- 테마 초기화 스크립트 -->
+    <script>
+        // 테마 저장 및 로드
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.body.setAttribute('data-theme', savedTheme);
+        }
+        
+        // 테마 토글 기능
+        function toggleTheme() {
+            const currentTheme = document.body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+        
+        // 글로벌 검색 ESC 키 처리
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeGlobalSearch();
+            }
+        });
+        
+        // 실시간 알림 설정
+        if (typeof setupRealtimeNotifications === 'function') {
+            setupRealtimeNotifications();
+        }
+    </script>
+</body>
+</html>

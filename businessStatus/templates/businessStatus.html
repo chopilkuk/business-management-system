@@ -1,0 +1,93 @@
+<html>
+    <head>
+        {% load static %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>업무현황</title>
+        <link rel = "stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+        <script src="{% static 'js/businessStatus.js' %}"></script><!-- js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+        <link rel = "stylesheet" type="text/css" href="{% static 'css/businessStatus.css' %} ?afte">
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css " />
+
+    </head>
+ 
+    <body>
+        {% include 'navbar.html' %}
+        <div class="layout">
+            {% include 'sidebar.html' %}
+
+            <div class="content-area">
+                <span class="menuTitle">업무 현황</span><!-- 메뉴 이름(한글) -->
+                    </div>
+                    <div class="outTime">
+                        <span id="outText">퇴근</span><br>
+                        <input type="button" class="outBtn" value="18:00"></input>
+                    </div>
+                </div>
+                <div class="alarm">
+                    <div class="alarmImg">
+                        <img src="{% static 'images/alarm.png' %}" width="15px" alt="알림">
+                    </div>
+                    <div class="alarmTitle">알림</div>
+                    <div class="alarm">
+                        <input type="button" class="allBtn" value="전체알림"></input>  <!-- 전체알림 -->
+                        <span style="margin-top: 2px; font-size: 12px;">I</span>
+                        <input type="button" class="metionBtn" value="우선알림"></input> <!-- 우선알림, 개인알림 -->
+                        <br>
+                    </div>
+                    <br>
+                    <div class="alarmBox"> <!-- 알림 상자 -->
+                        <span class="Box"></span>
+                        <div class="alarmCon">
+                            {% if notifications %}
+                                {% for notification in notifications %}
+                                    <span class="alarmName">{{ notification.title }}</span>
+                                    <span class="alarmWirter">{{ notification.author }}</span><br>
+                                    <span class="alarmSub">{{ notification.content }}</span><br>
+                                {% endfor %}
+                            {% else %}
+                                <span class="alarmSub">새로운 알림이 없습니다.</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="userMenu">
+                        <div class="dateMenu">
+                            <a href="/data/"><img src="{% static 'images/datablack.png' %}" width="40px" alt="자료"><br></a> <!-- 자료페이지로 이동-->
+                            <span style="font-size: 13px; font-weight: 500; margin-left: 7px">자료</span>
+                        </div>
+                        <div class="authoMenu">
+                            <a href="/authority/"><img src="{% static 'images/authorityblack.png' %}" width="40px" alt="권한"><br></a>
+                            <span style="font-size: 13px; font-weight: 500; margin-left: 7px">권한</span>
+                        </div>
+                        <div class="settingMenu">
+                            <a href="/setting/"><img src="{% static 'images/settingblack.png' %}" width="40px" alt="설정"><br></a>
+                            <span style="font-size: 12px; font-weight: 500; margin-left: 7px">설정</span>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- 프로필 -->
+            <div class="ontentsBox"> <!-- 내용 박스 -->
+                    <!-- 코딩할 위치 -->
+                <div class="tab_menu">
+                    <button id="mdinform" onclick=mdinform()>업무통계</button>
+                    <button id="clog" onclick=clog()>챗봇로그</button>
+                    <hr style="border: 0.5px groove #e2e2e2; ">
+                </div>
+                <span id="content"></span>
+
+                <span id="date_search"><table class="commuteBox" id="dst"></table></span><br>
+
+                <span id="chartarea"></span>
+                
+                
+
+                <div id="mdinform_table"><table class="commuteBox" id="t1"></table></div>
+                <div style="height: 400px; overflow: auto" id="cb_list"><table class="commuteBox" id="t2"></table></div>
+            </div>
+        </div>
+    </body>
+</html>

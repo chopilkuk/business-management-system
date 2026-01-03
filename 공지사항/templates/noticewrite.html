@@ -1,0 +1,60 @@
+<html lang="ko">
+
+<head>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width = device - width, initial-scale=1">
+  <title>공지사항</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/notice.css' %}">
+  <script src="{% static 'js/noticewrite.js' %}"></script>
+</head>
+
+<body>
+
+  <nav id="nav3">
+    <!-- 상단메뉴바 -->
+    <a href="/"><img src="{% static 'images/logo.png' %}" width="130px"></a>
+      <ul>
+        <li><a href="/"><img src="{% static 'images/home.png' %}" title="홈" width="40px"></a></li>
+        <li><a href="/calendar/"><img src="{% static 'images/calendar.png' %}" title="캘린더" width="40px"></a></li>
+        <li><a href="/commute/"><img src="{% static 'images/commute.png' %}" title="출퇴근관리" width="40px"></a></li>
+        <li><a href="/client_inform/"><img src="{% static 'images/client.png' %}" title="거래처정보" width="40px"></a></li>
+        <li><a href="/businessStatus/"><img src="{% static 'images/businessStatus.png' %}" title="업무현황" width="40px"></a></li>
+        <li><a href="/businessManagement/"><img src="{% static 'images/businessManagement.png' %}" title="업무관리" width="40px"></a></li>
+        <li><a href="/address/"><img src="{% static 'images/address.png' %}" title="주소록" width="40px"></a></li>
+        <li><a href="/공지사항/"><img src="{% static 'images/notice.png' %}" title="공지사항" width="40px"></a></li>
+        <li><a href="/data/"><img src="{% static 'images/data.png' %}" title="자료" width="40px"></a></li>
+        <li><a href="/기술/"><img src="{% static 'images/technology.png' %}" title="기술" width="40px"></a></li>
+        <li><a href="/supportProject/"><img src="{% static 'images/supportProject.png' %}" title="지원사업" width="40px"></a></li>
+        <li><a href="/authority/"><img src="{% static 'images/authority.png' %}" title="권한 " width="40px"></a></li>
+        <li><a href="/cooperation/"><img src="{% static 'images/cooperation.png' %}" title="협업관리" width="40px"></a></li>
+      </ul>
+  </nav>
+  <span class="menuTitle">게시글 작성</span><!-- 메뉴 이름(한글) -->
+  <div class="ontentsBox">
+    <!-- 내용 박스 -->
+
+    <p style="margin-left: 25%; font-weight: 600;">공지사항 작성</p>
+    <span style="margin-left: 25%; font-size: 13px;">부서 내부 공지</span>
+    <input type='checkbox' style="padding-top: 5px;" /><br>
+    <!--부서내부공지 체크-->
+    <input class="form-control" name="write_id" id="write_id" readonly=""  style="margin-left: 25%; width: 50%;"><br>
+    <!--사용자명-->
+    <input type="text" id='notice_name' placeholder="공지사항 제목" style="margin-top: 5px; margin-left: 25%; width: 50%;"/><br>
+    <!--공지사항제목작성-->
+    <textarea id="notice_comments" name="notice_comments" class="form-control"
+      style="height: 269px; margin-top: 5px; margin-left: 25%; width: 50%;"></textarea><br>
+    <!--글 작성-->
+    <label style="margin-left: 25%;">파일업로드 : </label>
+    <input type="file" id='upfile' name="upfile" value="" ><br>
+    <!--파일업로드-->
+    <button type="reset" class="btn btn-default" onclick="reset_write()" style="margin-left: 25%; margin-top: 10px;"><i class="fas fa-times" ></i> 초기화</button>
+    <!--초기화버튼-->
+    <button type="button" class="btn btn-primary" onclick="check_input()">등록</button>
+    <!--등록버튼-->
+
+  </div>
+
+</body>
+
+</html>

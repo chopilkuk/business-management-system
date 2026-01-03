@@ -1,0 +1,25 @@
+<html>
+    <head>
+        {% load static %}
+        {% load tags %}
+        <link rel = "stylesheet" type="text/css" href="{% static 'login.css' %}?after">
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <div class="loginBox">
+            <img class="logo" src="{% static 'menu/logo.png' %}" width="130px">
+            <div class="loginInput">
+                <input type="text" id="idBox"><br>
+                <input type="text" id="pwBox"><br>
+
+
+            </div>
+            
+            <div class="loginOption">
+                <input type="button" id="findId" value="아이디찾기"><span style="font-size: 10px;">ㅣ</span>
+                <input type="button" id="findPw" value="비밀번호찾기"><span style="font-size: 10px;">ㅣ</span>
+                <input type="button" id="join" value="회원가입">
+            </div>
+        </div>
+    </body>
+<html>

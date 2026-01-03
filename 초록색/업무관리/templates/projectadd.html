@@ -1,0 +1,55 @@
+<html>
+    <head>
+        {% load static %}
+        <script src="{% static 'projectadd.js' %}"></script><!-- js -->
+        <link rel = "stylesheet" type="text/css" href="{% static 'projectadd.css' %}?after ">
+    </head>
+
+
+    <body>
+        <nav id="nav3"></nav>
+        <span class="menuTitle">등록</span><br>
+        <input type="button" id="save" value="저장" onclick=save()>
+        <input type="button" id="del" value="삭제" onclick='self.close()'>
+        <div class="ontentsBox">
+            <table class="commuteBox">
+                <th>#</th>
+                <th>항목</th>
+                <th>내용</th>
+
+                <tr>
+                    <th> 1</th>
+                    <td> 사원명</td>
+                    <td> <input type="text" id="name"></td>
+                </tr>
+                <tr>
+                    <th> 2</th>
+                    <td> 날짜</td>
+                    <td> <input type="date" id="date" value="xxx" min="yyy" max="zzz"></td>
+                </tr>
+                <tr>
+                    <th> 3</th>
+                    <td> 출근시간</td>
+                    <td><input type="time" id="arrive_time" value="xxx" min="yyy" max="zzz"></td>
+                <tr>
+                    <th> 4</th>
+                    <td> 퇴근시간</td>
+                    <td> <input type="time" id="leave_time" value="xxx" min="yyy" max="zzz"></td>
+                </tr>
+                <tr>
+                    <th> 5</th>
+                    <td> 상태</td>
+                    <td> <input type="text" id="status"></td>
+                </tr>
+                <tr>
+                    <th> 6</th>
+                    <td> 지역/목적</td>
+                    <td> <input type="text" id="ect"></td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+        
+    </body>
+</html>

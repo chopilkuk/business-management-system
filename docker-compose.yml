@@ -1,0 +1,206 @@
+# =============================================================================
+# 비즈니스 관리 시스템 Docker Compose 설정
+# =============================================================================
+# 설명: Django 웹 애플리케이션과 관련 서비스들을 정의하는 Docker Compose 파일
+# 작성자: 비즈니스 관리 시스템 개발팀
+# 버전: 1.0.0
+# =============================================================================
+
+# Docker Compose 파일 버전 (3.8은 최신 기능 지원)
+version: '3.8'
+
+# =============================================================================
+# 서비스 정의
+# =============================================================================
+# 각 서비스는 독립적인 컨테이너로 실행되며 서로 통신 가능
+services:
+  # =============================================================================
+  # PostgreSQL 데이터베이스 서비스
+  # =============================================================================
+  db:
+    # PostgreSQL 15 이미지 사용 (안정적인 최신 버전)
+    image: postgres:15
+    # 컨테이너 이름 지정 (관리 및 로그 확인 용이)
+    container_name: business_db
+    # 데이터베이스 환경 변수 설정
+    environment:
+      POSTGRES_DB: business_management          # 데이터베이스 이름
+      POSTGRES_USER: postgres                   # 데이터베이스 사용자 이름
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres123}  # 데이터베이스 비밀번호 (환경 변수 또는 기본값)
+    # 데이터 영속성을 위한 볼륨 마운트
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # 데이터베이스 데이터 저장
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql  # 초기화 스크립트
+    # 포트 매핑 (호스트:컨테이너)
+    ports:
+      - "5432:5432"  # PostgreSQL 기본 포트
+    # 헬스 체크 설정 (서비스 상태 확인)
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]  # PostgreSQL 준비 상태 확인
+      interval: 10s    # 10초마다 실행
+      timeout: 5s      # 5초 타임아웃
+      retries: 5       # 5번 실패 시 비정상으로 간주
+
+  # =============================================================================
+  # Redis 캐시 및 메시지 큐 서비스
+  # =============================================================================
+  redis:
+    # Redis 7 Alpine 이미지 사용 (경량화된 버전)
+    image: redis:7-alpine
+    # 컨테이너 이름 지정
+    container_name: business_redis
+    # 포트 매핑
+    ports:
+      - "6379:6379"  # Redis 기본 포트
+    # 데이터 영속성을 위한 볼륨 마운트
+    volumes:
+      - redis_data:/data  # Redis 데이터 저장
+    # 헬스 체크 설정
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]  # Redis PING 명령으로 상태 확인
+      interval: 10s    # 10초마다 실행
+      timeout: 5s      # 5초 타임아웃
+      retries: 5       # 5번 실패 시 비정상으로 간주
+
+  # =============================================================================
+  # Django 웹 애플리케이션 서비스
+  # =============================================================================
+  web:
+    # 현재 디렉토리의 Dockerfile을 사용하여 이미지 빌드
+    build: .
+    # 컨테이너 이름 지정
+    container_name: business_web
+    # 컨테이너 시작 시 실행할 명령어
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py collectstatic --noinput &&
+             gunicorn --bind 0.0.0.0:8000 --workers 3 business_management.wsgi:application"
+    # 볼륨 마운트 (정적 파일 및 미디어 파일)
+    volumes:
+      - static_volume:/app/staticfiles  # 정적 파일 저장
+      - media_volume:/app/media         # 미디어 파일 저장
+    # 포트 매핑
+    ports:
+      - "8000:8000"  # 웹 서버 포트
+    # 환경 변수 설정
+    environment:
+      - DEBUG=False  # 디버그 모드 비활성화 (프로덕션 환경)
+      - SECRET_KEY=${SECRET_KEY:-django-insecure-change-me-in-production}  # Django 시크릿 키
+      - DB_NAME=business_management      # 데이터베이스 이름
+      - DB_USER=postgres                   # 데이터베이스 사용자 이름
+      - DB_PASSWORD=${DB_PASSWORD:-postgres123}  # 데이터베이스 비밀번호
+      - DB_HOST=db                         # 데이터베이스 호스트 (db 서비스 이름)
+      - DB_PORT=5432                       # 데이터베이스 포트
+      - REDIS_URL=redis://redis:6379/0     # Redis 연결 URL
+    # 의존성 설정 (다른 서비스가 준비된 후 시작)
+    depends_on:
+      db:
+        condition: service_healthy         # 데이터베이스가 정상 상태일 때까지 대기
+      redis:
+        condition: service_healthy         # Redis가 정상 상태일 때까지 대기
+    # 헬스 체크 설정
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/"]  # 웹 서버 상태 확인
+      interval: 30s    # 30초마다 실행
+      timeout: 10s     # 10초 타임아웃
+      retries: 3       # 3번 실패 시 비정상으로 간주
+
+  # =============================================================================
+  # Nginx 웹 서버 (리버스 프록시 및 정적 파일 서빙)
+  # =============================================================================
+  nginx:
+    # Nginx Alpine 이미지 사용 (경량화된 버전)
+    image: nginx:alpine
+    # 컨테이너 이름 지정
+    container_name: business_nginx
+    # 포트 매핑
+    ports:
+      - "80:80"    # HTTP 포트
+      - "443:443"  # HTTPS 포트
+    # 볼륨 마운트
+    volumes:
+      - static_volume:/static      # 정적 파일 서빙
+      - media_volume:/media        # 미디어 파일 서빙
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf  # Nginx 설정 파일
+      - ./docker/nginx/ssl:/etc/nginx/ssl               # SSL 인증서 파일
+    # 의존성 설정
+    depends_on:
+      - web  # 웹 서비스가 시작된 후 시작
+    # 헬스 체크 설정
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]  # Nginx 상태 확인
+      interval: 30s    # 30초마다 실행
+      timeout: 10s     # 10초 타임아웃
+      retries: 3       # 3번 실패 시 비정상으로 간주
+
+  # =============================================================================
+  # Celery 워커 (백그라운드 작업 처리)
+  # =============================================================================
+  celery:
+    # 웹 서비스와 동일한 이미지 사용
+    build: .
+    # 컨테이너 이름 지정
+    container_name: business_celery
+    # Celery 워커 실행 명령어
+    command: celery -A business_management worker -l info
+    # 볼륨 마운트 (개발 시 코드 변경 감지)
+    volumes:
+      - .:/app  # 현재 디렉토리를 컨테이너에 마운트
+    # 환경 변수 설정 (웹 서비스와 동일)
+    environment:
+      - DEBUG=False
+      - SECRET_KEY=${SECRET_KEY:-django-insecure-change-me-in-production}
+      - DB_NAME=business_management
+      - DB_USER=postgres
+      - DB_PASSWORD=${DB_PASSWORD:-postgres123}
+      - DB_HOST=db
+      - DB_PORT=5432
+      - REDIS_URL=redis://redis:6379/0
+    # 의존성 설정
+    depends_on:
+      - db    # 데이터베이스 의존
+      - redis # Redis 의존
+
+  # =============================================================================
+  # Celery Beat (주기적 작업 스케줄러)
+  # =============================================================================
+  celery-beat:
+    # 웹 서비스와 동일한 이미지 사용
+    build: .
+    # 컨테이너 이름 지정
+    container_name: business_celery_beat
+    # Celery Beat 실행 명령어 (데이터베이스 스케줄러 사용)
+    command: celery -A business_management beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    # 볼륨 마운트
+    volumes:
+      - .:/app  # 현재 디렉토리를 컨테이너에 마운트
+    # 환경 변수 설정 (웹 서비스와 동일)
+    environment:
+      - DEBUG=False
+      - SECRET_KEY=${SECRET_KEY:-django-insecure-change-me-in-production}
+      - DB_NAME=business_management
+      - DB_USER=postgres
+      - DB_PASSWORD=${DB_PASSWORD:-postgres123}
+      - DB_HOST=db
+      - DB_PORT=5432
+      - REDIS_URL=redis://redis:6379/0
+    # 의존성 설정
+    depends_on:
+      - db    # 데이터베이스 의존
+      - redis # Redis 의존
+
+# =============================================================================
+# 볼륨 정의 (데이터 영속성)
+# =============================================================================
+volumes:
+  postgres_data:    # PostgreSQL 데이터 저장소
+  redis_data:       # Redis 데이터 저장소
+  static_volume:    # 정적 파일 저장소
+  media_volume:     # 미디어 파일 저장소
+
+# =============================================================================
+# 네트워크 정의
+# =============================================================================
+networks:
+  default:
+    name: business_network  # 커스텀 네트워크 이름 (서비스 간 통신용)

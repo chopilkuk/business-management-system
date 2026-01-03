@@ -1,0 +1,60 @@
+{% load static %}
+<nav id="nav3"> <!-- 상단메뉴바 -->
+    <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <a href="/"><img src="{% static 'images/logo.png' %}" width="130px" style="margin-left: 60px;" alt="로고"></a>
+    <input type="button" class="logout" title="로그아웃">
+    <ul id="main-menu">
+        <li><a href="/"><img src="{% static 'images/home.png' %}" title="홈" width="28px"></a></li>
+        <li><a href="/calendar/"><img src="{% static 'images/calendar.png' %}" title="캘린더" width="28px"></a></li>
+        <li><a href="/commute/"><img src="{% static 'images/commute.png' %}" title="출퇴근관리" width="28px"></a></li>
+        <li><a href="/client_inform/"><img src="{% static 'images/client.png' %}" title="거래처정보" width="28px"></a></li>
+        <li><a href="/businessStatus/"><img src="{% static 'images/businessStatus.png' %}" title="업무현황" width="28px"></a></li>
+        <li><a href="/공지사항/"><img src="{% static 'images/notice.png' %}" title="공지사항" width="28px"></a></li>
+        <li><a href="/기술/"><img src="{% static 'images/technology.png' %}" title="기술관리" width="28px"></a></li>
+    </ul>
+    {% include 'messages.html' %}
+</nav>
+
+<script>
+function toggleMobileMenu() {
+    const menu = document.getElementById('main-menu');
+    const toggle = document.querySelector('.mobile-menu-toggle');
+    
+    if (menu) {
+        menu.classList.toggle('active');
+        toggle.classList.toggle('active');
+    }
+}
+
+// 화면 크기에 따른 메뉴 자동 조정
+function adjustMenuForScreenSize() {
+    const menu = document.getElementById('main-menu');
+    const toggle = document.querySelector('.mobile-menu-toggle');
+    
+    if (window.innerWidth <= 900) {
+        // 작은 화면에서는 메뉴 숨김
+        if (menu) {
+            menu.classList.remove('active');
+        }
+        if (toggle) {
+            toggle.style.display = 'block';
+        }
+    } else {
+        // 큰 화면에서는 메뉴 항상 표시
+        if (menu) {
+            menu.classList.add('active');
+        }
+        if (toggle) {
+            toggle.style.display = 'none';
+        }
+    }
+}
+
+// 페이지 로드 시 및 화면 크기 변경 시 메뉴 조정
+document.addEventListener('DOMContentLoaded', adjustMenuForScreenSize);
+window.addEventListener('resize', adjustMenuForScreenSize);
+</script>

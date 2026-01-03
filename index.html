@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>비즈니스 관리 시스템</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #7c3aed;
+            --success-color: #16a34a;
+            --danger-color: #dc2626;
+            --warning-color: #f59e0b;
+            --info-color: #0891b2;
+            --dark-color: #1f2937;
+            --light-color: #f8fafc;
+            --border-color: #e5e7eb;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        /* 글로벌 네비게이션 바 */
+        .global-navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-md);
+        }
+
+        .navbar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .brand-logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+        }
+
+        .navbar-menu {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-list {
+            display: flex;
+            list-style: none;
+            gap: 0.5rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            background: var(--light-color);
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .nav-link i {
+            font-size: 1.125rem;
+        }
+
+        .navbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: var(--light-color);
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            min-width: 300px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus-within {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .search-input {
+            border: none;
+            background: none;
+            outline: none;
+            flex: 1;
+            font-size: 0.875rem;
+            color: var(--dark-color);
+        }
+
+        .search-btn {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 0.25rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .notification-bell {
+            position: relative;
+        }
+
+        .notification-btn {
+            background: none;
+            border: none;
+            color: var(--dark-color);
+            cursor: pointer;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .notification-btn:hover {
+            background: var(--light-color);
+            color: var(--primary-color);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: var(--danger-color);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.05);
+        }
+
+        /* 메인 컨텐츠 */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .hero-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--dark-color);
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .nav-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid var(--border-color);
+        }
+
+        .nav-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary-color);
+        }
+
+        .nav-card .icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .nav-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--dark-color);
+        }
+
+        .nav-card p {
+            color: var(--dark-color);
+            opacity: 0.7;
+            margin-bottom: 0;
+        }
+
+        /* 푸터 */
+        .footer {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            margin-top: 3rem;
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            .navbar-container {
+                flex-direction: column;
+                height: auto;
+                padding: 1rem 0;
+            }
+
+            .navbar-menu {
+                width: 100%;
+                margin-top: 1rem;
+            }
+
+            .nav-list {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .navbar-actions {
+                width: 100%;
+                justify-content: center;
+                margin-top: 1rem;
+            }
+
+            .search-box {
+                min-width: 200px;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-section {
+                padding: 2rem 1rem;
+            }
+
+            .nav-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 애니메이션 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-section,
+        .nav-card {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .nav-card:nth-child(2) { animation-delay: 0.1s; }
+        .nav-card:nth-child(3) { animation-delay: 0.2s; }
+        .nav-card:nth-child(4) { animation-delay: 0.3s; }
+        .nav-card:nth-child(5) { animation-delay: 0.4s; }
+        .nav-card:nth-child(6) { animation-delay: 0.5s; }
+        .nav-card:nth-child(7) { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <!-- 글로벌 네비게이션 바 -->
+    <nav class="global-navbar">
+        <div class="navbar-container">
+            <!-- 로고 영역 -->
+            <a href="/" class="navbar-brand">
+                <div class="brand-logo">
+                    <i class="fas fa-building"></i>
+                </div>
+                <span class="brand-text">Business Management System</span>
+            </a>
+            
+            <!-- 글로벌 메뉴 -->
+            <div class="navbar-menu">
+                <ul class="nav-list">
+                    <!-- 홈 -->
+                    <li class="nav-item">
+                        <a href="/" class="nav-link active">
+                            <i class="fas fa-home"></i>
+                            <span>홈</span>
+                        </a>
+                    </li>
+                    
+                    <!-- 공지사항 -->
+                    <li class="nav-item">
+                        <a href="/공지사항/" class="nav-link">
+                            <i class="fas fa-bullhorn"></i>
+                            <span>공지사항</span>
+                        </a>
+                    </li>
+                    
+                    <!-- 기술 관리 -->
+                    <li class="nav-item">
+                        <a href="/기술/" class="nav-link">
+                            <i class="fas fa-code"></i>
+                            <span>기술 관리</span>
+                        </a>
+                    </li>
+                    
+                    <!-- 거래처 정보 -->
+                    <li class="nav-item">
+                        <a href="/client_inform/" class="nav-link">
+                            <i class="fas fa-building"></i>
+                            <span>거래처 정보</span>
+                        </a>
+                    </li>
+                    
+                    <!-- 업무 현황 -->
+                    <li class="nav-item">
+                        <a href="/businessStatus/" class="nav-link">
+                            <i class="fas fa-chart-line"></i>
+                            <span>업무 현황</span>
+                        </a>
+                    </li>
+                    
+                    <!-- 근태 관리 -->
+                    <li class="nav-item">
+                        <a href="/commute/" class="nav-link">
+                            <i class="fas fa-clock"></i>
+                            <span>근태 관리</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- 사용자 정보 및 설정 -->
+            <div class="navbar-actions">
+                <!-- 검색 -->
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="전체 검색..." id="globalSearch">
+                    <button class="search-btn" onclick="performGlobalSearch()">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                
+                <!-- 알림 -->
+                <div class="notification-bell">
+                    <button class="notification-btn" onclick="toggleNotifications()">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge" id="notificationCount">3</span>
+                    </button>
+                </div>
+                
+                <!-- 사용자 메뉴 -->
+                <div class="user-menu">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+    </nav>
+
+    <div class="layout">
+        <div class="userBox">
+            <!-- 프로필 -->
+            <div class="profile">
+                <div style="width: 100%; height: 100%; background: #ddd; display: flex; align-items: center; justify-content: center; font-size: 40px;">👤</div>
+            </div>
+            <span class="username">사용자</span>
+            <span class="userrank">사원</span>
+            
+            <div class="timeCheck">
+                <div class="goTime">
+                    <span id="goText">출근</span>
+                    <input type="button" class="goBtn" value="09:00">
+                </div>
+                <div class="outTime">
+                    <span id="outText">퇴근</span>
+                    <input type="button" class="outBtn" value="18:00">
+                </div>
+            </div>
+            
+            <div class="alarm">
+                <div class="alarmImg">
+                    <div style="font-size: 20px;">🔔</div>
+                </div>
+                <div class="alarmTitle">알림</div>
+                <div class="alarm">
+                    <input type="button" class="allBtn" value="전체알림">
+                    <span style="margin-top: 2px; font-size: 12px;">|</span>
+                    <input type="button" class="metionBtn" value="우선알림">
+                    <br>
+                </div>
+                <br>
+                <div class="alarmBox">
+                    <span class="Box"></span>
+                    <div class="alarmCon">
+                        <span class="alarmName">알림제목</span>
+                        <span class="alarmWirter">작성자</span><br>
+                        <span class="alarmSub">알림내용</span><br>
+                    </div>
+                </div>
+                <div class="userMenu">
+                    <div class="dateMenu">
+                        <div style="font-size: 30px;">📁</div><br>
+                        <span style="font-size: 13px; font-weight: 500; margin-left: 7px">자료</span>
+                    </div>
+                    <div class="authoMenu">
+                        <div style="font-size: 30px;">🔐</div><br>
+                        <span style="font-size: 13px; font-weight: 500; margin-left: 7px">권한</span>
+                    </div>
+                    <div class="settingMenu">
+                        <div style="font-size: 30px;">⚙️</div><br>
+                        <span style="font-size: 12px; font-weight: 500; margin-left: 7px">설정</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 업무 현황 -->
+        <div class="userOne">
+            <span style="margin-top: 10px; margin-left: 20px; font-size: 20px; font-weight: 600; color: #2bae66; display: inline-block;">업무현황</span>
+            <div class="story">
+                <span style="margin-left: 14px; font-size: 13px; font-weight: 500; color: black;">업무 제목</span>
+                <span style="margin-left: 2px; font-size: 8px; font-weight: 500; color: black;">담당자</span><br>
+                <span style="margin-left: 14px; font-size: 13px; font-weight: 500; color: black;">이것은 GitHub Pages 데모 버전입니다.</span>
+            </div>
+            <a href="#">
+                <input type="button" class="plus" value="+">
+            </a>
+        </div>
+
+        <!-- 캘린더 -->
+        <div class="userTwo">
+            <span style="margin-top: 10px; margin-left: 20px; font-size: 20px; font-weight: 600; color: #094d28; display: inline-block;">캘린더</span>
+            <div class="story2">
+                <span style="margin-left: 14px; font-size: 13px; font-weight: 500; color: black;">데모 일정</span>
+                <span style="margin-left: 2px; font-size: 8px; font-weight: 500; color: black;">시간</span><br>
+                <span style="margin-left: 14px; font-size: 13px; font-weight: 500; color: black;">GitHub Pages에서는 동적 기능이 제한됩니다.</span>
+            </div>
+            <a href="#">
+                <input type="button" class="plus2" value="+">
+            </a>
+        </div>
+
+        <!-- 업무관리 -->
+        <div class="userThree">
+            <a href="#">
+                <span class="businessAla">20</span>
+                <div style="font-size: 80px; margin-left: 5px; margin-top: 100px;">💼</div><br>
+                <span class="businesstTitle" style="margin-left: 14px; font-size: 16px; font-weight: 600;">업무관리</span>
+            </a>
+        </div>
+
+        <!-- 거래처 -->
+        <div class="userFour">
+            <a href="#">
+                <span class="clientAla">5</span>
+                <div style="font-size: 80px; margin-left: 5px; margin-top: 100px;">👥</div><br>
+                <span class="clientTitle" style="margin-left: 24px; font-size: 16px; font-weight: 600;">거래처</span>
+            </a>
+        </div>
+
+        <!-- 기술 -->
+        <div class="userFive">
+            <a href="#">
+                <span class="techAla">8</span>
+                <div style="font-size: 80px; margin-left: 5px; margin-top: 100px;">🔧</div><br>
+                <span class="techTitle" style="margin-left: 25px; font-size: 16px; font-weight: 600;">기술</span>
+            </a>
+        </div>
+
+        <!-- 협업관리 -->
+        <div class="userSix">
+            <a href="#">
+                <span class="cooperAla">17</span>
+                <div style="font-size: 80px; margin-left: 5px; margin-top: 100px;">🤝</div><br>
+                <span class="cooperTitle" style="margin-left: 16px; font-size: 16px; font-weight: 600;">협업관리</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // 출퇴근 버튼 기능
+        document.querySelector('.goBtn').addEventListener('click', function() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false });
+            this.value = timeString;
+            this.style.background = '#e8f5e8';
+            this.style.color = '#2bae66';
+        });
+        function performGlobalSearch() {
+            const searchInput = document.getElementById('globalSearch');
+            const searchTerm = searchInput.value.trim();
+            
+            if (searchTerm) {
+                // 실제 검색 로직 구현
+                console.log('검색어:', searchTerm);
+                // 여기에 실제 검색 기능 구현
+            }
+        }
+
+        // 알림 토글
+        function toggleNotifications() {
+            // 알림 드롭다운 토글 로직
+            console.log('알림 토글');
+        }
+
+        // 네비게이션 활성화
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // 현재 활성화된 링크 제거
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    // 클릭된 링크 활성화
+                    this.classList.add('active');
+                });
+            });
+
+            // 검색 입력 이벤트
+            const searchInput = document.getElementById('globalSearch');
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performGlobalSearch();
+                }
+            });
+
+            // 카드 애니메이션
+            const cards = document.querySelectorAll('.nav-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-12px) scale(1.02)';
+                });
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(-8px) scale(1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

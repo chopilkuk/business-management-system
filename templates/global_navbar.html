@@ -1,0 +1,536 @@
+{% load static %}
+<nav class="global-navbar">
+    <!-- 로고 영역 -->
+    <div class="navbar-brand">
+        <a href="/" class="brand-logo">
+            <img src="{% static 'images/logo.png' %}" alt="Global Logo" width="40px">
+        </a>
+        <span class="brand-text">Business Management System</span>
+    </div>
+    
+    <!-- 글로벌 메뉴 -->
+    <div class="navbar-menu">
+        <ul class="nav-list">
+            <!-- 홈 -->
+            <li class="nav-item">
+                <a href="/" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                    <i class="fas fa-home"></i>
+                    <span>홈</span>
+                </a>
+            </li>
+            
+            <!-- 공지사항 -->
+            <li class="nav-item">
+                <a href="/공지사항/" class="nav-link {% if '공지사항' in request.path %}active{% endif %}">
+                    <i class="fas fa-bullhorn"></i>
+                    <span>공지사항</span>
+                </a>
+            </li>
+            
+            <!-- 기술 관리 -->
+            <li class="nav-item">
+                <a href="/기술/" class="nav-link {% if '기술' in request.path %}active{% endif %}">
+                    <i class="fas fa-code"></i>
+                    <span>기술 관리</span>
+                </a>
+            </li>
+            
+            <!-- 거래처 정보 -->
+            <li class="nav-item">
+                <a href="/client_inform/" class="nav-link {% if 'client_inform' in request.path %}active{% endif %}">
+                    <i class="fas fa-building"></i>
+                    <span>거래처 정보</span>
+                </a>
+            </li>
+            
+            <!-- 업무 현황 -->
+            <li class="nav-item">
+                <a href="/businessStatus/" class="nav-link {% if 'businessStatus' in request.path %}active{% endif %}">
+                    <i class="fas fa-chart-line"></i>
+                    <span>업무 현황</span>
+                </a>
+            </li>
+            
+            <!-- 근태 관리 -->
+            <li class="nav-item">
+                <a href="/commute/" class="nav-link {% if 'commute' in request.path %}active{% endif %}">
+                    <i class="fas fa-clock"></i>
+                    <span>근태 관리</span>
+                </a>
+            </li>
+            
+            <!-- 캘린더 -->
+            <li class="nav-item">
+                <a href="/calendar/" class="nav-link {% if 'calendar' in request.path %}active{% endif %}">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>캘린더</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    
+    <!-- 사용자 정보 및 설정 -->
+    <div class="navbar-actions">
+        <!-- 검색 -->
+        <div class="search-box">
+            <input type="text" class="search-input" placeholder="전체 검색..." id="globalSearch">
+            <button class="search-btn" onclick="performGlobalSearch()">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+        
+        <!-- 알림 -->
+        <div class="notification-bell">
+            <button class="notification-btn" onclick="toggleNotifications()">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge" id="notificationCount">0</span>
+            </button>
+            <div class="notification-dropdown" id="notificationDropdown">
+                <div class="notification-header">
+                    <h4>알림</h4>
+                    <button class="mark-all-read" onclick="markAllNotificationsRead()">모두 읽음</button>
+                </div>
+                <div class="notification-list" id="notificationList">
+                    <!-- 알림 목록이 여기에 동적으로 추가됨 -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- 사용자 메뉴 -->
+        <div class="user-menu">
+            <button class="user-menu-btn" onclick="toggleUserMenu()">
+                <img src="{% static 'images/user-avatar.png' %}" alt="User" class="user-avatar">
+                <span class="user-name">{{ user.username }}</span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="user-dropdown" id="userDropdown">
+                <div class="user-header">
+                    <img src="{% static 'images/user-avatar.png' %}" alt="User" class="user-avatar-large">
+                    <div class="user-info">
+                        <div class="user-name">{{ user.username }}</div>
+                        <div class="user-role">{% if user.is_staff %}관리자{% else %}사용자{% endif %}</div>
+                    </div>
+                </div>
+                <div class="user-menu-items">
+                    <a href="/profile/" class="menu-item">
+                        <i class="fas fa-user"></i>
+                        <span>프로필</span>
+                    </a>
+                    <a href="/settings/" class="menu-item">
+                        <i class="fas fa-cog"></i>
+                        <span>설정</span>
+                    </a>
+                    <a href="/help/" class="menu-item">
+                        <i class="fas fa-question-circle"></i>
+                        <span>도움말</span>
+                    </a>
+                    <div class="menu-divider"></div>
+                    <a href="/logout/" class="menu-item logout-item">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>로그아웃</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 테마 토글 -->
+        <div class="theme-toggle">
+            <button class="theme-btn" onclick="toggleTheme()">
+                <i class="fas fa-moon" id="themeIcon"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- 모바일 메뉴 토글 -->
+    <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+</nav>
+
+<!-- 전역 알림 -->
+<div class="global-alerts" id="globalAlerts">
+    <!-- 알림이 여기에 동적으로 추가됨 -->
+</div>
+
+<!-- 글로벌 검색 결과 -->
+<div class="global-search-results" id="globalSearchResults">
+    <div class="search-results-header">
+        <h4>검색 결과</h4>
+        <button class="close-search" onclick="closeGlobalSearch()">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    <div class="search-results-content" id="searchResultsContent">
+        <!-- 검색 결과가 여기에 동적으로 추가됨 -->
+    </div>
+</div>
+
+<script>
+// 글로벌 검색 기능
+function performGlobalSearch() {
+    const searchTerm = document.getElementById('globalSearch').value.trim();
+    if (!searchTerm) return;
+    
+    fetch(`/api/v1/search/?q=${encodeURIComponent(searchTerm)}`, {
+        method: 'GET',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            displaySearchResults(data.data.results);
+        }
+    })
+    .catch(error => {
+        console.error('검색 오류:', error);
+    });
+}
+
+function displaySearchResults(results) {
+    const resultsContainer = document.getElementById('searchResultsContent');
+    const searchResults = document.getElementById('globalSearchResults');
+    
+    if (results.length === 0) {
+        resultsContainer.innerHTML = '<div class="no-results">검색 결과가 없습니다.</div>';
+    } else {
+        resultsContainer.innerHTML = results.map(result => `
+            <div class="search-result-item" onclick="navigateToResult('${result.type}', '${result.id}', '${result.url}')">
+                <div class="result-icon">
+                    <i class="fas ${getResultIcon(result.type)}"></i>
+                </div>
+                <div class="result-content">
+                    <div class="result-title">${result.title}</div>
+                    <div class="result-preview">${result.preview}</div>
+                    <div class="result-meta">
+                        <span class="result-type">${getResultType(result.type)}</span>
+                        <span class="result-date">${formatDate(result.date)}</span>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    searchResults.classList.add('show');
+}
+
+function getResultIcon(type) {
+    const icons = {
+        'notice': 'fa-bullhorn',
+        'technology': 'fa-code',
+        'client': 'fa-building',
+        'default': 'fa-file'
+    };
+    return icons[type] || icons['default'];
+}
+
+function getResultType(type) {
+    const types = {
+        'notice': '공지사항',
+        'technology': '기술',
+        'client': '거래처',
+        'default': '문서'
+    };
+    return types[type] || types['default'];
+}
+
+function navigateToResult(type, id, url) {
+    window.location.href = url;
+}
+
+function closeGlobalSearch() {
+    document.getElementById('globalSearchResults').classList.remove('show');
+    document.getElementById('globalSearch').value = '';
+}
+
+// 알림 기능
+function toggleNotifications() {
+    const dropdown = document.getElementById('notificationDropdown');
+    dropdown.classList.toggle('show');
+    
+    if (dropdown.classList.contains('show')) {
+        loadNotifications();
+    }
+}
+
+function loadNotifications() {
+    fetch('/api/v1/notifications/', {
+        method: 'GET',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            displayNotifications(data.data.notifications);
+            updateNotificationCount(data.data.unread_count);
+        }
+    })
+    .catch(error => {
+        console.error('알림 로딩 오류:', error);
+    });
+}
+
+function displayNotifications(notifications) {
+    const notificationList = document.getElementById('notificationList');
+    
+    if (notifications.length === 0) {
+        notificationList.innerHTML = '<div class="no-notifications">새로운 알림이 없습니다.</div>';
+    } else {
+        notificationList.innerHTML = notifications.map(notification => `
+            <div class="notification-item ${notification.read ? 'read' : 'unread'}" onclick="markNotificationRead('${notification.id}')">
+                <div class="notification-icon">
+                    <i class="fas ${getNotificationIcon(notification.type)}"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">${notification.title}</div>
+                    <div class="notification-message">${notification.message}</div>
+                    <div class="notification-time">${formatDate(notification.created_at)}</div>
+                </div>
+                <div class="notification-actions">
+                    <button onclick="deleteNotification('${notification.id}')" class="delete-btn">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        `).join('');
+    }
+}
+
+function getNotificationIcon(type) {
+    const icons = {
+        'info': 'fa-info-circle',
+        'success': 'fa-check-circle',
+        'warning': 'fa-exclamation-triangle',
+        'error': 'fa-exclamation-circle',
+        'system': 'fa-cog'
+    };
+    return icons[type] || icons['info'];
+}
+
+function updateNotificationCount(count) {
+    const badge = document.getElementById('notificationCount');
+    if (count > 0) {
+        badge.textContent = count > 99 ? '99+' : count;
+        badge.style.display = 'block';
+    } else {
+        badge.style.display = 'none';
+    }
+}
+
+function markNotificationRead(notificationId) {
+    fetch(`/api/v1/notifications/${notificationId}/read/`, {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            loadNotifications();
+        }
+    })
+    .catch(error => {
+        console.error('알림 읽음 처리 오류:', error);
+    });
+}
+
+function deleteNotification(notificationId) {
+    fetch(`/api/v1/notifications/${notificationId}/`, {
+        method: 'DELETE',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            loadNotifications();
+        }
+    })
+    .catch(error => {
+        console.error('알림 삭제 오류:', error);
+    });
+}
+
+function markAllNotificationsRead() {
+    fetch('/api/v1/notifications/mark-all-read/', {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            loadNotifications();
+        }
+    })
+    .catch(error => {
+        console.error('모든 알림 읽음 처리 오류:', error);
+    });
+}
+
+// 사용자 메뉴
+function toggleUserMenu() {
+    const dropdown = document.getElementById('userDropdown');
+    dropdown.classList.toggle('show');
+}
+
+// 테마 토글
+function toggleTheme() {
+    const body = document.body;
+    const themeIcon = document.getElementById('themeIcon');
+    
+    if (body.classList.contains('dark-theme')) {
+        body.classList.remove('dark-theme');
+        themeIcon.classList.remove('fa-sun');
+        themeIcon.classList.add('fa-moon');
+        localStorage.setItem('theme', 'light');
+    } else {
+        body.classList.add('dark-theme');
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+        localStorage.setItem('theme', 'dark');
+    }
+}
+
+// 모바일 메뉴
+function toggleMobileMenu() {
+    const navbar = document.querySelector('.global-navbar');
+    const mobileToggle = document.querySelector('.mobile-menu-toggle');
+    
+    navbar.classList.toggle('mobile-open');
+    mobileToggle.classList.toggle('active');
+}
+
+// 유틸리 함수
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diff = now - date;
+    
+    if (diff < 60000) {
+        return '방금 전';
+    } else if (diff < 3600000) {
+        return `${Math.floor(diff / 60000)}분 전`;
+    } else if (diff < 86400000) {
+        return `${Math.floor(diff / 3600000)}시간 전`;
+    } else {
+        return date.toLocaleDateString();
+    }
+}
+
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
+}
+
+// 페이지 로드 시 테마 적용
+document.addEventListener('DOMContentLoaded', function() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-theme');
+        document.getElementById('themeIcon').classList.remove('fa-moon');
+        document.getElementById('themeIcon').classList.add('fa-sun');
+    }
+    
+    // 클릭 이벤트 핸들러
+    document.addEventListener('click', function(e) {
+        // 알림 드롭다운 외부 클릭 시 닫기
+        if (!e.target.closest('.notification-bell')) {
+            document.getElementById('notificationDropdown').classList.remove('show');
+        }
+        
+        // 사용자 메뉴 드롭다운 외부 클릭 시 닫기
+        if (!e.target.closest('.user-menu')) {
+            document.getElementById('userDropdown').classList.remove('show');
+        }
+        
+        // 검색 결과 외부 클릭 시 닫기
+        if (!e.target.closest('.global-search-results')) {
+            document.getElementById('globalSearchResults').classList.remove('show');
+        }
+    });
+    
+    // ESC 키로 모든 드롭다운 닫기
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            document.getElementById('notificationDropdown').classList.remove('show');
+            document.getElementById('userDropdown').classList.remove('show');
+            document.getElementById('globalSearchResults').classList.remove('show');
+        }
+    });
+    
+    // 검색 입력창 엔터 키 처리
+    document.getElementById('globalSearch').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            performGlobalSearch();
+        }
+    });
+});
+
+// 실시간 알림 업데이트 (WebSocket)
+function setupRealtimeNotifications() {
+    const ws = new WebSocket('ws://127.0.0.1:8000/ws/notifications/');
+    
+    ws.onmessage = function(event) {
+        const data = JSON.parse(event.data);
+        if (data.type === 'notification') {
+            showRealtimeNotification(data.notification);
+            updateNotificationCount(data.unread_count);
+        }
+    };
+    
+    ws.onerror = function(error) {
+        console.log('WebSocket 오류:', error);
+    };
+    
+    ws.onclose = function() {
+        console.log('WebSocket 연결 종료');
+        // 5초 후 재연결 시도
+        setTimeout(setupRealtimeNotifications, 5000);
+    };
+}
+
+// 실시간 알림 표시
+function showRealtimeNotification(notification) {
+    const alertContainer = document.getElementById('globalAlerts');
+    const alertElement = document.createElement('div');
+    alertElement.className = `alert alert-${notification.level} alert-dismissible`;
+    alertElement.innerHTML = `
+        <div class="alert-content">
+            <i class="fas ${getNotificationIcon(notification.level)}"></i>
+            <span class="alert-message">${notification.message}</span>
+            <button class="alert-close" onclick="this.parentElement.remove()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    `;
+    
+    alertContainer.appendChild(alertElement);
+    
+    // 5초 후 자동 제거
+    setTimeout(() => {
+        alertElement.remove();
+    }, 5000);
+}
+
+// 초기화
+setupRealtimeNotifications();
+</script>

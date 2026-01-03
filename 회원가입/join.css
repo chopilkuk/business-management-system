@@ -1,0 +1,42 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+.notosanskr * { 
+ font-family: 'Noto Sans KR', sans-serif;
+}
+
+body{ /*폰트설정*/
+    font-family: 'Noto Sans KR', sans-serif;
+    background: linear-gradient(45deg, #aadbd5, #80bfd7);
+}
+
+.loginBox {
+    width: 300px;
+    height: 400px;
+    background: linear-gradient(45deg, #cce9e5, #a0cdde);
+    border-radius: 5px;
+
+    margin:110px auto;
+    box-shadow: 2px 2px 7px -5px #545454;
+}
+
+.logo {
+    margin: 40px 28% 10px ;
+}
+
+.textBox {
+    margin-left: 7%;
+    float: left;
+}
+
+
+
+#userBox {
+    width: 180px;
+    height: 25px;
+    margin: 2px 3px ;
+    border: 1px solid #c9c9c9;
+    box-shadow: 2px 2px 7px -5px #545454;
+    border-radius: 5px;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+
