@@ -42,7 +42,7 @@ class TechnologyAdmin(admin.ModelAdmin):
     list_display = [
         'name',                 # 기술 이름
         'category',             # 기술 카테고리
-        'difficulty_level',      # 난이도 수준
+        'proficiency',          # 숙련도
         'status',               # 상태
         'created_at',            # 생성일
         'updated_at',            # 수정일
@@ -52,7 +52,7 @@ class TechnologyAdmin(admin.ModelAdmin):
     # 다양한 기준으로 기술 필터링 기능 제공
     list_filter = [
         'category',             # 카테고리별 필터링
-        'difficulty_level',      # 난이도별 필터링
+        'proficiency',          # 숙련도별 필터링
         'status',                # 상태별 필터링
         'created_at',            # 생성일별 필터링
         'updated_at',            # 수정일별 필터링
@@ -87,15 +87,15 @@ class TechnologyAdmin(admin.ModelAdmin):
                 'name',
                 'description',
                 'category',
-                'difficulty_level',
+                'proficiency',
                 'status',
             )
         }),
         ('추가 정보', {
             'fields': (
                 'tags',
-                'documentation_url',
-                'examples',
+                'official_document',
+                'learning_resources',
             )
         }),
         ('시간 정보', {

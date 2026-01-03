@@ -86,7 +86,6 @@ class CustomerInformationAdmin(admin.ModelAdmin):
     # 일단 등록된 중요 정보는 수정하지 않도록 설정
     readonly_fields = (
         'registration_date',      # 등록일 (수정 불가)
-        'created_at',            # 생성일시 (수정 불가)
     )
     
     # 목록 페이지에서 페이지당 표시할 레코드 수
