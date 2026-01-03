@@ -1,3 +1,11 @@
+# =============================================================================
+# 비즈니스 관리 시스템 Django 설정
+# =============================================================================
+# 설명: Django 프로젝트의 모든 설정을 정의하는 메인 설정 파일
+# 작성자: 비즈니스 관리 시스템 개발팀
+# 버전: 1.0.0
+# =============================================================================
+
 """
 Django settings for business_management project.
 
@@ -13,41 +21,62 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+# 경로 관리를 위한 Path 클래스 임포트
 from pathlib import Path
+# 운영체제 관련 기능 임포트
 import os
 
+# =============================================================================
+# 기본 경로 설정
+# =============================================================================
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # 프로젝트의 기본 디렉토리 경로를 설정합니다.
 # 이 경로를 기준으로 모든 파일 경로를 계산합니다.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# =============================================================================
+# 개발 환경 설정
+# =============================================================================
 # Quick-start development settings - unsuitable for production
 # 개발 환경을 위한 빠른 시작 설정 - 운영 환경에는 적합하지 않음
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
+# =============================================================================
+# 보안 설정
+# =============================================================================
 # SECURITY WARNING: keep the secret key used in production secret!
 # 보안 경고: 운영 환경에서 사용되는 시크릿 키를 비밀로 유지하세요!
 # Django의 암호화, 세션, CSRF 보호 등에 사용되는 중요한 키입니다.
+# 운영 환경에서는 반드시 환경 변수나 별도 파일에서 관리해야 합니다.
 SECRET_KEY = 'django-insecure-your-secret-key-here-change-in-production'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # 보안 경고: 운영 환경에서 디버그 모드를 켜지 마세요!
 # DEBUG=True이면 에러 상세 정보가 노출되어 보안에 취약합니다.
+# 개발 환경에서는 True, 운영 환경에서는 False로 설정해야 합니다.
 DEBUG = True
 
+# =============================================================================
+# 호스트 설정
+# =============================================================================
 # ALLOWED_HOSTS는 이 Django 사이트가 서비스될 수 있는 호스트명/도메인 목록입니다.
 # 개발 환경에서는 localhost와 127.0.0.1을 허용합니다.
+# 운영 환경에서는 실제 도메인을 추가해야 합니다.
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
+# =============================================================================
+# 애플리케이션 정의
+# =============================================================================
 # Application definition
 # 애플리케이션 정의 - 프로젝트에 포함된 Django 앱 목록
+# 등록된 순서대로 로드되며, 의존성이 있는 앱은 먼저 등록해야 합니다.
 
 INSTALLED_APPS = [
     # Django 기본 앱들 - 핵심 기능 제공
-    'django.contrib.admin',         # 관리자 사이트
-    'django.contrib.auth',          # 인증 시스템
-    'django.contrib.contenttypes',   # 콘텐츠 타입 프레임워크
-    'django.contrib.sessions',      # 세션 프레임워크
+    'django.contrib.admin',         # 관리자 사이트 - 데이터베이스 관리 인터페이스
+    'django.contrib.auth',          # 인증 시스템 - 사용자 인증 및 권한 관리
+    'django.contrib.contenttypes',   # 콘텐츠 타입 프레임워크 - 모델 간 관계 관리
+    'django.contrib.sessions',      # 세션 프레임워크 - 사용자 세션 관리
     'django.contrib.messages',      # 메시지 프레임워크
     'django.contrib.staticfiles',   # 정적 파일 관리
 
