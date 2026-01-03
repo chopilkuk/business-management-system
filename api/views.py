@@ -1,3 +1,11 @@
+# =============================================================================
+# 비즈니스 관리 시스템 RESTful API 뷰
+# =============================================================================
+# 설명: 시스템의 모든 데이터에 대한 RESTful API 엔드포인트를 제공
+# 작성자: 비즈니스 관리 시스템 개발팀
+# 버전: 1.0.0
+# =============================================================================
+
 """
 RESTful API 뷰 모듈
 
@@ -12,20 +20,36 @@ JSON 응답, 에러 처리, 인증, 권한 관리 등을 포함합니다.
 - 검색 및 필터링 API
 """
 
+# =============================================================================
+# 임포트 구역
+# =============================================================================
+# Django HTTP 응답 클래스 임포트
 from django.http import JsonResponse, HttpResponse
+# CSRF 보호 데코레이터 임포트
 from django.views.decorators.csrf import csrf_exempt
+# HTTP 메서드 제한 데코레이터 임포트
 from django.views.decorators.http import require_http_methods
+# 로그인 요구 데코레이터 임포트
 from django.contrib.auth.decorators import login_required
+# 페이지네이터 임포트
 from django.core.paginator import Paginator
+# 복잡한 데이터베이스 쿼리를 위한 Q 객체 임포트
 from django.db.models import Q
+# 메서드 데코레이터 임포트
 from django.utils.decorators import method_decorator
+# Django 뷰 클래스 임포트
 from django.views import View
+# Django 직렬화 임포트
 from django.core import serializers
+# 표준 라이브러리 임포트
 import json
 import logging
 from datetime import datetime
 
-# 앱 모델 임포트 (Django 설정이 로드된 후에만)
+# =============================================================================
+# 모델 임포트 (동적 임포트)
+# =============================================================================
+# Django 설정이 로드된 후에만 모델을 임포트하여 순환 참조 방지
 try:
     from 공지사항.models import Notice
     from 기술.models import Technology
@@ -34,19 +58,59 @@ try:
     User = get_user_model()
     MODELS_AVAILABLE = True
 except ImportError:
+    # 모델을 사용할 수 없는 경우 (예: 마이그레이션 전)
     MODELS_AVAILABLE = False
     User = None
 
-# API 로거 설정
+# =============================================================================
+# 로거 설정
+# =============================================================================
+# API 전용 로거 설정 - 디버깅 및 모니터링용
 api_logger = logging.getLogger('api')
 
-
+# =============================================================================
+# API 응답 표준 클래스
+# =============================================================================
 class APIResponse:
-    """API 응답 표준 클래스"""
+    """
+    API 응답 표준 클래스
+    
+    모든 API 엔드포인트에서 일관된 응답 형식을 제공합니다.
+    성공, 오류, 페이지네이션 등 다양한 응답 타입을 지원합니다.
+    
+    Methods:
+        success: 성공 응답 생성
+        error: 오류 응답 생성
+        paginated: 페이지네이션 응답 생성
+        
+    Response Format:
+        - success: 성공 여부 (boolean)
+        - message: 응답 메시지 (string)
+        - data: 응답 데이터 (object/array)
+        - error_code: 오류 코드 (string, optional)
+        - details: 상세 오류 정보 (object, optional)
+        - timestamp: 응답 시간 (ISO 8601 format)
+    """
     
     @staticmethod
     def success(data=None, message="성공", status=200):
-        """성공 응답"""
+        """
+        성공 응답 생성 메서드
+        
+        Args:
+            data (object/array): 응답 데이터
+            message (str): 성공 메시지
+            status (int): HTTP 상태 코드
+            
+        Returns:
+            JsonResponse: 표준화된 성공 응답
+            
+        Description:
+            - API 호출 성공 시 표준 응답 생성
+            - 일관된 성공 응답 형식 제공
+            - 타임스탬프 자동 추가
+            - 데이터 포맷 자동 직렬화
+        """
         response_data = {
             'success': True,
             'message': message,
@@ -57,7 +121,24 @@ class APIResponse:
     
     @staticmethod
     def error(message="오류 발생", status=400, error_code=None, details=None):
-        """오류 응답"""
+        """
+        오류 응답 생성 메서드
+        
+        Args:
+            message (str): 오류 메시지
+            status (int): HTTP 상태 코드
+            error_code (str): 오류 코드
+            details (object): 상세 오류 정보
+            
+        Returns:
+            JsonResponse: 표준화된 오류 응답
+            
+        Description:
+            - API 호출 실패 시 표준 오류 응답 생성
+            - 일관된 오류 응답 형식 제공
+            - 오류 코드 및 상세 정보 포함
+            - 타임스탬프 자동 추가
+        """
         response_data = {
             'success': False,
             'message': message,
@@ -69,7 +150,23 @@ class APIResponse:
     
     @staticmethod
     def paginated(queryset, page=1, per_page=10):
-        """페이지네이션 응답"""
+        """
+        페이지네이션 응답 생성 메서드
+        
+        Args:
+            queryset: 데이터베이스 쿼리셋
+            page (int): 현재 페이지 번호
+            per_page (int): 페이지당 항목 수
+            
+        Returns:
+            JsonResponse: 페이지네이션된 응답
+            
+        Description:
+            - 대용량 데이터를 페이지별로 제공
+            - 페이지네이션 정보 포함
+            - 이전/다음 페이지 링크 제공
+            - 총 항목 수 및 페이지 수 정보
+        """
         paginator = Paginator(queryset, per_page)
         page_obj = paginator.get_page(page)
         
