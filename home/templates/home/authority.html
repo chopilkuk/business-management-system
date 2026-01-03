@@ -1,0 +1,495 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>권한 관리 - 비즈니스 관리 시스템</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/common.css' %}">
+    <style>
+        :root {
+            --primary-color: #2E7D32;
+            --secondary-color: #4CAF50;
+            --success-color: #66BB6A;
+            --danger-color: #F44336;
+            --warning-color: #FF9800;
+            --info-color: #2196F3;
+            --dark-color: #1B5E20;
+            --light-color: #F1F8E9;
+            --border-color: #C8E6C9;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .authority-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .authority-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .authority-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .add-user-btn {
+            background: var(--success-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .add-user-btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+        }
+
+        .search-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .user-table {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .table {
+            margin: 0;
+        }
+
+        .table thead {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .table th {
+            padding: 15px;
+            font-weight: 600;
+            border: none;
+        }
+
+        .table td {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+        }
+
+        .table tbody tr:hover {
+            background: var(--light-color);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .role-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .role-admin {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .role-manager {
+            background: var(--warning-color);
+            color: white;
+        }
+
+        .role-user {
+            background: var(--info-color);
+            color: white;
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .status-active {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .status-inactive {
+            background: #9E9E9E;
+            color: white;
+        }
+
+        .action-btn {
+            background: var(--info-color);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin: 0 2px;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-1px);
+        }
+
+        .action-btn.delete {
+            background: var(--danger-color);
+        }
+
+        .action-btn.delete:hover {
+            background: #d32f2f;
+        }
+
+        .back-btn {
+            background: var(--info-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--light-color);
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--dark-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="authority-container">
+        <div class="authority-header">
+            <h1 class="authority-title">
+                <i class="fas fa-user-shield"></i> 권한 관리
+            </h1>
+            <a href="/" class="back-btn">
+                <i class="fas fa-home"></i> 홈으로
+            </a>
+        </div>
+
+        <div class="stats-section">
+            <div class="stat-card">
+                <div class="stat-number">45</div>
+                <div class="stat-label">전체 사용자</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">3</div>
+                <div class="stat-label">관리자</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">8</div>
+                <div class="stat-label">매니저</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">34</div>
+                <div class="stat-label">일반 사용자</div>
+            </div>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="사용자 이름 검색..." id="searchInput">
+            <button class="search-btn" onclick="searchUsers()">
+                <i class="fas fa-search"></i> 검색
+            </button>
+            <button class="add-user-btn" onclick="addUser()">
+                <i class="fas fa-user-plus"></i> 사용자 추가
+            </button>
+        </div>
+
+        <div class="user-table">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>사용자</th>
+                        <th>역할</th>
+                        <th>상태</th>
+                        <th>이메일</th>
+                        <th>가입일</th>
+                        <th>마지막 로그인</th>
+                        <th>작업</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="user-info">
+                                <div class="user-avatar">관</div>
+                                <div>
+                                    <div style="font-weight: 600;">관리자</div>
+                                    <div style="font-size: 0.8rem; color: #666;">admin@company.com</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="role-badge role-admin">관리자</span>
+                        </td>
+                        <td>
+                            <span class="status-badge status-active">활성</span>
+                        </td>
+                        <td>admin@company.com</td>
+                        <td>2024-01-01</td>
+                        <td>2024-01-15 14:30</td>
+                        <td>
+                            <button class="action-btn" onclick="editUser('admin')">
+                                <i class="fas fa-edit"></i> 수정
+                            </button>
+                            <button class="action-btn delete" onclick="deleteUser('admin')">
+                                <i class="fas fa-trash"></i> 삭제
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="user-info">
+                                <div class="user-avatar">김</div>
+                                <div>
+                                    <div style="font-weight: 600;">김매니저</div>
+                                    <div style="font-size: 0.8rem; color: #666;">manager@company.com</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="role-badge role-manager">매니저</span>
+                        </td>
+                        <td>
+                            <span class="status-badge status-active">활성</span>
+                        </td>
+                        <td>manager@company.com</td>
+                        <td>2024-01-05</td>
+                        <td>2024-01-15 09:15</td>
+                        <td>
+                            <button class="action-btn" onclick="editUser('manager')">
+                                <i class="fas fa-edit"></i> 수정
+                            </button>
+                            <button class="action-btn delete" onclick="deleteUser('manager')">
+                                <i class="fas fa-trash"></i> 삭제
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="user-info">
+                                <div class="user-avatar">이</div>
+                                <div>
+                                    <div style="font-weight: 600;">이사용자</div>
+                                    <div style="font-size: 0.8rem; color: #666;">user@company.com</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="role-badge role-user">사용자</span>
+                        </td>
+                        <td>
+                            <span class="status-badge status-active">활성</span>
+                        </td>
+                        <td>user@company.com</td>
+                        <td>2024-01-10</td>
+                        <td>2024-01-15 16:45</td>
+                        <td>
+                            <button class="action-btn" onclick="editUser('user')">
+                                <i class="fas fa-edit"></i> 수정
+                            </button>
+                            <button class="action-btn delete" onclick="deleteUser('user')">
+                                <i class="fas fa-trash"></i> 삭제
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="user-info">
+                                <div class="user-avatar">박</div>
+                                <div>
+                                    <div style="font-weight: 600;">박사용자</div>
+                                    <div style="font-size: 0.8rem; color: #666;">park@company.com</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="role-badge role-user">사용자</span>
+                        </td>
+                        <td>
+                            <span class="status-badge status-inactive">비활성</span>
+                        </td>
+                        <td>park@company.com</td>
+                        <td>2024-01-12</td>
+                        <td>2024-01-14 11:20</td>
+                        <td>
+                            <button class="action-btn" onclick="editUser('park')">
+                                <i class="fas fa-edit"></i> 수정
+                            </button>
+                            <button class="action-btn delete" onclick="deleteUser('park')">
+                                <i class="fas fa-trash"></i> 삭제
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function searchUsers() {
+            const searchTerm = document.getElementById('searchInput').value;
+            alert(`'${searchTerm}' 사용자 검색 결과는 준비 중입니다.`);
+        }
+
+        function addUser() {
+            alert('사용자 추가 기능은 준비 중입니다.');
+        }
+
+        function editUser(userId) {
+            alert(`'${userId}' 사용자 수정 기능은 준비 중입니다.`);
+        }
+
+        function deleteUser(userId) {
+            if (confirm(`'${userId}' 사용자를 삭제하시겠습니까?`)) {
+                alert(`'${userId}' 사용자 삭제 기능은 준비 중입니다.`);
+            }
+        }
+
+        // 테이블 정렬 기능
+        document.addEventListener('DOMContentLoaded', function() {
+            const table = document.querySelector('.table');
+            const headers = table.querySelectorAll('th');
+            
+            headers.forEach((header, index) => {
+                header.style.cursor = 'pointer';
+                header.addEventListener('click', () => {
+                    sortTable(index);
+                });
+            });
+        });
+
+        function sortTable(columnIndex) {
+            const table = document.querySelector('.table');
+            const tbody = table.querySelector('tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            
+            rows.sort((a, b) => {
+                const aValue = a.cells[columnIndex].textContent.trim();
+                const bValue = b.cells[columnIndex].textContent.trim();
+                return aValue.localeCompare(bValue);
+            });
+            
+            tbody.innerHTML = '';
+            rows.forEach(row => tbody.appendChild(row));
+        }
+    </script>
+</body>
+</html>
