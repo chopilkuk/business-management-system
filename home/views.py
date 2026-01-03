@@ -24,7 +24,7 @@ def home(request):
         - 사용자 정보, 업무 현황, 알림 등 표시
         - 네비게이션 메뉴 및 아이콘 링크 포함
     """
-    return render(request, 'home/home.html')
+    return render(request, 'home.html')
 
 def calendar(request):
     """
