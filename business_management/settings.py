@@ -178,6 +178,9 @@ USE_TZ = True              # 시간대 기능 활성화
 # 정적 파일 설정 - CSS, JavaScript, 이미지 등 개발 리소스
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 # Media files (사용자 업로드 파일)
 # 미디어 파일 설정 - 사용자가 업로드하는 파일 저장 위치
