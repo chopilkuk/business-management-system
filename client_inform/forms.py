@@ -1,18 +1,73 @@
+# =============================================================================
+# 비즈니스 관리 시스템 거래처 정보 관리 앱 폼
+# =============================================================================
+# 설명: 거래처 정보 관리와 관련된 폼 클래스를 정의
+# 작성자: 비즈니스 관리 시스템 개발팀
+# 버전: 1.0.0
+# =============================================================================
+
+# =============================================================================
+# 임포트 구역
+# =============================================================================
+# Django 폼 모듈 임포트
 from django import forms
+# Django 검증기 임포트
 from django.core.validators import MinLengthValidator, RegexValidator
+# 현재 앱의 모델 임포트
 from .models import customer_information
 
-
+# =============================================================================
+# 거래처 정보 등록/수정 폼 클래스
+# =============================================================================
 class CustomerInformationForm(forms.ModelForm):
     """
-    거래처 정보 폼
+    거래처 정보 폼 클래스
     
     거래처 정보 등록 및 수정에 사용되는 폼입니다.
     데이터 검증 및 위젯 커스터마이징을 포함합니다.
+    
+    Features:
+        - 거래처의 모든 정보 필드 포함
+        - Bootstrap CSS 클래스 적용
+        - 커스텀 데이터 검증 로직
+        - 필드별 유효성 검증
+        - 사업자등록번호 유효성 검증
+        - 전화번호 형식 검증
+        - 비즈니스 로직 검증
+        
+    Validation Rules:
+        - 기업명: 최소 2자, 최대 32자
+        - 대표자명: 최소 2자, 한글/영문/숫자만 허용
+        - 사업자등록번호: 10자 또는 12자, 유효성 검증
+        - 전화번호: 형식 및 길이 검증
+        - V3 계약 상태: O 또는 X만 허용
+        - 업체 평가: A, B, C만 허용
+        
+    Business Logic:
+        - 계약 완료 시 ERP 사용 상태 검증
+        - V3 계약 시 계약 상태 필수 검증
+        
+    Attributes:
+        기본 정보: 등록일, 지역, 구분, 기업명, 대표자명, 사업자등록번호
+        비즈니스 정보: 종업원수, 연간 매출액, 업종, 종목/이벤트, 외주사 작업 유형, 주요업무
+        계약 정보: 계약 상태, V3 계약 상태
+        연락처 정보: 담당직원, 전화번호, 사업장 주소, 이메일
+        시스템 정보: ERP 유지보수, ERP 사용 현황, 그룹웨어 사용
+        평가 정보: 업체 평가, 비고
     """
     
+    # =============================================================================
+    # 메타 클래스 설정
+    # =============================================================================
     class Meta:
-        model = customer_information
+        """
+        폼 메타데이터 클래스
+        
+        폼의 기본 설정과 위젯 커스터마이징을 정의합니다.
+        """
+        model = customer_information  # 연결할 모델
+        
+        # 포함할 필드 목록 (거래처의 모든 정보)
         fields = [
             'registration_date', 'region', 'division', 'company_name', 'representative',
             'business_registration_number', 'number_of_employees', 'annual_sales',
@@ -21,150 +76,197 @@ class CustomerInformationForm(forms.ModelForm):
             'business_address', 'e_mail', 'erp_maintenance', 'erp_usage_status',
             'groupware', 'company_evaluation', 'note'
         ]
+        
+        # 필드별 위젯 커스터마이징
         widgets = {
+            # 등록일 필드: 날짜 입력 위젯
             'registration_date': forms.DateInput(
                 attrs={
-                    'class': 'form-control',
-                    'type': 'date'
+                    'class': 'form-control',  # Bootstrap CSS 클래스
+                    'type': 'date'  # HTML5 날짜 타입
                 }
             ),
+            
+            # 지역 필드: 텍스트 입력 위젯
             'region': forms.TextInput(
                 attrs={
-                    'class': 'form-control',
-                    'placeholder': '지역을 입력하세요 (예: 서울, 경기)'
+                    'class': 'form-control',  # Bootstrap CSS 클래스
+                    'placeholder': '지역을 입력하세요 (예: 서울, 경기)'  # 플레이스홀더
                 }
             ),
+            
+            # 구분 필드: 텍스트 입력 위젯
             'division': forms.TextInput(
                 attrs={
-                    'class': 'form-control',
-                    'placeholder': '구분을 입력하세요 (예: 내부, 외부, 파트너)'
+                    'class': 'form-control',  # Bootstrap CSS 클래스
+                    'placeholder': '구분을 입력하세요 (예: 내부, 외부, 파트너)'  # 플레이스홀더
                 }
             ),
+            
+            # 기업명 필드: 텍스트 입력 위젯 (필수)
             'company_name': forms.TextInput(
                 attrs={
-                    'class': 'form-control',
-                    'placeholder': '기업명을 입력하세요',
-                    'required': 'required'
+                    'class': 'form-control',  # Bootstrap CSS 클래스
+                    'placeholder': '기업명을 입력하세요',  # 플레이스홀더
+                    'required': 'required'  # 필수 필드 표시
                 }
             ),
+            
+            # 대표자명 필드: 텍스트 입력 위젯 (필수)
             'representative': forms.TextInput(
                 attrs={
-                    'class': 'form-control',
-                    'placeholder': '대표자명을 입력하세요',
-                    'required': 'required'
+                    'class': 'form-control',  # Bootstrap CSS 클래스
+                    'placeholder': '대표자명을 입력하세요',  # 플레이스홀더
+                    'required': 'required'  # 필수 필드 표시
                 }
             ),
+            
+            # 사업자등록번호 필드: 텍스트 입력 위젯 (필수)
             'business_registration_number': forms.TextInput(
                 attrs={
-                    'class': 'form-control',
-                    'placeholder': '사업자등록번호를 입력하세요',
-                    'required': 'required'
+                    'class': 'form-control',  # Bootstrap CSS 클래스
+                    'placeholder': '사업자등록번호를 입력하세요',  # 플레이스홀더
+                    'required': 'required'  # 필수 필드 표시
                 }
             ),
+            
+            # 종업원수 필드: 숫자 입력 위젯
             'number_of_employees': forms.NumberInput(
                 attrs={
-                    'class': 'form-control',
-                    'placeholder': '종업원수',
-                    'min': '0'
+                    'class': 'form-control',  # Bootstrap CSS 클래스
+                    'placeholder': '종업원수',  # 플레이스홀더
+                    'min': '0'  # 최소값 0
                 }
             ),
+            
+            # 연간 매출액 필드: 숫자 입력 위젯
             'annual_sales': forms.NumberInput(
                 attrs={
-                    'class': 'form-control',
-                    'placeholder': '연간 매출액',
-                    'min': '0'
+                    'class': 'form-control',  # Bootstrap CSS 클래스
+                    'placeholder': '연간 매출액',  # 플레이스홀더
+                    'min': '0'  # 최소값 0
                 }
             ),
+            
+            # 업종 필드: 텍스트 입력 위젯
             'sectors': forms.TextInput(
                 attrs={
-                    'class': 'form-control',
-                    'placeholder': '주요 업종을 입력하세요 (예: IT, 제조, 서비스)'
+                    'class': 'form-control',  # Bootstrap CSS 클래스
+                    'placeholder': '주요 업종을 입력하세요 (예: IT, 제조, 서비스)'  # 플레이스홀더
                 }
             ),
+            
+            # 종목/이벤트 필드: 텍스트 입력 위젯
             'event': forms.TextInput(
                 attrs={
-                    'class': 'form-control',
-                    'placeholder': '종목 또는 특별 이벤트를 입력하세요'
+                    'class': 'form-control',  # Bootstrap CSS 클래스
+                    'placeholder': '종목 또는 특별 이벤트를 입력하세요'  # 플레이스홀더
                 }
             ),
+            
+            # 외주사 작업 유형 필드: 텍스트 입력 위젯
             'outsourcing_work_type': forms.TextInput(
                 attrs={
-                    'class': 'form-control',
-                    'placeholder': '외주사 작업 유형을 입력하세요'
+                    'class': 'form-control',  # Bootstrap CSS 클래스
+                    'placeholder': '외주사 작업 유형을 입력하세요'  # 플레이스홀더
                 }
             ),
+            
+            # 주요업무 필드: 텍스트 입력 위젯
             'main_business': forms.TextInput(
                 attrs={
-                    'class': 'form-control',
-                    'placeholder': '주요업무 내용을 입력하세요'
+                    'class': 'form-control',  # Bootstrap CSS 클래스
+                    'placeholder': '주요업무 내용을 입력하세요'  # 플레이스홀더
                 }
             ),
+            
+            # 계약 상태 필드: 텍스트 입력 위젯
             'contract_status': forms.TextInput(
                 attrs={
-                    'class': 'form-control',
-                    'placeholder': '계약 상태를 입력하세요 (예: 진행중, 완료, 만료)'
+                    'class': 'form-control',  # Bootstrap CSS 클래스
+                    'placeholder': '계약 상태를 입력하세요 (예: 진행중, 완료, 만료)'  # 플레이스홀더
                 }
             ),
+            
+            # V3 계약 상태 필드: 텍스트 입력 위젯
             'v3_contract_status': forms.TextInput(
                 attrs={
-                    'class': 'form-control',
-                    'placeholder': 'V3 계약 상태 (O 또는 X)',
-                    'maxlength': '1'
+                    'class': 'form-control',  # Bootstrap CSS 클래스
+                    'placeholder': 'V3 계약 상태 (O 또는 X)',  # 플레이스홀더
+                    'maxlength': '1'  # 최대 길이 1자
                 }
             ),
+            
+            # 담당직원 필드: 텍스트 입력 위젯
             'staff_in_charge': forms.TextInput(
                 attrs={
-                    'class': 'form-control',
-                    'placeholder': '담당직원을 입력하세요'
+                    'class': 'form-control',  # Bootstrap CSS 클래스
+                    'placeholder': '담당직원을 입력하세요'  # 플레이스홀더
                 }
             ),
+            
+            # 전화번호 필드: 텍스트 입력 위젯
             'phone_number': forms.TextInput(
                 attrs={
-                    'class': 'form-control',
-                    'placeholder': '전화번호를 입력하세요'
+                    'class': 'form-control',  # Bootstrap CSS 클래스
+                    'placeholder': '전화번호를 입력하세요'  # 플레이스홀더
                 }
             ),
+            
+            # 사업장 주소 필드: 텍스트 입력 위젯
             'business_address': forms.TextInput(
                 attrs={
-                    'class': 'form-control',
-                    'placeholder': '사업장 주소를 입력하세요'
+                    'class': 'form-control',  # Bootstrap CSS 클래스
+                    'placeholder': '사업장 주소를 입력하세요'  # 플레이스홀더
                 }
             ),
+            
+            # 이메일 필드: 이메일 입력 위젯
             'e_mail': forms.EmailInput(
                 attrs={
-                    'class': 'form-control',
-                    'placeholder': '이메일 주소를 입력하세요'
+                    'class': 'form-control',  # Bootstrap CSS 클래스
+                    'placeholder': '이메일 주소를 입력하세요'  # 플레이스홀더
                 }
             ),
+            
+            # ERP 유지보수 필드: 텍스트 입력 위젯
             'erp_maintenance': forms.TextInput(
                 attrs={
-                    'class': 'form-control',
-                    'placeholder': 'ERP 유지보수 상태를 입력하세요'
+                    'class': 'form-control',  # Bootstrap CSS 클래스
+                    'placeholder': 'ERP 유지보수 상태를 입력하세요'  # 플레이스홀더
                 }
             ),
+            
+            # ERP 사용 현황 필드: 텍스트 입력 위젯
             'erp_usage_status': forms.TextInput(
                 attrs={
-                    'class': 'form-control',
-                    'placeholder': 'ERP 사용 현황을 입력하세요'
+                    'class': 'form-control',  # Bootstrap CSS 클래스
+                    'placeholder': 'ERP 사용 현황을 입력하세요'  # 플레이스홀더
                 }
             ),
+            
+            # 그룹웨어 사용 필드: 체크박스 위젯
             'groupware': forms.CheckboxInput(
                 attrs={
-                    'class': 'form-check-input'
+                    'class': 'form-check-input'  # Bootstrap CSS 클래스
                 }
             ),
+            
+            # 업체 평가 필드: 텍스트 입력 위젯
             'company_evaluation': forms.TextInput(
                 attrs={
-                    'class': 'form-control',
-                    'placeholder': '업체 평가 (예: A, B, C)',
-                    'maxlength': '1'
+                    'class': 'form-control',  # Bootstrap CSS 클래스
+                    'placeholder': '업체 평가 (예: A, B, C)',  # 플레이스홀더
+                    'maxlength': '1'  # 최대 길이 1자
                 }
             ),
+            
+            # 비고 필드: 텍스트 영역 위젯
             'note': forms.Textarea(
                 attrs={
-                    'class': 'form-control',
-                    'placeholder': '비고나 추가 메모를 입력하세요',
-                    'rows': 3
+                    'class': 'form-control',  # Bootstrap CSS 클래스
+                    'placeholder': '비고나 추가 메모를 입력하세요',  # 플레이스홀더
+                    'rows': 3  # 텍스트 영역 높이
                 }
             ),
         }
