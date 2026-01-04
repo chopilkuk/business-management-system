@@ -3,7 +3,7 @@
     <!-- 로고 영역 -->
     <div class="navbar-brand">
         <a href="/" class="brand-logo">
-            <img src="{% static 'images/logo.png' %}" alt="Global Logo" width="40px">
+            <img src="{% static 'menu/logo.png' %}" alt="Global Logo" width="40px">
         </a>
         <span class="brand-text">Business Management System</span>
     </div>
@@ -99,13 +99,13 @@
         <!-- 사용자 메뉴 -->
         <div class="user-menu">
             <button class="user-menu-btn" onclick="toggleUserMenu()">
-                <img src="{% static 'images/user-avatar.png' %}" alt="User" class="user-avatar">
+                <img src="{% static 'menu/user-avatar.png' %}" alt="User" class="user-avatar">
                 <span class="user-name">{{ user.username }}</span>
                 <i class="fas fa-chevron-down"></i>
             </button>
             <div class="user-dropdown" id="userDropdown">
                 <div class="user-header">
-                    <img src="{% static 'images/user-avatar.png' %}" alt="User" class="user-avatar-large">
+                    <img src="{% static 'menu/user-avatar.png' %}" alt="User" class="user-avatar-large">
                     <div class="user-info">
                         <div class="user-name">{{ user.username }}</div>
                         <div class="user-role">{% if user.is_staff %}관리자{% else %}사용자{% endif %}</div>

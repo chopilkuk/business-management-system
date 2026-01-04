@@ -558,22 +558,22 @@
 <body>
     <nav id="nav3">
         <a href="/home/">
-            <img src="{% static 'images/logo.png' %}" width="35px" alt="로고">
+            <img src="{% static 'menu/logo.png' %}" width="35px" alt="로고">
         </a>
         <ul>
-            <li><a href="/home/" title="홈"><img src="{% static 'images/home.png' %}" width="40px" alt="홈"></a></li>
-            <li><a href="/calendar/" title="캘린더"><img src="{% static 'images/calendar.png' %}" width="40px" alt="캘린더"></a></li>
-            <li><a href="/commute/" title="출퇴근관리"><img src="{% static 'images/commute.png' %}" width="40px" alt="출퇴근관리"></a></li>
-            <li><a href="/client_inform/" title="거래처정보"><img src="{% static 'images/client.png' %}" width="40px" alt="거래처정보"></a></li>
-            <li><a href="/businessStatus/" title="업무현황"><img src="{% static 'images/businessStatus.png' %}" width="40px" alt="업무현황"></a></li>
-            <li><a href="/businessManagement/" title="업무관리"><img src="{% static 'images/businessManagement.png' %}" width="40px" alt="업무관리"></a></li>
-            <li><a href="/address/" title="주소록"><img src="{% static 'images/address.png' %}" width="40px" alt="주소록"></a></li>
-            <li><a href="/공지사항/" title="공지사항"><img src="{% static 'images/notice.png' %}" width="40px" alt="공지사항"></a></li>
-            <li><a href="/data/" title="자료"><img src="{% static 'images/data.png' %}" width="40px" alt="자료"></a></li>
-            <li><a href="/기술/" title="기술"><img src="{% static 'images/technology.png' %}" width="40px" alt="기술"></a></li>
-            <li><a href="/supportProject/" title="지원사업"><img src="{% static 'images/supportProject.png' %}" width="40px" alt="지원사업"></a></li>
-            <li><a href="/authority/" title="권한"><img src="{% static 'images/authority.png' %}" width="40px" alt="권한"></a></li>
-            <li><a href="/cooperation/" title="협업관리"><img src="{% static 'images/cooperation.png' %}" width="40px" alt="협업관리"></a></li>
+            <li><a href="/home/" title="홈"><img src="{% static 'menu/home.png' %}" width="40px" alt="홈"></a></li>
+            <li><a href="/calendar/" title="캘린더"><img src="{% static 'menu/calendar.png' %}" width="40px" alt="캘린더"></a></li>
+            <li><a href="/commute/" title="출퇴근관리"><img src="{% static 'menu/commute.png' %}" width="40px" alt="출퇴근관리"></a></li>
+            <li><a href="/client_inform/" title="거래처정보"><img src="{% static 'menu/client.png' %}" width="40px" alt="거래처정보"></a></li>
+            <li><a href="/businessStatus/" title="업무현황"><img src="{% static 'menu/businessStatus.png' %}" width="40px" alt="업무현황"></a></li>
+            <li><a href="/businessManagement/" title="업무관리"><img src="{% static 'menu/businessManagement.png' %}" width="40px" alt="업무관리"></a></li>
+            <li><a href="/address/" title="주소록"><img src="{% static 'menu/address.png' %}" width="40px" alt="주소록"></a></li>
+            <li><a href="/공지사항/" title="공지사항"><img src="{% static 'menu/notice.png' %}" width="40px" alt="공지사항"></a></li>
+            <li><a href="/data/" title="자료"><img src="{% static 'menu/data.png' %}" width="40px" alt="자료"></a></li>
+            <li><a href="/기술/" title="기술"><img src="{% static 'menu/technology.png' %}" width="40px" alt="기술"></a></li>
+            <li><a href="/supportProject/" title="지원사업"><img src="{% static 'menu/supportProject.png' %}" width="40px" alt="지원사업"></a></li>
+            <li><a href="/authority/" title="권한"><img src="{% static 'menu/authority.png' %}" width="40px" alt="권한"></a></li>
+            <li><a href="/cooperation/" title="협업관리"><img src="{% static 'menu/cooperation.png' %}" width="40px" alt="협업관리"></a></li>
         </ul>
         <input type="button" class="logout" title="로그아웃">
     </nav>
@@ -582,7 +582,7 @@
         <div class="userBox">
             <!-- 프로필 -->
             <div class="profile">
-                <img src="{% static 'images/puppy.jpg' %}" alt="프로필 이미지">
+                <img src="{% static 'menu/puppy.jpg' %}" alt="프로필 이미지">
             </div>
             <span class="username">{{ user.username|default:"강아지" }}</span>
             <span class="userrank">사원</span>
@@ -600,7 +600,7 @@
             
             <div class="alarm">
                 <div class="alarmImg">
-                    <img src="{% static 'images/alram.png' %}" width="15px" alt="알림">
+                    <img src="{% static 'menu/alram.png' %}" width="15px" alt="알림">
                 </div>
                 <div class="alarmTitle">알림</div>
                 <div class="alarm">
@@ -621,19 +621,19 @@
                 <div class="userMenu">
                     <div class="dateMenu">
                         <a href="/data/">
-                            <img src="{% static 'images/datablack.png' %}" width="40px" alt="자료"><br>
+                            <img src="{% static 'menu/datablack.png' %}" width="40px" alt="자료"><br>
                         </a>
                         <span style="font-size: 13px; font-weight: 500; margin-left: 7px">자료</span>
                     </div>
                     <div class="authoMenu">
                         <a href="/authority/">
-                            <img src="{% static 'images/authorityblack.png' %}" width="40px" alt="권한"><br>
+                            <img src="{% static 'menu/authorityblack.png' %}" width="40px" alt="권한"><br>
                         </a>
                         <span style="font-size: 13px; font-weight: 500; margin-left: 7px">권한</span>
                     </div>
                     <div class="settingMenu">
                         <a href="/setting/">
-                            <img src="{% static 'images/settingblack.png' %}" width="40px" alt="설정"><br>
+                            <img src="{% static 'menu/settingblack.png' %}" width="40px" alt="설정"><br>
                         </a>
                         <span style="font-size: 12px; font-weight: 500; margin-left: 7px">설정</span>
                     </div>
@@ -669,7 +669,7 @@
         <div class="userThree">
             <a href="/businessManagement/">
                 <span class="businessAla">20</span>
-                <img src="{% static 'images/businessManagement.png' %}" width="80px" style="margin-left: 5px; margin-top: 100px;"><br>
+                <img src="{% static 'menu/businessManagement.png' %}" width="80px" style="margin-left: 5px; margin-top: 100px;"><br>
                 <span class="businesstTitle" style="margin-left: 14px; font-size: 16px; font-weight: 600;">업무관리</span>
             </a>
         </div>
@@ -678,7 +678,7 @@
         <div class="userFour">
             <a href="/client_inform/">
                 <span class="clientAla">5</span>
-                <img src="{% static 'images/client.png' %}" width="80px" style="margin-left: 5px; margin-top: 100px;"><br>
+                <img src="{% static 'menu/client.png' %}" width="80px" style="margin-left: 5px; margin-top: 100px;"><br>
                 <span class="clientTitle" style="margin-left: 24px; font-size: 16px; font-weight: 600;">거래처</span>
             </a>
         </div>
@@ -687,7 +687,7 @@
         <div class="userFive">
             <a href="/기술/">
                 <span class="techAla">8</span>
-                <img src="{% static 'images/technology.png' %}" width="80px" style="margin-left: 5px; margin-top: 100px;"><br>
+                <img src="{% static 'menu/technology.png' %}" width="80px" style="margin-left: 5px; margin-top: 100px;"><br>
                 <span class="techTitle" style="margin-left: 25px; font-size: 16px; font-weight: 600;">기술</span>
             </a>
         </div>
@@ -696,7 +696,7 @@
         <div class="userSix">
             <a href="/cooperation/">
                 <span class="cooperAla">17</span>
-                <img src="{% static 'images/cooperation.png' %}" width="80px" style="margin-left: 5px; margin-top: 100px;"><br>
+                <img src="{% static 'menu/cooperation.png' %}" width="80px" style="margin-left: 5px; margin-top: 100px;"><br>
                 <span class="cooperTitle" style="margin-left: 16px; font-size: 16px; font-weight: 600;">협업관리</span>
             </a>
         </div>

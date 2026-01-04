@@ -25,6 +25,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 # 운영체제 관련 기능 임포트
 import os
+from django.core.exceptions import ImproperlyConfigured
 
 # =============================================================================
 # 기본 경로 설정
@@ -48,13 +49,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # 보안 경고: 운영 환경에서 사용되는 시크릿 키를 비밀로 유지하세요!
 # Django의 암호화, 세션, CSRF 보호 등에 사용되는 중요한 키입니다.
 # 운영 환경에서는 반드시 환경 변수나 별도 파일에서 관리해야 합니다.
-SECRET_KEY = 'django-insecure-your-secret-key-here-change-in-production'
+
+# DEBUG may be controlled via environment for CI/production. Default to True for local dev.
+DEBUG = os.environ.get('DEBUG', 'True').lower() in ('1', 'true', 'yes')
+
+SECRET_KEY = os.environ.get('SECRET_KEY')
+if not SECRET_KEY:
+    if DEBUG:
+        SECRET_KEY = 'django-insecure-development-key-please-change'
+    else:
+        raise ImproperlyConfigured('The SECRET_KEY environment variable is required in production')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # 보안 경고: 운영 환경에서 디버그 모드를 켜지 마세요!
 # DEBUG=True이면 에러 상세 정보가 노출되어 보안에 취약합니다.
 # 개발 환경에서는 True, 운영 환경에서는 False로 설정해야 합니다.
-DEBUG = True
 
 # =============================================================================
 # 호스트 설정
@@ -88,7 +97,7 @@ INSTALLED_APPS = [
     'login',                       # 로그인
     '공지사항',                     # 공지사항 관리
     '기술',                        # 기술 관리
-    # 'utils',                       # 유틸리티 모듈 (캐싱, 보안, 모니터링)
+    'utils',                       # 유틸리티 모듈 (캐싱, 보안, 모니터링)
     # 'api',                         # RESTful API
 ]
 
@@ -129,70 +138,22 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'business_management.wsgi.application'
 # WSGI 애플리케이션 설정 - 웹 서버와 Django 연결
-
+# NOTE: `DEFAULT_AUTO_FIELD` is set later to the canonical Django value.
 # Database
 # 데이터베이스 설정 - 개발 환경에서는 SQLite 사용
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
+# Database
+# 데이터베이스 설정 - 개발 환경에서는 SQLite 사용
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',    # SQLite 백엔드 사용
         'NAME': BASE_DIR / 'db.sqlite3',          # 데이터베이스 파일 경로
     }
 }
+# LOGGING is consolidated later in this file; keep a single effective
+# LOGGING configuration (defined further below).
 
-# Password validation
-# 비밀번호 검증 설정 - 사용자 비밀번호의 강도를 검증하는 규칙들
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
-
-AUTH_PASSWORD_VALIDATORS = [
-    # 사용자 이름과 비슷한 비밀번호 방지
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    # 최소 길이 검증
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    # 일반적인 비밀번호 목록과 일치하는지 검증
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    # 숫자로만 구성된 비밀번호 방지
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
-
-# Internationalization
-# 국제화 설정 - 다국어 지원
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
-
-LANGUAGE_CODE = 'ko-kr'    # 한국어 설정
-TIME_ZONE = 'Asia/Seoul'   # 서울 시간대
-
-USE_I18N = True            # 국제화 기능 활성화
-USE_TZ = True              # 시간대 기능 활성화
-
-# Static files (CSS, JavaScript, Images)
-# 정적 파일 설정 - CSS, JavaScript, 이미지 등 개발 리소스
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-
-# Media files (사용자 업로드 파일)
-# 미디어 파일 설정 - 사용자가 업로드하는 파일 저장 위치
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
-
-# Default primary key field type
-# 기본 기본 키 필드 타입 설정
-DEFAULT_AUTO_FIELD = 'big.AutoField'
-
-# Cache settings
-# 캐시 설정 - 성능 최적화를 위한 캐시 백엔드 설정
+# Cache settings - 성능을 위한 캐시 설정
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
@@ -214,92 +175,25 @@ CACHES = {
     },
 }
 
-# Logging settings
-# 로깅 설정 - 시스템 모니터링 및 오류 추적
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
-        },
-        'simple': {
-            'format': '{levelname} {message}',
-        },
-    },
-    'handlers': {
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'logs', 'django.log'),
-            'formatter': 'verbose',
-        },
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple',
-        },
-        'security': {
-            'level': 'WARNING',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'logs', 'security.log'),
-            'formatter': 'verbose',
-        },
-        'performance': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'logs', 'performance.log'),
-            'formatter': 'verbose',
-        },
-        'user_activity': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'logs', 'user_activity.log'),
-            'formatter': 'verbose',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file', 'console'],
-            'level': 'INFO',
-            'propagate': True,
-        },
-        'security': {
-            'handlers': ['security'],
-            'level': 'WARNING',
-            'propagate': False,
-        },
-        'performance': {
-            'handlers': ['performance'],
-            'level': 'INFO',
-            'propagate': False,
-        },
-        'user_activity': {
-            'handlers': ['user_activity'],
-            'level': 'INFO',
-            'propagate': False,
-        },
-        'system': {
-            'handlers': ['file'],
-            'level': 'INFO',
-            'propagate': False,
-        },
-    },
-}
-
 # Security settings
-# 보안 설정 - 엔터프라이즈급 보안 강화
-SECURE_SSL_REDIRECT = True
+# 보안 설정 - 운영/개발 환경에 따라 일부 값은 동적으로 설정
+SECURE_SSL_REDIRECT = False
 SECURE_HSTS_SECONDS = 31536000
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
-SESSION_COOKIE_SECURE = True
+# Cookie security: enable strict/secure cookies in production
+if DEBUG:
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = False
+else:
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Strict'
-CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_HTTPONLY = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
@@ -320,13 +214,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'  # 큰 정수 자동 증가
 MEDIA_URL = '/media/'       # 미디어 파일 URL 접두사
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # 미디어 파일 저장 경로
 
-# Security settings
-# 추가적인 보안 설정들
+# Internationalization
+# 국제화 설정
+LANGUAGE_CODE = 'ko-kr'
+TIME_ZONE = 'Asia/Seoul'
+USE_I18N = True
+USE_TZ = True
 
-CSRF_COOKIE_SECURE = False        # HTTPS에서만 CSRF 쿠키 전송 (개발 환경에서는 False)
-SESSION_COOKIE_SECURE = False     # HTTPS에서만 세션 쿠키 전송 (개발 환경에서는 False)
-CSRF_COOKIE_HTTPONLY = True        # JavaScript에서 CSRF 쿠키 접근 방지
-SESSION_COOKIE_HTTPONLY = True     # JavaScript에서 세션 쿠키 접근 방지
+# Additional security settings are handled above (cookie security is set
+# conditionally based on DEBUG). Do not duplicate here.
 
 # Logging configuration
 # 로깅 설정 - 애플리케이션의 동작을 기록하는 설정
