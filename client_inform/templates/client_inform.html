@@ -315,6 +315,7 @@ function create_vaccine_table()
                     <button id="excel" onclick=excel()>Excel</button>
                     <button id="print" onclick=print()>Print</button>
                     <button id="column_visiblity" onclick=column_visiblity()>Column visibility</button>
+                    <a href="{% url 'client_inform:create' %}" class="btn btn-success" style="margin-left:10px;">업체등록</a>
                 </div>
                 <div class="tool2">
                     <input class="form-control" type="text" placeholder="검색어를 입력하세요." aria-label="검색어를 입력하세요." aria-describedby="button-search" id="search-input"/>
