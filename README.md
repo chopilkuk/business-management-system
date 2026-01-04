@@ -318,13 +318,55 @@ docker run -p 8000:8000 business-management
 
 ## 🔄 변경 로그
 
+## 🔄 변경 로그 및 버전 관리
+
+### 버전 정책
+- 이 프로젝트는 Semantic Versioning(유의적 버전, `MAJOR.MINOR.PATCH`)을 따릅니다.
+   - MAJOR: 호환되지 않는 API 변경
+   - MINOR: 하위 호환이 되는 기능 추가
+   - PATCH: 하위 호환이 되는 버그 수정
+
+### 변경 기록 작성 방법
+- 새 변경을 커밋하고 PR을 만들 때 `README.md`의 이 섹션 상단에 새 항목을 추가하세요.
+- 항목에는 날짜와 작성자, 변경 종류(Added/Changed/Fixed/Docs/Chore), 간단한 설명, 관련 이슈/PR 번호를 포함합니다.
+
+#### 변경 항목 템플릿
+- `vX.Y.Z (YYYY-MM-DD) — 작성자`
+   - Category: Added | Changed | Fixed | Docs | Chore
+   - Description: 간단한 변경 설명 (한국어)
+   - PR/Issue: #번호
+
+#### 예시 항목
+- `v1.0.1 (2025-01-04) — 홍길동`
+   - Category: Docs
+   - Description: README에 변경 기록 템플릿 추가
+   - PR/Issue: #42
+
+- `v1.0.2 (2026-01-04) — 자동정리봇`
+   - Category: Chore
+   - Description: README에 버전 관리 가이드 추가 및 초기 정리 스크립트 추가
+   - PR/Issue: #auto
+
+### 커밋·브랜치 가이드 (권장)
+- 브랜치: `feature/`, `fix/`, `hotfix/`, `release/vX.Y.Z`
+- 커밋 메시지 예시: `feat(client): add search filter` / `fix(commute): correct timezone handling`
+- 릴리스 커밋 메시지 예시: `chore(release): vX.Y.Z - 요약`
+
+### 릴리스 절차 (간단)
+1. 기능/수정 완료 후 PR 생성 및 리뷰
+2. 리뷰 머지 후 `release/vX.Y.Z` 브랜치 생성 (또는 직접 태그 생성)
+3. `README.md`의 이 섹션에 새 릴리스 항목 추가
+4. 태그 생성: `git tag -a vX.Y.Z -m "Release vX.Y.Z"` 및 푸시
+
+---
+
+### 기존 릴리스
+
 ### v1.0.0 (2024-01-15)
 - 초기 릴리스
 - 기본 기능 구현
 - 보안 강화
 - UI/UX 개선
-
----
 
 **개발팀**: Your Company Development Team  
 **최종 업데이트**: 2024-01-15
