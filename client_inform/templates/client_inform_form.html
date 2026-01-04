@@ -6,6 +6,7 @@
   <h2>{{ action }} 거래처</h2>
   <form method="post" novalidate>
     {% csrf_token %}
+    <script src="{% static 'js/form_validation.js' %}"></script>
     {{ form.non_field_errors }}
     <div class="row">
       {% for field in form.visible_fields %}
