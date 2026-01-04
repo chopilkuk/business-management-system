@@ -43,7 +43,37 @@
                 <br>
                 <div class="tableBox">
                     <div class="t1Box">
-                        <div id="inform_table"><table id="t1"></table></div>
+                        <div id="inform_table">
+                            <table id="t1" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>회사명</th>
+                                        <th>대표자</th>
+                                        <th>연락처</th>
+                                        <th>등록일</th>
+                                        <th>작업</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for client in clients %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ client.company_name }}</td>
+                                        <td>{{ client.representative }}</td>
+                                        <td>{{ client.phone_number }}</td>
+                                        <td>{{ client.registration_date }}</td>
+                                        <td>
+                                            <a href="{% url 'client_inform:edit' client.pk %}" class="btn btn-sm btn-primary">수정</a>
+                                            <a href="{% url 'client_inform:delete' client.pk %}" class="btn btn-sm btn-danger">삭제</a>
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr><td colspan="6">등록된 거래처가 없습니다.</td></tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <div class="t2Box">
                         <div id="vaccine_list"><table id="t2"></table></div>

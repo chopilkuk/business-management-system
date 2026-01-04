@@ -91,8 +91,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // 초기 생성
-  try{ create_inform_table(); }catch(e){}
+  // 초기 생성: 서버에서 이미 렌더된 테이블이 있으면 JS 추가 생성을 하지 않음
+  try{
+    var t1 = document.getElementById('t1');
+    if(t1 && t1.tBodies && t1.tBodies.length > 0 && t1.tBodies[0].children.length>0){
+      // 서버 렌더링된 목록이 존재하므로 추가 생성하지 않음
+    }else{
+      create_inform_table();
+    }
+  }catch(e){}
 
   // 기타 UI 핸들러 최소 구현
   window.create_inform_table = create_inform_table;
