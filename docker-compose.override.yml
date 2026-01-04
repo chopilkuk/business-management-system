@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  web:
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    environment:
+      - DEBUG=True
+      - SECRET_KEY=dev-secret-key
+      - DB_PASSWORD=postgres123
+    volumes:
+      - .:/app:rw
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+    ports:
+      - "8000:8000"

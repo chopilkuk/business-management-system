@@ -1,17 +1,9 @@
-# =============================================================================
-# 비즈니스 관리 시스템 거래처 정보 관리 앱 테스트
-# =============================================================================
-# 설명: 거래처 정보 관리 기능의 테스트 케이스를 정의
-# 작성자: 비즈니스 관리 시스템 개발팀
-# 버전: 1.0.0
-# =============================================================================
 
 # Django 테스트 프레임워크 임포트
 from django.test import TestCase
+from .forms import CustomerInformationForm
+from .models import customer_information
 
-# =============================================================================
-# 테스트 클래스 정의 영역
-# =============================================================================
 
 class ClientInformTests(TestCase):
     """
@@ -53,8 +45,35 @@ class ClientInformTests(TestCase):
             3. 저장된 데이터의 정확성 확인
             4. 필수 필드의 값 검증
         """
-        # TODO: 거래처 생성 테스트 구현
-        pass
+        data = {
+            'company_name': '테스트주식회사',
+            'representative': '홍길동',
+            'business_registration_number': '1234567890',
+            'registration_date': '2025-01-01',
+            'region': '서울',
+            'division': '외주',
+            'number_of_employees': 5,
+            'annual_sales': 1000000,
+            'sectors': 'IT',
+            'event': '',
+            'outsourcing_work_type': '',
+            'main_business': '',
+            'contract_status': '',
+            'v3_contract_status': 'O',
+            'staff_in_charge': '',
+            'phone_number': '010-0000-0000',
+            'business_address': '',
+            'e_mail': 'test@example.com',
+            'erp_maintenance': '',
+            'erp_usage_status': '',
+            'groupware': False,
+            'company_evaluation': 'A',
+            'note': ''
+        }
+        form = CustomerInformationForm(data)
+        self.assertTrue(form.is_valid(), msg=form.errors.as_json())
+        obj = form.save()
+        self.assertIsInstance(obj, customer_information)
     
     def test_client_validation(self):
         """
@@ -75,8 +94,37 @@ class ClientInformTests(TestCase):
             3. ValidationError 발생 확인
             4. 에러 메시지 검증
         """
-        # TODO: 거래처 유효성 검증 테스트 구현
-        pass
+        data = {
+            'company_name': 'A',
+            'representative': '!!',
+            'business_registration_number': 'abc',
+            'registration_date': '2025-01-01',
+            'region': '서울',
+            'division': '외주',
+            'number_of_employees': -1,
+            'annual_sales': -100,
+            'sectors': 'IT',
+            'event': '',
+            'outsourcing_work_type': '',
+            'main_business': '',
+            'contract_status': '',
+            'v3_contract_status': 'O',
+            'staff_in_charge': '',
+            'phone_number': 'not-phone',
+            'business_address': '',
+            'e_mail': 'invalid-email',
+            'erp_maintenance': '',
+            'erp_usage_status': '',
+            'groupware': False,
+            'company_evaluation': 'Z',
+            'note': ''
+        }
+        form = CustomerInformationForm(data)
+        self.assertFalse(form.is_valid())
+        # Expect errors for multiple fields
+        self.assertIn('company_name', form.errors)
+        self.assertIn('representative', form.errors)
+        self.assertIn('business_registration_number', form.errors)
     
     def test_client_list(self):
         """
@@ -97,8 +145,18 @@ class ClientInformTests(TestCase):
             3. HTTP 상태 코드 확인
             4. 템플릿에 거래처 목록이 포함되는지 확인
         """
-        # TODO: 거래처 목록 조회 테스트 구현
-        pass
+        # create sample
+        customer_information.objects.create(
+            registration_date='2025-01-01', region='서울', division='외주',
+            company_name='C1', representative='A', business_registration_number='1234567890',
+            number_of_employees=1, annual_sales=1000, sectors='IT', event='',
+            outsourcing_work_type='', main_business='', contract_status='', v3_contract_status='O',
+            staff_in_charge='', phone_number='010-0000-0000', business_address='', e_mail='a@b.com',
+            erp_maintenance='', erp_usage_status='', groupware=False, company_evaluation='A', note=''
+        )
+        resp = self.client.get('/client_inform/')
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, 'C1')
     
     def test_client_update(self):
         """
@@ -120,8 +178,18 @@ class ClientInformTests(TestCase):
             4. 수정된 데이터의 정확성 확인
             5. 데이터베이스에 반영된 값 확인
         """
-        # TODO: 거래처 정보 수정 테스트 구현
-        pass
+        obj = customer_information.objects.create(
+            registration_date='2025-01-01', region='서울', division='외주',
+            company_name='C2', representative='A', business_registration_number='1234567891',
+            number_of_employees=1, annual_sales=1000, sectors='IT', event='',
+            outsourcing_work_type='', main_business='', contract_status='', v3_contract_status='O',
+            staff_in_charge='', phone_number='010-0000-0000', business_address='', e_mail='a@b.com',
+            erp_maintenance='', erp_usage_status='', groupware=False, company_evaluation='A', note=''
+        )
+        resp = self.client.post(f'/client_inform/{obj.pk}/edit/', {'company_name': 'C2-updated', 'representative':'B', 'business_registration_number':'1234567891', 'registration_date':'2025-01-01', 'region':'서울', 'division':'외주', 'number_of_employees':1, 'annual_sales':1000, 'sectors':'IT', 'event':'', 'outsourcing_work_type':'', 'main_business':'', 'contract_status':'', 'v3_contract_status':'O', 'staff_in_charge':'','phone_number':'010-0000-0000','business_address':'','e_mail':'a@b.com','erp_maintenance':'','erp_usage_status':'','groupware':False,'company_evaluation':'A','note':''})
+        self.assertEqual(resp.status_code, 302)
+        obj.refresh_from_db()
+        self.assertEqual(obj.company_name, 'C2-updated')
     
     def test_client_delete(self):
         """
@@ -142,5 +210,15 @@ class ClientInformTests(TestCase):
             3. 삭제 성공 확인
             4. 데이터베이스에서 레코드가 사라졌는지 확인
         """
-        # TODO: 거래처 삭제 테스트 구현
-        pass
+        obj = customer_information.objects.create(
+            registration_date='2025-01-01', region='서울', division='외주',
+            company_name='C3', representative='A', business_registration_number='1234567892',
+            number_of_employees=1, annual_sales=1000, sectors='IT', event='',
+            outsourcing_work_type='', main_business='', contract_status='', v3_contract_status='O',
+            staff_in_charge='', phone_number='010-0000-0000', business_address='', e_mail='a@b.com',
+            erp_maintenance='', erp_usage_status='', groupware=False, company_evaluation='A', note=''
+        )
+        resp = self.client.post(f'/client_inform/{obj.pk}/delete/')
+        self.assertEqual(resp.status_code, 302)
+        with self.assertRaises(customer_information.DoesNotExist):
+            customer_information.objects.get(pk=obj.pk)
