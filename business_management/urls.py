@@ -18,8 +18,15 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.shortcuts import redirect
+
+
+# Development helper: redirect missing /static/images/... requests to /static/menu/...
+def _redirect_images_to_menu(request, path):
+    return redirect(f'/static/menu/{path}')
 
 urlpatterns = [
+    path('static/images/<path:path>', _redirect_images_to_menu),
     path('admin/', admin.site.urls),
     path('', include('home.urls')),
     path('login/', include('login.urls')),

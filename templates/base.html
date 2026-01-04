@@ -17,10 +17,11 @@
     <link rel="stylesheet" href="{% static 'css/global.css' %}">
     <link rel="stylesheet" href="{% static 'css/footer.css' %}">
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/theme_selector.css' %}">
     
     <!-- 파비콘 아이콘 -->
-    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
-    <link rel="apple-touch-icon" href="{% static 'images/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'menu/favicon.ico' %}">
+    <link rel="apple-touch-icon" href="{% static 'menu/apple-touch-icon.png' %}">
     
     <!-- 테마 색상 -->
     <meta name="theme-color" content="#2563eb">
@@ -29,7 +30,7 @@
     <!-- Open Graph 메타 태그 -->
     <meta property="og:title" content="{% block title %} - Business Management System">
     <meta property="og:description" content="세계적인 비즈니스 관리 시스템">
-    <meta property="og:image" content="{% static 'images/og-image.jpg' %}">
+    <meta property="og:image" content="{% static 'menu/og-image.jpg' %}">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="ko_KR">
@@ -38,7 +39,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{% block title %} - Business Management System">
     <meta name="twitter:description" content="세계적인 비즈니스 관리 시스템">
-    <meta name="twitter:image" content="{% static 'images/twitter-card.jpg' %}">
+    <meta name="twitter:image" content="{% static 'menu/twitter-card.jpg' %}">
     
     <!-- 구조화된 데이터 -->
     <script type="application/ld+json">
@@ -63,6 +64,7 @@
 <body data-theme="light">
     <!-- 글로벌 내비게이션 -->
     {% include 'global_navbar.html' %}
+    {% include 'partials/theme_selector.html' %}
     
     <!-- 메인 컨텐측 영역 -->
     <main class="main-content">
@@ -80,22 +82,28 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="{% static 'js/realtime.js' %}"></script>
     <script src="{% static 'js/global.js' %}"></script>
+        <script src="{% static 'js/button-actions.js' %}"></script>
+        <script src="{% static 'js/fix-images.js' %}"></script>
     
     <!-- 테마 초기화 스크립트 -->
     <script>
-        // 테마 저장 및 로드
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            document.body.setAttribute('data-theme', savedTheme);
+        // 테마 저장 및 로드 (선택된 컬러 테마를 body에 적용)
+        const savedColorTheme = localStorage.getItem('selectedTheme');
+        if (savedColorTheme) {
+            document.body.setAttribute('data-selected-theme', savedColorTheme);
         }
-        
-        // 테마 토글 기능
-        function toggleTheme() {
-            const currentTheme = document.body.getAttribute('data-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            document.body.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-        }
+
+        // 테마 버튼 이벤트 바인딩
+        document.addEventListener('DOMContentLoaded', function() {
+            const opts = document.querySelectorAll('.theme-option');
+            opts.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const theme = this.dataset.theme;
+                    document.body.setAttribute('data-selected-theme', theme);
+                    localStorage.setItem('selectedTheme', theme);
+                });
+            });
+        });
         
         // 글로벌 검색 ESC 키 처리
         document.addEventListener('keydown', function(e) {
