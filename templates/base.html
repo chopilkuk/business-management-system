@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="{% static 'css/footer.css' %}">
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
     <link rel="stylesheet" href="{% static 'css/theme_selector.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ui-fixes.css' %}">
     
     <!-- 파비콘 아이콘 -->
     <link rel="icon" type="image/x-icon" href="{% static 'menu/favicon.ico' %}">
@@ -62,12 +63,13 @@
 </head>
 
 <body data-theme="light">
+    <a class="skip-link" href="#main-content" style="position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden;">본문으로 건너뛰기</a>
     <!-- 글로벌 내비게이션 -->
     {% include 'global_navbar.html' %}
     {% include 'partials/theme_selector.html' %}
     
     <!-- 메인 컨텐측 영역 -->
-    <main class="main-content">
+    <main id="main-content" class="main-content">
         <div class="content-wrapper">
             {% block content %}
                 {{ content|safe }}
@@ -84,6 +86,7 @@
     <script src="{% static 'js/global.js' %}"></script>
         <script src="{% static 'js/button-actions.js' %}"></script>
         <script src="{% static 'js/fix-images.js' %}"></script>
+        <script src="{% static 'js/theme-save.js' %}"></script>
     
     <!-- 테마 초기화 스크립트 -->
     <script>

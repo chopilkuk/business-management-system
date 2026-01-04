@@ -7,16 +7,36 @@
   <form method="post" novalidate>
     {% csrf_token %}
     <script src="{% static 'js/form_validation.js' %}"></script>
-    {{ form.non_field_errors }}
+    {% comment %} Accessible error summary for screen readers {% endcomment %}
+    {% if form.non_field_errors or form.errors %}
+      <div id="form-errors" role="alert" aria-live="assertive" class="alert alert-danger">
+        {% if form.non_field_errors %}
+          {% for err in form.non_field_errors %}
+            <div>{{ err }}</div>
+          {% endfor %}
+        {% endif %}
+        {% for field in form.visible_fields %}
+          {% for err in field.errors %}
+            <div>{{ field.label }}: {{ err }}</div>
+          {% endfor %}
+        {% endfor %}
+      </div>
+    {% endif %}
     <div class="row">
       {% for field in form.visible_fields %}
         <div class="mb-3 col-md-6">
           <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-          {{ field }}
+          {% if field.errors %}
+            {{ field.as_widget(attrs={'aria-describedby':'error_'|add:field.name}) }}
+          {% else %}
+            {{ field }}
+          {% endif %}
           {% if field.help_text %}<small class="form-text text-muted">{{ field.help_text }}</small>{% endif %}
-          {% for err in field.errors %}
-            <div class="text-danger">{{ err }}</div>
-          {% endfor %}
+          {% if field.errors %}
+            <div id="error_{{ field.name }}" class="text-danger" role="alert">
+              {% for err in field.errors %}{{ err }}{% if not forloop.last %}<br>{% endif %}{% endfor %}
+            </div>
+          {% endif %}
         </div>
       {% endfor %}
     </div>
