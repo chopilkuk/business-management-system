@@ -191,6 +191,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 # 기본 기본 키 필드 타입 설정
 DEFAULT_AUTO_FIELD = 'big.AutoField'
 
+# URL 설정
+# URL 슬래시 자동 추가 활성화
+APPEND_SLASH = True
+
 # Cache settings
 # 캐시 설정 - 성능 최적화를 위한 캐시 백엔드 설정
 CACHES = {
@@ -289,17 +293,17 @@ LOGGING = {
 
 # Security settings
 # 보안 설정 - 엔터프라이즈급 보안 강화
-SECURE_SSL_REDIRECT = True
-SECURE_HSTS_SECONDS = 31536000
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
+SECURE_SSL_REDIRECT = False
+SECURE_HSTS_SECONDS = 0
+SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+SECURE_HSTS_PRELOAD = False
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
-SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = False
 SESSION_COOKIE_HTTPONLY = True
-SESSION_COOKIE_SAMESITE = 'Strict'
-CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_SECURE = False
 CSRF_COOKIE_HTTPONLY = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
