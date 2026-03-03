@@ -16,8 +16,11 @@ from . import views
 # =============================================================================
 # 각 URL 경로에 해당하는 뷰 함수를 매핑
 urlpatterns = [
-    # 홈페이지 - 메인 대시보드
-    path('', views.home, name='home'),
+    # 홈페이지 - 메인 대시보드 (수정된 버전)
+    path('', views.home_fixed, name='home'),
+    
+    # 원래 홈페이지 (백업)
+    path('original/', views.home, name='home_original'),
     
     # 워크스페이스 - Untitled 스타일 대시보드
     path('workspace/', views.workspace, name='workspace'),

@@ -151,3 +151,38 @@ def home_complete(request):
         - 반응형 디자인 완벽 지원
     """
     return render(request, 'home_complete.html')
+
+def home_fixed(request):
+    """
+    메인 페이지 수정 뷰 함수
+    
+    Args:
+        request (HttpRequest): 클라이언트의 HTTP 요청 객체
+        
+    Returns:
+        HttpResponse: 렌더링된 수정된 메인 페이지 HTML 응답
+        
+    Description:
+        - 메인 페이지 화면 문제 해결
+        - 내장 CSS로 스타일 통합
+        - 외부 의존성 제거
+        - 완벽한 화면 표시
+    """
+    return render(request, 'home_fixed.html')
+
+def home_original(request):
+    """
+    원래 홈페이지 뷰 함수 (백업용)
+    
+    Args:
+        request (HttpRequest): 클라이언트의 HTTP 요청 객체
+        
+    Returns:
+        HttpResponse: 렌더링된 원래 홈페이지 HTML 응답
+        
+    Description:
+        - 원래 홈페이지 백업
+        - 외부 CSS 파일 의존
+        - 기존 기능 유지
+    """
+    return render(request, 'home.html')

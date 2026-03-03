@@ -51,6 +51,9 @@ urlpatterns = [
     # 완성형 홈페이지
     path('complete/', include('home.urls')),
     
+    # 메인 페이지 수정
+    path('main-fixed/', include('home.urls')),
+    
     # API 엔드포인트
     path('api/', include('api.urls')),
     
