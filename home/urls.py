@@ -19,6 +19,12 @@ urlpatterns = [
     # 홈페이지 - 메인 대시보드
     path('', views.home, name='home'),
     
+    # 워크스페이스 - Untitled 스타일 대시보드
+    path('workspace/', views.workspace, name='workspace'),
+    
+    # 완성형 홈페이지 - 완벽한 화면 비율
+    path('complete/', views.home_complete, name='home_complete'),
+    
     # 캘린더 페이지 - 일정 관리
     path('calendar/', views.calendar, name='calendar'),
     

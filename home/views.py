@@ -115,3 +115,39 @@ def address(request):
         - 그룹별 연락처 관리
     """
     return render(request, 'home/address.html')
+
+def workspace(request):
+    """
+    워크스페이스 페이지 뷰 함수
+    
+    Args:
+        request (HttpRequest): 클라이언트의 HTTP 요청 객체
+        
+    Returns:
+        HttpResponse: 렌더링된 워크스페이스 페이지 HTML 응답
+        
+    Description:
+        - Untitled Workspace 스타일의 대시보드
+        - 현대적인 UI/UX 디자인
+        - 실시간 데이터 표시
+        - 반응형 레이아웃 지원
+    """
+    return render(request, 'workspace.html')
+
+def home_complete(request):
+    """
+    완성형 홈페이지 뷰 함수
+    
+    Args:
+        request (HttpRequest): 클라이언트의 HTTP 요청 객체
+        
+    Returns:
+        HttpResponse: 렌더링된 완성형 홈페이지 HTML 응답
+        
+    Description:
+        - 완벽한 화면 비율의 비즈니스 관리 시스템
+        - 현대적인 디자인과 완벽한 레이아웃
+        - 모든 기능이 통합된 대시보드
+        - 반응형 디자인 완벽 지원
+    """
+    return render(request, 'home_complete.html')
