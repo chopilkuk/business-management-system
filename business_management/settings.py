@@ -224,6 +224,15 @@ USE_TZ = True
 # Additional security settings are handled above (cookie security is set
 # conditionally based on DEBUG). Do not duplicate here.
 
+# SSL/HTTPS settings for development
+# 개발 환경용 SSL/HTTPS 설정
+SECURE_SSL_REDIRECT = False
+SECURE_HSTS_SECONDS = 0
+SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+SECURE_HSTS_PRELOAD = False
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
+
 # Logging configuration
 # 로깅 설정 - 애플리케이션의 동작을 기록하는 설정
 LOGGING = {
