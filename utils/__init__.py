@@ -5,27 +5,13 @@
 캐싱, 보안, 모니터링 등의 기능을 포함합니다.
 """
 
-# 유틸리티 모듈 임포트
-try:
-    from .cache import CacheManager, QueryOptimizer, TemplateCache, PerformanceMonitor
-    from .security import SecurityManager, PermissionManager, SecurityMixin, SecureModelMixin
-    from .monitoring import SystemMonitor, PerformanceMonitor, ErrorMonitor, UserActivityMonitor, HealthCheck
-    
-    # 유틸리티 함수 내보내기
-    __all__ = [
-        'CacheManager',
-        'QueryOptimizer', 
-        'TemplateCache',
-        'PerformanceMonitor',
-        'SecurityManager',
-        'PermissionManager',
-        'SecurityMixin',
-        'SecureModelMixin',
-        'SystemMonitor',
-        'ErrorMonitor',
-        'UserActivityMonitor',
-        'HealthCheck'
-    ]
-except ImportError:
-    # Django 설정이 로드되지 않은 경우
-    __all__ = []
+"""
+패키지 초기화: 앱 로드 시점에 Django 앱 레지스트리 관련 문제가 발생하지 않도록
+하위 모듈을 최상위에서 바로 임포트하지 않습니다. 필요할 때 명시적으로 하위 모듈을 임포트하세요.
+"""
+
+__all__ = [
+    'cache',
+    'security',
+    'monitoring',
+]

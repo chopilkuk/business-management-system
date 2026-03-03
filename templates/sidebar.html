@@ -1,7 +1,7 @@
 {% load static %}
 <div class="userBox"> <!-- 프로필 -->
     <div class="profile">
-        <img src="{% static 'images/puppy.jpg' %}" alt="프로필 이미지">
+        <img src="{% static 'menu/puppy.jpg' %}" alt="프로필 이미지">
     </div>
     <span class="username">{{ user.username|default:"강아지" }}</span> <!-- 이름 -->
     <span class="userrank">{{ user.get_user_type_display|default:"사원" }}</span> <!-- 직급 -->
@@ -17,7 +17,7 @@
     </div>
     <div class="alarm">
         <div class="alarmImg">
-            <img src="{% static 'images/alarm.png' %}" width="15px" alt="알림">
+            <img src="{% static 'menu/alarm.png' %}" width="15px" alt="알림">
         </div>
         <div class="alarmTitle">알림</div>
         <div class="alarm">
@@ -43,15 +43,15 @@
         </div>
         <div class="userMenu">
             <div class="dateMenu">
-                <a href="/data/"><img src="{% static 'images/datablack.png' %}" width="40px" alt="자료"><br></a> <!-- 자료페이지로 이동-->
+                <a href="/data/"><img src="{% static 'menu/datablack.png' %}" width="40px" alt="자료"><br></a> <!-- 자료페이지로 이동-->
                 <span style="font-size: 13px; font-weight: 500; margin-left: 7px">자료</span>
             </div>
             <div class="authoMenu">
-                <a href="/authority/"><img src="{% static 'images/authorityblack.png' %}" width="40px" alt="권한"><br></a>
+                <a href="/authority/"><img src="{% static 'menu/authorityblack.png' %}" width="40px" alt="권한"><br></a>
                 <span style="font-size: 13px; font-weight: 500; margin-left: 7px">권한</span>
             </div>
             <div class="settingMenu">
-                <a href="/setting/"><img src="{% static 'images/settingblack.png' %}" width="40px" alt="설정"><br></a>
+                <a href="/setting/"><img src="{% static 'menu/settingblack.png' %}" width="40px" alt="설정"><br></a>
                 <span style="font-size: 12px; font-weight: 500; margin-left: 7px">설정</span>
             </div>
         </div>
