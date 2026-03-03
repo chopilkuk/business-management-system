@@ -48,6 +48,9 @@ urlpatterns = [
     path('notice/', include('공지사항.urls')),
     path('supportProject/', include('home.urls')),
     
+    # 완성형 홈페이지
+    path('complete/', include('home.urls')),
+    
     # API 엔드포인트
     path('api/', include('api.urls')),
     
