@@ -175,16 +175,16 @@ CACHES = {
     },
 }
 
-# Security settings
+# Security settings - 개발 환경용 보안 설정
 # 보안 설정 - 운영/개발 환경에 따라 일부 값은 동적으로 설정
 SECURE_SSL_REDIRECT = False
-SECURE_HSTS_SECONDS = 31536000
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
+SECURE_HSTS_SECONDS = 0
+SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+SECURE_HSTS_PRELOAD = False
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
-# Cookie security: enable strict/secure cookies in production
+# Cookie security: 개발 환경에서는 보안 쿠키 비활성화
 if DEBUG:
     SESSION_COOKIE_SECURE = False
     CSRF_COOKIE_SECURE = False
