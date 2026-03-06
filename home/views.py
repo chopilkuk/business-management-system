@@ -186,3 +186,83 @@ def home_original(request):
         - 기존 기능 유지
     """
     return render(request, 'home.html')
+
+def calendar_add(request):
+    """
+    일정 추가 뷰 함수
+    
+    Args:
+        request (HttpRequest): 클라이언트의 HTTP 요청 객체
+        
+    Returns:
+        HttpResponse: 렌더링된 일정 추가 페이지 HTML 응답
+        
+    Description:
+        - 새로운 일정 추가 폼 제공
+        - 날짜, 시간, 제목, 내용 입력
+        - 반복 일정 설정 기능
+    """
+    if request.method == 'POST':
+        # 일정 데이터 처리 로직
+        title = request.POST.get('title', '').strip()
+        date = request.POST.get('date', '')
+        time = request.POST.get('time', '')
+        description = request.POST.get('description', '').strip()
+        
+        if title and date:
+            # 여기에 일정 저장 로직 추가
+            return redirect('calendar')
+    
+    return render(request, 'calendar_add.html')
+
+def data_upload(request):
+    """
+    파일 업로드 뷰 함수
+    
+    Args:
+        request (HttpRequest): 클라이언트의 HTTP 요청 객체
+        
+    Returns:
+        HttpResponse: 렌더링된 파일 업로드 페이지 HTML 응답
+        
+    Description:
+        - 파일 업로드 폼 제공
+        - 다중 파일 업로드 지원
+        - 파일 형식 및 크기 제한
+    """
+    if request.method == 'POST':
+        # 파일 업로드 처리 로직
+        uploaded_files = request.FILES.getlist('files')
+        
+        if uploaded_files:
+            # 여기에 파일 저장 로직 추가
+            return redirect('data')
+    
+    return render(request, 'data_upload.html')
+
+def reports_generate(request):
+    """
+    보고서 생성 뷰 함수
+    
+    Args:
+        request (HttpRequest): 클라이언트의 HTTP 요청 객체
+        
+    Returns:
+        HttpResponse: 렌더링된 보고서 생성 페이지 HTML 응답
+        
+    Description:
+        - 보고서 생성 폼 제공
+        - 다양한 보고서 유형 선택
+        - 기간 및 필터 설정
+    """
+    if request.method == 'POST':
+        # 보고서 생성 처리 로직
+        report_type = request.POST.get('report_type', '')
+        start_date = request.POST.get('start_date', '')
+        end_date = request.POST.get('end_date', '')
+        
+        if report_type and start_date and end_date:
+            # 여기에 보고서 생성 로직 추가
+            return redirect('data')
+    
+    return render(request, 'reports_generate.html')

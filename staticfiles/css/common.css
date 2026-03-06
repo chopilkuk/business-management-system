@@ -1,0 +1,514 @@
+/**
+ * 공통 CSS - 현대적 디자인 시스템
+ * 
+ * 이 파일은 전체 프로젝트에서 공통으로 사용되는 CSS 스타일을 정의합니다.
+ * CSS 변수, 기본 컴포넌트, 유틸리티 클래스 등을 포함합니다.
+ * 
+ * 주요 기능:
+ * - CSS 변수 정의 (색상, 폰트, 간격 등)
+ * - 기본 HTML 요소 스타일 리셋
+ * - 버튼, 폼, 카드, 테이블 등 컴포넌트 스타일
+ * - 반응형 디자인 및 미디어 쿼리
+ * - 유틸리티 클래스 정의
+ * 
+ * @author Business Management Team
+ * @version 1.0.0
+ */
+
+/* CSS 변수 정의 */
+:root {
+    /* 색상 팔레트 - 프로젝트 전체에서 사용할 색상들 */
+    --primary-color: #2c3e50;        /* 주요 색상 - 네비 */
+    --secondary-color: #3498db;      /* 보조 색상 - 파란 */
+    --accent-color: #e74c3c;         /* 강조 색상 - 빨강 */
+    --success-color: #27ae60;        /* 성공 색상 - 녹색 */
+    --warning-color: #f39c12;        /* 경고 색상 - 주황 */
+    --info-color: #3498db;          /* 정보 색상 - 파란 */
+    --light-color: #ecf0f1;          /* 밝은 색상 */
+    --dark-color: #2c3e50;           /* 어두운 색상 */
+    --text-color: #2c3e50;           /* 텍스트 색상 */
+    --text-muted: #7f8c8d;          /* 희미 텍스트 색상 */
+    --border-color: #bdc3c7;         /* 테두리 색상 */
+    --background-color: #ffffff;     /* 배경 색상 */
+    --background-secondary: #f8f9fa; /* 보조 배경 색상 */
+    
+    /* 폰트 설정 */
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  /* 기본 폰트 */
+    --font-size-base: 14px;         /* 기본 폰트 크기 */
+    --font-size-sm: 12px;            /* 작은 폰트 크기 */
+    --font-size-lg: 16px;            /* 큰 폰트 크기 */
+    --font-size-xl: 18px;            /* 매우 큰 폰트 크기 */
+    --font-size-xxl: 24px;          /* 가장 큰 폰트 크기 */
+    
+    /* 간격 설정 - 일관된 여백 값 */
+    --spacing-xs: 4px;              /* 매우 작은 간격 */
+    --spacing-sm: 8px;              /* 작은 간격 */
+    --spacing-md: 16px;             /* 중간 간격 */
+    --spacing-lg: 24px;             /* 큰 간격 */
+    --spacing-xl: 32px;             /* 매우 큰 간격 */
+    --spacing-xxl: 48px;            /* 가장 큰 간격 */
+    
+    /* 그림자 설정 - 일관된 그림자 효과 */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);      /* 작은 그림자 */
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);      /* 중간 그림자 */
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);     /* 큰 그림자 */
+    --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.15);    /* 매우 큰 그림자 */
+    
+    /* 둥근 모서리 - 일관된 둥근 처리 */
+    --border-radius-sm: 4px;          /* 작은 둥근 */
+    --border-radius-md: 8px;          /* 중간 둥근 */
+    --border-radius-lg: 12px;         /* 큰 둥근 */
+    --border-radius-xl: 16px;         /* 매우 큰 둥근 */
+    
+    /* 전환 효과 - 일관된 애니메이션 */
+    --transition-fast: 0.15s ease-in-out;  /* 빠른 전환 */
+    --transition-normal: 0.3s ease-in-out; /* 일반 전환 */
+    --transition-slow: 0.5s ease-in-out;   /* 느린 전환 */
+}
+
+/* 기본 리셋 - 브라우저 기본 스타일 제거 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 기본 바디 스타일 */
+body {
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-secondary);
+    -webkit-font-smoothing: antialiased;  /* 폰트 렌더링 최적화 */
+    -moz-osx-font-smoothing: grayscale;     /* 폰트 렌더링 최적화 */
+}
+
+/* 버튼 스타일 - 일관된 버튼 컴포넌트 */
+.btn {
+    display: inline-flex;           /* 플렉스박스로 정렬 */
+    align-items: center;           /* 수직 중앙 정렬 */
+    justify-content: center;         /* 수평 중앙 정렬 */
+    padding: var(--spacing-sm) var(--spacing-md);  /* 내부 여백 */
+    font-size: var(--font-size-base);
+    font-weight: 500;              /* 폰트 두께 */
+    text-decoration: none;           /* 밑줄 제거 */
+    border: 1px solid transparent;    /* 투명한 테두리 */
+    border-radius: var(--border-radius-md);  /* 둥근 처리 */
+    cursor: pointer;                 /* 포인터 커서 */
+    transition: all var(--transition-normal);  /* 전환 효과 */
+    white-space: nowrap;             /* 텍스트 줄바꿈 방지 */
+    user-select: none;               /* 텍스트 선택 방지 */
+}
+
+/* 버튼 포커스 스타일 */
+.btn:focus {
+    outline: 2px solid var(--secondary-color);  /* 포커스 시 아웃라인 */
+    outline-offset: 2px;                         /* 아웃라인 오프셋 */
+}
+
+/* 버튼 변형들 */
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: #34495e;  /* 호버 시 더 어두운 색상 */
+    transform: translateY(-1px);    /* 위로 살짝 효과 */
+    box-shadow: var(--shadow-md);      /* 그림자 추가 */
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: white;
+    border-color: var(--secondary-color);
+}
+
+.btn-secondary:hover {
+    background-color: #2980b9;  /* 호버 시 더 어두운 색상 */
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-success {
+    background-color: var(--success-color);
+    color: white;
+    border-color: var(--success-color);
+}
+
+.btn-success:hover {
+    background-color: #229954;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-danger {
+    background-color: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--primary-color);
+    border-color: var(--border-color);
+}
+
+.btn-outline:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+/* 버튼 크기 변형들 */
+.btn-sm {
+    padding: var(--spacing-xs) var(--spacing-sm);  /* 작은 버튼 */
+    font-size: var(--font-size-sm);
+}
+
+.btn-lg {
+    padding: var(--spacing-md) var(--spacing-lg);  /* 큰 버튼 */
+    font-size: var(--font-size-lg);
+}
+
+/* 폼 요소 스타일 */
+.form-control {
+    display: block;               /* 블록 레벨 */
+    width: 100%;                   /* 전체 너비 */
+    padding: var(--spacing-sm) var(--spacing-md);  /* 내부 여백 */
+    font-size: var(--font-size-base);
+    line-height: 1.5;              /* 줄 높이 */
+    color: var(--text-color);
+    background-color: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.form-control:focus {
+    outline: none;  /* 포커스 아웃라인 제거 */
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);  /* 포커스 시 그림자 */
+}
+
+.form-control::placeholder {
+    color: var(--text-muted);  /* 플레이스홀더 텍스트 색상 */
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);  /* 폼 그룹 하단 여백 */
+}
+
+.form-label {
+    display: block;               /* 블록 레벨 */
+    margin-bottom: var(--spacing-xs);  /* 레이블 하단 여백 */
+    font-weight: 500;              /* 폰트 두께 */
+    color: var(--text-color);
+}
+
+/* 카드 스타일 - 콘텐츠 컨테이너 */
+.card {
+    background: white;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;               /* 내용 넘침 방지 */
+    transition: box-shadow var(--transition-normal);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);  /* 호버 시 그림자 강화 */
+}
+
+/* 카드 섹션들 */
+.card-header {
+    padding: var(--spacing-lg);
+    background-color: var(--background-secondary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.card-body {
+    padding: var(--spacing-lg);
+}
+
+.card-footer {
+    padding: var(--spacing-lg);
+    background-color: var(--background-secondary);
+    border-top: 1px solid var(--border-color);
+}
+
+/* 테이블 스타일 */
+.table {
+    width: 100%;
+    border-collapse: collapse;        /* 테두리 경계선 병합 */
+    background: white;
+    border-radius: var(--border-radius-md);
+    overflow: hidden;               /* 내용 넘침 방지 */
+    box-shadow: var(--shadow-sm);
+}
+
+.table th,
+.table td {
+    padding: var(--spacing-md);
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.table th {
+    background-color: var(--background-secondary);
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: var(--font-size-sm);
+    text-transform: uppercase;        /* 대문자 변환 */
+    letter-spacing: 0.5px;
+}
+
+.table tbody tr:hover {
+    background-color: var(--background-secondary);  /* 호버 시 배경색 변경 */
+}
+
+.table-striped tbody tr:nth-child(odd) {
+    background-color: var(--background-secondary);  /* 홀수번째 줄 배경색 */
+}
+
+/* 알림/메시지 스타일 */
+.alert {
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    margin-bottom: var(--spacing-md);
+    border: 1px solid transparent;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border-color: #ffeaa7;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-color: #f5c6cb;
+}
+
+.alert-info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border-color: #bee5eb;
+}
+
+/* 로딩 스피너 */
+.spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid var(--border-color);
+    border-radius: 50%;
+    border-top-color: var(--primary-color);
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* 툴팁 */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: var(--dark-color);
+    color: white;
+    text-align: center;
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-sm);
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+    font-size: var(--font-size-sm);
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* 모달 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn var(--transition-normal);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 0;
+    border-radius: var(--border-radius-lg);
+    width: 90%;
+    max-width: 600px;
+    box-shadow: var(--shadow-xl);
+    animation: slideIn var(--transition-normal);
+}
+
+.modal-header {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-body {
+    padding: var(--spacing-lg);
+}
+
+.modal-footer {
+    padding: var(--spacing-lg);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-sm);
+}
+
+.close {
+    color: var(--text-muted);
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color var(--transition-normal);
+}
+
+.close:hover {
+    color: var(--text-color);
+}
+
+/* 모달 애니메이션 */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .btn {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: var(--font-size-sm);
+    }
+    
+    .card-body {
+        padding: var(--spacing-md);
+    }
+    
+    .table {
+        font-size: var(--font-size-sm);
+    }
+    
+    .table th,
+    .table td {
+        padding: var(--spacing-sm);
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .btn {
+        display: block;
+        width: 100%;
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+/* 유틸리티 클래스 - 일반적으로 사용되는 유틸리티 클래스들 */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.d-none { display: none; }
+.d-block { display: block; }
+.d-inline { display: inline; }
+.d-inline-block { display: inline-block; }
+.d-flex { display: flex; }
+.d-grid { display: grid; }
+
+.justify-content-center { justify-content: center; }
+.justify-content-between { justify-content: space-between; }
+.align-items-center { align-items: center; }
+
+/* 마진 유틸리티 클래스 */
+.m-0 { margin: 0; }
+.m-1 { margin: var(--spacing-xs); }
+.m-2 { margin: var(--spacing-sm); }
+.m-3 { margin: var(--spacing-md); }
+.m-4 { margin: var(--spacing-lg); }
+.m-5 { margin: var(--spacing-xl); }
+
+.p-0 { padding: 0; }
+.p-1 { padding: var(--spacing-xs); }
+.p-2 { padding: var(--spacing-sm); }
+.p-3 { padding: var(--spacing-md); }
+.p-4 { padding: var(--spacing-lg); }
+.p-5 { padding: var(--spacing-xl); }
+
+/* 여백 유틸리티 클래스 */
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: var(--spacing-xs); }
+.mb-2 { margin-bottom: var(--spacing-sm); }
+.mb-3 { margin-bottom: var(--spacing-md); }
+.mb-4 { margin-bottom: var(--spacing-lg); }
+.mb-5 { margin-bottom: var(--spacing-xl); }
+
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: var(--spacing-xs); }
+.mt-2 { margin-top: var(--spacing-sm); }
+.mt-3 { margin-top: var(--spacing-md); }
+.mt-4 { margin-top: var(--spacing-lg); }
+.mt-5 { margin-top: var(--spacing-xl); }

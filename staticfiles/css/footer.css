@@ -1,0 +1,433 @@
+/**
+ * 글로벌 푸터 스타일
+ * 세계적인 푸터 디자인
+ */
+
+/* 푸터 기본 스타일 */
+.global-footer {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 3rem 0 1rem;
+    margin-top: auto;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* 푸터 상단 */
+.footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-section h4 {
+    color: var(--text-primary);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: 1rem;
+    font-size: var(--font-size-base);
+}
+
+.footer-section h5 {
+    color: var(--text-primary);
+    font-weight: var(--font-weight-medium);
+    margin-bottom: 0.5rem;
+    font-size: var(--font-size-sm);
+}
+
+/* 브랜드 섹션 */
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.footer-brand img {
+    height: 40px;
+    width: auto;
+}
+
+.footer-brand h3 {
+    margin: 0;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+}
+
+.footer-brand p {
+    margin: 0;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* 푸터 링크 */
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color var(--transition-speed);
+    font-size: var(--font-size-sm);
+}
+
+.footer-links a:hover {
+    color: var(--primary-color);
+}
+
+.footer-links a i {
+    width: 16px;
+    text-align: center;
+}
+
+/* 소셜 링크 */
+.social-links {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all var(--transition-speed);
+}
+
+.social-link:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+/* 뉴스레터 */
+.newsletter {
+    margin-top: 1rem;
+}
+
+.newsletter-form {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.newsletter-form input {
+    flex: 1;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+}
+
+.newsletter-form input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.newsletter-form button {
+    padding: 0.75rem 1rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color var(--transition-speed);
+}
+
+.newsletter-form button:hover {
+    background: var(--primary-hover);
+}
+
+/* 푸터 하단 */
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.footer-bottom-left p {
+    margin: 0 0 0.5rem 0;
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+}
+
+.footer-legal {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.footer-legal a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+    font-size: var(--font-size-xs);
+    transition: color var(--transition-speed);
+}
+
+.footer-legal a:hover {
+    color: var(--text-secondary);
+}
+
+.footer-bottom-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* 언어 선택기 */
+.language-selector select {
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+}
+
+.language-selector select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* 테마 선택기 */
+.theme-selector .theme-btn {
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background: var(--bg-primary);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-speed);
+}
+
+.theme-selector .theme-btn:hover {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 1024px) {
+    .footer-top {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+    
+    .footer-brand {
+        grid-column: 1 / -1;
+        text-align: center;
+        align-items: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .global-footer {
+        padding: 2rem 0 1rem;
+    }
+    
+    .footer-container {
+        padding: 0 1rem;
+    }
+    
+    .footer-top {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .footer-brand {
+        text-align: center;
+        align-items: center;
+    }
+    
+    .footer-section {
+        text-align: center;
+    }
+    
+    .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .footer-legal {
+        justify-content: center;
+    }
+    
+    .social-links {
+        justify-content: center;
+    }
+    
+    .newsletter-form {
+        flex-direction: column;
+    }
+    
+    .newsletter-form input {
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-brand h3 {
+        font-size: var(--font-size-base);
+    }
+    
+    .footer-links a {
+        font-size: var(--font-size-xs);
+    }
+    
+    .social-link {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .footer-legal {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+
+/* 다크테마 */
+[data-theme="dark"] {
+    .global-footer {
+        background: var(--bg-primary);
+        border-top-color: var(--border-color);
+    }
+    
+    .newsletter-form input {
+        background: var(--bg-secondary);
+        border-color: var(--border-color);
+    }
+    
+    .social-link {
+        background: var(--bg-secondary);
+        border-color: var(--border-color);
+    }
+    
+    .language-selector select {
+        background: var(--bg-secondary);
+        border-color: var(--border-color);
+    }
+    
+    .theme-selector .theme-btn {
+        background: var(--bg-secondary);
+        border-color: var(--border-color);
+    }
+}
+
+/* 애니메이션 효과 */
+@keyframes slideInUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.footer-section {
+    animation: slideInUp 0.6s ease-out;
+}
+
+.footer-section:nth-child(1) { animation-delay: 0.1s; }
+.footer-section:nth-child(2) { animation-delay: 0.2s; }
+.footer-section:nth-child(3) { animation-delay: 0.3s; }
+.footer-section:nth-child(4) { animation-delay: 0.4s; }
+
+/* 로딩 상태 */
+.newsletter-form.loading button {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.newsletter-form.loading button::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-left: 8px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 성공 상태 */
+.newsletter-form.success input {
+    border-color: var(--success-color);
+}
+
+.newsletter-form.success button {
+    background: var(--success-color);
+}
+
+/* 오류 상태 */
+.newsletter-form.error input {
+    border-color: var(--danger-color);
+}
+
+.newsletter-form.error button {
+    background: var(--danger-color);
+}
+
+/* 접근성 향상 */
+.footer-links a:focus,
+.social-link:focus,
+.newsletter-form input:focus,
+.newsletter-form button:focus,
+.language-selector select:focus,
+.theme-selector .theme-btn:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* 스크롤바 스타일링 */
+.footer-links::-webkit-scrollbar {
+    width: 6px;
+}
+
+.footer-links::-webkit-scrollbar-track {
+    background: var(--bg-tertiary);
+}
+
+.footer-links::-webkit-scrollbar-thumb {
+    background: var(--text-tertiary);
+    border-radius: 3px;
+}
+
+.footer-links::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}

@@ -31,8 +31,14 @@ urlpatterns = [
     # 캘린더 페이지 - 일정 관리
     path('calendar/', views.calendar, name='calendar'),
     
+    # 일정 추가 페이지
+    path('calendar/add/', views.calendar_add, name='calendar_add'),
+    
     # 자료실 페이지 - 파일 관리
     path('data/', views.data, name='data'),
+    
+    # 파일 업로드 페이지
+    path('data/upload/', views.data_upload, name='data_upload'),
     
     # 권한 관리 페이지 - 사용자 권한 설정
     path('authority/', views.authority, name='authority'),
@@ -42,4 +48,7 @@ urlpatterns = [
     
     # 주소록 페이지 - 연락처 관리
     path('address/', views.address, name='address'),
+    
+    # 보고서 생성 페이지
+    path('reports/generate/', views.reports_generate, name='reports_generate'),
 ]

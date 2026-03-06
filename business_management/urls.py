@@ -40,13 +40,17 @@ urlpatterns = [
     path('technology/', include('기술.urls')),
     path('cooperation/', include('commute.urls')),
     path('calendar/', include('home.urls')),
+    path('calendar/add/', include('home.urls')),
     path('data/', include('home.urls')),
+    path('data/upload/', include('home.urls')),
     path('authority/', include('home.urls')),
     path('setting/', include('home.urls')),
     path('address/', include('home.urls')),
     path('주소/', include('home.urls')),
     path('notice/', include('공지사항.urls')),
     path('supportProject/', include('home.urls')),
+    path('reports/', include('home.urls')),
+    path('reports/generate/', include('home.urls')),
     
     # 완성형 홈페이지
     path('complete/', include('home.urls')),

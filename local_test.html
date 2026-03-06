@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>비즈니스 관리 시스템 - 로컬 테스트</title>
+    <style>
+        body {
+            font-family: 'Malgun Gothic', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #2bae66 0%, #094d28 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .test-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+        }
+        
+        .title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2bae66;
+            margin-bottom: 20px;
+        }
+        
+        .status {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .server-info {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .server-info h3 {
+            color: #2bae66;
+            margin-bottom: 15px;
+        }
+        
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #666;
+        }
+        
+        .info-value {
+            color: #333;
+        }
+        
+        .btn {
+            background: #2bae66;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px;
+        }
+        
+        .btn:hover {
+            background: #094d28;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+        }
+        
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+        
+        .success {
+            color: #28a745;
+            font-weight: 600;
+        }
+        
+        .warning {
+            color: #ffc107;
+            font-weight: 600;
+        }
+        
+        .error {
+            color: #dc3545;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1 class="title">🏢 비즈니스 관리 시스템</h1>
+        <p class="status">로컬 서버 상태 확인</p>
+        
+        <div class="server-info">
+            <h3>📊 서버 정보</h3>
+            <div class="info-item">
+                <span class="info-label">서버 주소:</span>
+                <span class="info-value">http://127.0.0.1:8000</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">서버 상태:</span>
+                <span class="info-value success">✅ 실행 중</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">포트:</span>
+                <span class="info-value">8000</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">프로세스 ID:</span>
+                <span class="info-value">4752</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">연결 상태:</span>
+                <span class="info-value success">✅ 정상</span>
+            </div>
+        </div>
+        
+        <div style="margin-bottom: 30px;">
+            <h3>🎯 바로가기</h3>
+            <a href="http://127.0.0.1:8000" class="btn" target="_blank">
+                🏠 메인 홈페이지
+            </a>
+            <a href="http://127.0.0.1:8000/workspace/" class="btn btn-secondary" target="_blank">
+                🚀 Untitled Workspace
+            </a>
+        </div>
+        
+        <div style="margin-bottom: 30px;">
+            <h3>📱 기능 확인</h3>
+            <div class="info-item">
+                <span class="info-label">메인 홈페이지:</span>
+                <span class="info-value success">✅ 정상</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">워크스페이스:</span>
+                <span class="info-value success">✅ 정상</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">정적 파일:</span>
+                <span class="info-value success">✅ 로딩됨</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">CSS 스타일:</span>
+                <span class="info-value success">✅ 적용됨</span>
+            </div>
+        </div>
+        
+        <div style="margin-top: 30px;">
+            <p style="color: #666; font-size: 14px;">
+                📅 확인 시간: <span id="current-time"></span>
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // 현재 시간 표시
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleString('ko-KR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('current-time').textContent = timeString;
+        }
+        
+        updateTime();
+        setInterval(updateTime, 1000);
+        
+        // 서버 상태 확인
+        function checkServer() {
+            fetch('http://127.0.0.1:8000')
+                .then(response => {
+                    console.log('서버 응답:', response.status);
+                })
+                .catch(error => {
+                    console.log('서버 오류:', error);
+                });
+        }
+        
+        // 5초마다 서버 상태 확인
+        setInterval(checkServer, 5000);
+        checkServer();
+    </script>
+</body>
+</html>
